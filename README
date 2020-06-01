@@ -1,0 +1,151 @@
+My dotfiles - by Henrique Gogó
+
+.tmux.conf
+==========
+  - Changes prefix to C-a and set some colors and default settings
+
+.muttrc
+=======
+  - Default configuration for Gmail accounts.
+    Create a .mutt/local file to set realname, imap_user and imap_pass
+
+.lynxrc
+=======
+  - Vi keymaps, nvim editor and accept cookies
+
+.gitconfig
+==========
+  Git Aliases
+  -----------
+  - sync: 
+    This alias pulls the latest changes for all Git repositories in the
+    current directory. It iterates through each subdirectory, checks if
+    it is a Git repository, and runs `git pull` if it is.
+    Usage: `git sync`
+
+  - history: 
+    This alias shows a formatted log of commits with a graphical
+    representation of the branch structure. The format includes the
+    commit hash, commit message, author name, and relative commit date,
+    all color-coded for better readability.
+    Usage: `git history`
+
+.bash_aliases
+=============
+  Bash Prompt
+  -----------
+  The prompt is customized to show the current directory and the Git
+  branch if applicable, with color-coded elements for better
+  readability.
+
+  Aliases
+  -------
+  - ll: 
+    Lists files with detailed information including hidden files, sorted
+    with directories first, and color-coded output.
+    Usage: `ll`
+
+  - battery: 
+    Displays the battery capacity of your system.
+    Usage: `battery`
+
+  Functions
+  ---------
+  - google: 
+    Opens a text-based web browser to search Google with the specified
+    query.
+    Usage: `google [search terms]`
+
+  - loadenv: 
+    Loads specified directories into environment variables such as PATH,
+    MANPATH, CPATH, LD_LIBRARY_PATH, LIBRARY_PATH, and PKG_CONFIG_PATH.
+    Usage: `loadenv [FOLDER1] [FOLDER2]...`
+    If no folder is specified, a usage message is displayed.
+    Automatically load environment variables from all directories within
+    $HOME/opt on startup.
+
+  - confine: 
+    Starts a chroot environment with a clean environment and specified
+    command.
+    Usage: `confine [PATH] [COMMAND]`
+    If no command is specified, a default shell environment is used.
+
+  - chhome: 
+    Run a command in a different home directory. Good for sandboxing.
+    This function consider LD_LIBRARY_PATH in the new home directory.
+    Usage: `chhome [PATH] [COMMAND]`
+
+  - watchpath:
+    Watches a directory for changes and executes a command when files
+    are added or modified.
+    Usage: `watchpath [PATH] [COMMAND]`
+
+  - selfextract: 
+    Creates a self-extracting archive with the specified command.
+    Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`
+
+.vimrc
+======
+  Overview
+  --------
+  - General Settings: Set some desirable options.
+  - Syntax Highlighting: Enable syntax highlighting.
+  - Custom Highlights: Define custom colors for various elements like
+    comments, strings, keywords, and more to improve readability and
+    aesthetics.
+  - Enhanced Statusline: A custom status line showing the current
+    directory, file name, modified status, read-only status, file type,
+    line, column, and percentage through the file and root user
+    indicator.
+
+  Shortcuts
+  ---------
+  - <C-c> to exit insert mode.
+  - <Leader><CR> to open the file explorer.
+  - <C-Space> to trigger the omnifunction for syntax completion.
+  - <Leader> to use the system clipboard for yank and paste operations.
+
+  Buffers and Tabs Navigation
+  ---------------------------
+  - Navigation Shortcuts: Map keys for quick buffer and tab management:
+    - <Leader>q Quit editor.
+    - <Leader>% Open a vertical split.
+    - <Leader>" Open a horizontal split.
+    - <Leader>b List all buffers.
+    - <Leader><Tab> Switch recent buffer.
+    - <Leader><Tab><Tab> Go to next buffer.
+    - <Leader><S-Tab> Go to previous buffer.
+
+  Find Files by Name or Containing Text
+  -------------------------------------
+  - Find Command: Define a :Find command to search for files by name
+    excluding certain directories (like node_modules, venv, etc.). Map
+    <Leader>. to use this command.
+  - Search Command: Define a :Search command to search for text within
+    files using rg (ripgrep) if available, or fallback to grep. Map
+    <Leader>/ to use this command.
+
+  Git Integrations
+  ----------------
+  - Git Blame: Map <Leader>g to show git blame for the current line or
+    selected lines.
+  - Git Diff: Automatically highlight lines with changes in files under
+    version control.
+
+  Ctags Support
+  -------------
+  - CtagsCreate: Create tags for the current directory using ctags and
+    save in tmp folder.
+  - CtagsDelete: Delete tags in the tmp folder.
+
+  Plugin Management
+  -----------------
+  - Custom Functions: Functions to install, remove, update, and list
+    plugins using git.
+  - Commands: Define :PluginInstall, :PluginRemove, :PluginUpdate, and 
+    :PluginList commands to manage plugins.
+
+Disclaimer
+==========
+  These are my personal settings. You can use them as you wish,
+  but I use to change it a lot sometimes.

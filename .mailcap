@@ -1,0 +1,2 @@
+application/pdf; pdftotext -layout %s -; copiousoutput;
+text/html; lynx -force_html -dump %s; copiousoutput

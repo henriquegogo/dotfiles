@@ -1,0 +1,31 @@
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key h quit
+
+browser "lynx %u"
+
+feedlist-title-format "Feeds (%u/%t)"
+searchresult-title-format "Search result (%u/%t)"
+articlelist-format "%4i %f %D %?T?%-12T ?%t"
+articlelist-title-format "%T (%u/%t)"
+itemview-title-format "%F - %T (%u/%t)"
+
+color background default default
+color listnormal color246 default
+color listfocus color238 color246 standout
+color listnormal_unread color255 default
+color listfocus_unread color238 color255 standout
+color info color245 color235
+
+# highlights
+highlight all "---.*---" yellow
+highlight feedlist ".*(0/0))" black
+highlight article "(^Feed:|^Title:|^Date:|^Link:|^Author:)" magenta default bold
+highlight article "https?://[^ ]+" yellow default
+highlight article "\\[[0-9][0-9]*\\]" blue default bold
+highlight article "\\[image\\ [0-9]+\\]" green default bold
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" green default bold
+highlight article ":.*\\(link\\)$" blue default
+highlight article ":.*\\(image\\)$" blue default
+highlight article ":.*\\(embedded flash\\)$" magenta default
