@@ -119,7 +119,10 @@ fi
 ### MY CHANGES ###
 # Bash prompt
 export PROMPT_DIRTRIM=2
-export PS1='\n\[\e[33m\]▶ \[\e[36m\]\w$(__git_ps1 " \[\e[34m\](\[\e[31m\]%s\[\e[34m\])") \[\e[00m\]'
+if [ -x "$(command -v git)" ]; then
+  export GIT_PS1='$(__git_ps1 " \[\e[34m\](\[\e[31m\]%s\[\e[34m\])")'
+fi
+export PS1="\n\[\e[33m\]▶ \[\e[36m\]\w$GIT_PS1 \[\e[00m\]"
 case "$TERM" in
 xterm*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}▶ \w\a\]$PS1"
