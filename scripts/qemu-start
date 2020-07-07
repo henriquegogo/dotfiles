@@ -1,0 +1,9 @@
+#!/bin/sh
+
+kvm \
+  -cpu host \
+  -m 4096M \
+  -soundhw hda \
+  -net nic -net user \
+  -vga virtio \
+  "$@"

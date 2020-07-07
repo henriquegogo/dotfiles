@@ -1,0 +1,3 @@
+#!/bin/sh
+
+while true; do echo " $(xdotool getwindowfocus getwindowname) %{r}%{A:dmenu_run:} $(date) %{A}"; sleep 0.2; done | lemonbar -g x25 -B#FF030609 -F#FFAAAAAA | sh

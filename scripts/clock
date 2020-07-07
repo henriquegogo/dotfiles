@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xclock -digital -bg black -fg white -geometry 1366 -face 'monospace-8'
