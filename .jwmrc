@@ -218,4 +218,7 @@
     <Key mask="4" key="Left">maxleft</Key>
     <Key mask="4" key="Right">maxright</Key>
 
+    <Key key="XF86AudioRaiseVolume">exec:amixer set Master 3+</Key>
+    <Key key="XF86AudioLowerVolume">exec:amixer set Master 3-</Key>
+
 </JWM>
