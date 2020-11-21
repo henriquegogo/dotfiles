@@ -4,7 +4,7 @@
     <!-- The root menu. -->
     <RootMenu onroot="12">
         <!--Include>/etc/jwm/debian-menu</Include-->
-        <Program label="Run">dmenu_run</Program>
+        <Program label="Run">dmenu_run -l 5</Program>
         <Program label="Terminal">x-terminal-emulator</Program>
         <Separator/>
         <Program label="Lock">slock</Program>
@@ -186,7 +186,7 @@
     <Key mask="A" key="F2">window</Key>
     <Key mask="A" key="F10">maximize</Key>
 
-    <Key mask="4" key="r">exec:dmenu_run</Key>
+    <Key mask="4" key="r">exec:dmenu_run -l 5</Key>
     <Key mask="4" key="t">exec:x-terminal-emulator</Key>
     <Key mask="4" key="b">exec:x-www-browser</Key>
     <Key mask="4" key="Up">maximize</Key>
