@@ -33,7 +33,7 @@
     <!-- Visual Styles -->
     <WindowStyle>
         <Font>Sans-9:bold</Font>
-        <Width>4</Width>
+        <Width>2</Width>
         <Height>10</Height>
         <Corner>0</Corner>
         <Foreground>#333333</Foreground>
