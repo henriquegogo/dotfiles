@@ -35,7 +35,7 @@
         <Font>Sans-9:bold</Font>
         <Width>4</Width>
         <Height>10</Height>
-        <Corner>3</Corner>
+        <Corner>0</Corner>
         <Foreground>#555555</Foreground>
         <Background>#555555</Background>
         <Outline>#000000</Outline>
