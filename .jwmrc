@@ -124,6 +124,7 @@
     <Key key="l">right</Key>
     <Key key="Return">select</Key>
     <Key key="Escape">escape</Key>
+    <Key key="Print">exec:xterm -iconic -e scrot -s</Key>
 
     <Key mask="A" key="Tab">nextstacked</Key>
     <Key mask="A" key="F4">close</Key>
@@ -135,7 +136,7 @@
     <Key mask="4" key="r">exec:dmenu_run -l 5</Key>
     <Key mask="4" key="t">exec:x-terminal-emulator</Key>
     <Key mask="4" key="b">exec:x-www-browser</Key>
-    <Key mask="4" key="Up">maximize</Key>
+    <Key mask="4" key="l">exec:slock</Key>
     <Key mask="4" key="Up">maximize</Key>
     <Key mask="4" key="Left">maxleft</Key>
     <Key mask="4" key="Right">maxright</Key>
