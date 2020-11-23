@@ -3,9 +3,9 @@
 
     <!-- The root menu. -->
     <RootMenu onroot="12">
-        <!--Include>/etc/jwm/debian-menu</Include-->
         <Program label="Run">dmenu_run -l 5</Program>
         <Program label="Terminal">x-terminal-emulator</Program>
+        <Program label="Internet">x-www-browser</Program>
         <Separator/>
         <Program label="Lock">slock</Program>
         <Separator/>
@@ -15,19 +15,12 @@
 
     <!-- Tray at the bottom. -->
     <Tray x="0" y="1" height="26" autohide="off">
-
+        <Spacer width="4"></Spacer>
         <TrayButton icon="/usr/share/icons/HighContrast/scalable/mimetypes/package-x-generic.svg">root:1</TrayButton>
-        <Spacer width="2"/>
-        <TrayButton label="_">showdesktop</TrayButton>
-        <Spacer width="2"/>
-
-        <Pager labeled="true"/>
-
+        <TrayButton label="|">showdesktop</TrayButton>
         <TaskList maxwidth="256"/>
-
         <Dock/>
         <Clock format="%a %d %b %H:%M"></Clock>
-
     </Tray>
 
     <!-- Visual Styles -->
