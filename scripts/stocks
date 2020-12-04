@@ -1,0 +1,2 @@
+# This uses ticker.sh script from https://github.com/pstadler/ticker.sh
+watch -n 5 -t -c ticker.sh ^BVSP BOVA11.SA ^GSPC USDBRL=X BZ=F CL=F BTC-USD
