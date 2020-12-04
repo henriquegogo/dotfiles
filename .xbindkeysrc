@@ -7,7 +7,7 @@
 "x-terminal-emulator"
   Control+Alt + t
 
-"dmenu_run -p Run: -l 8"
+"dmenu_run -l 5"
   Alt + F2
 
 "amixer set Master 3+"
