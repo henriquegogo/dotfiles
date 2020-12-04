@@ -1,0 +1,11 @@
+
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Henrique Gogó
+	email = henriquegogo@gmail.com
+[push]
+	default = simple
+
+[alias]
+	lg = log --format='%Cred%h %Creset%s (%Cgreen%an) %Creset- %Cblue%cr' --graph
