@@ -13,6 +13,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-export PATH=$PATH:$HOME/bin
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.npm-global/bin
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$PATH
