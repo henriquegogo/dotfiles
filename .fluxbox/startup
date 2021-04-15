@@ -23,6 +23,7 @@ if [ $? -eq 0 ]; then
     fbautostart
 fi
 
+lxrandr &
 fbsetbg -f ~/wallpaper.jpg &
 
 # And last but not least we start fluxbox.
