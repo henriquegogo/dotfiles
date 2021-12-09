@@ -83,7 +83,7 @@ editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 skin=default
-skin=nicedark
+skin=modarcon16-thin
 
 [Layout]
 message_visible=true
@@ -117,6 +117,14 @@ screen.xterm-256color=
 color_terminals=
 
 xterm-256color=
+
+screen-256color-bce=
+
+screen=
+
+screen-bce=
+
+linux=
 
 [Panels]
 show_mini_info=true
