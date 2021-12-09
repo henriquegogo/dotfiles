@@ -1,6 +1,6 @@
 echo "Copying files..."
 cat .bashrc >> ~/.bashrc
+cat .gitconfig >> ~/.gitconfig
 cp -n .vimrc ~/.vimrc
 cp -n .screenrc ~/.screenrc
-cp -n .gitconfig ~/.gitconfig
 echo; echo "Done!"
