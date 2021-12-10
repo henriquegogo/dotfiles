@@ -83,7 +83,7 @@ editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 skin=default
-skin=modarcon16-thin
+skin=gotar
 
 [Layout]
 message_visible=true
