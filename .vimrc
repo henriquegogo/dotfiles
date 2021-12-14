@@ -24,24 +24,27 @@ nnoremap <Leader>yy "+yy
 map <Leader>p "+p
 map <Leader>P "+P
 
-let g:netrw_banner = 0
-let g:netrw_winsize = -25
+let g:netrw_banner=0
+let g:netrw_winsize=-25
 
 set background=dark
 hi clear
-hi Normal      ctermbg=233 ctermfg=253
-hi Visual      ctermbg=238
-hi CursorLine  ctermbg=237
-hi LineNr      ctermbg=232 ctermfg=244
+hi Normal      ctermbg=233 ctermfg=15
+hi Visual      ctermbg=236
+hi CursorLine  ctermbg=236
+hi LineNr      ctermbg=0   ctermfg=8
 hi SignColumn  ctermbg=233
-hi Pmenu       ctermbg=238 ctermfg=15 
-hi Boolean     ctermfg=148
-hi Comment     ctermfg=244
-hi Function    ctermfg=229
-hi Identifier  ctermfg=148
-hi Number      ctermfg=208
-hi Preproc     ctermfg=110
-hi Type        ctermfg=103
-hi Special     ctermfg=208
-hi Statement   ctermfg=103
-hi String      ctermfg=148
+hi Pmenu       ctermbg=236 ctermfg=15
+hi Boolean     ctermfg=2
+hi Comment     ctermfg=8
+hi Constant    ctermfg=9
+hi Function    ctermfg=11
+hi Identifier  ctermfg=9
+hi Keyword     ctermfg=6
+hi Number      ctermfg=3
+hi PreProc     ctermfg=13
+hi Type        ctermfg=14
+hi Special     ctermfg=3
+hi Statement   ctermfg=6
+hi String      ctermfg=10
+hi Structure   ctermfg=13
