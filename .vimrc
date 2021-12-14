@@ -28,8 +28,7 @@ let g:netrw_banner=0
 let g:netrw_winsize=-25
 
 set background=dark
-hi clear
-hi Normal      ctermbg=233 ctermfg=15
+hi Normal      ctermbg=233 ctermfg=253
 hi Visual      ctermbg=236
 hi CursorLine  ctermbg=236
 hi LineNr      ctermbg=0   ctermfg=8
@@ -40,11 +39,11 @@ hi Comment     ctermfg=8
 hi Constant    ctermfg=9
 hi Function    ctermfg=11
 hi Identifier  ctermfg=9
-hi Keyword     ctermfg=6
-hi Number      ctermfg=3
+hi Keyword     ctermfg=4
+hi Number      ctermfg=208
 hi PreProc     ctermfg=13
 hi Type        ctermfg=14
-hi Special     ctermfg=3
-hi Statement   ctermfg=6
+hi Special     ctermfg=11
+hi Statement   ctermfg=4
 hi String      ctermfg=10
 hi Structure   ctermfg=13
