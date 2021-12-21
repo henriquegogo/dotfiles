@@ -5,6 +5,7 @@ set autoindent
 set expandtab
 set tabstop=2
 set shiftwidth=2
+set hidden
 set cursorline
 set incsearch
 set wildmenu
