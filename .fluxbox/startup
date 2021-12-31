@@ -23,9 +23,6 @@ if [ $? -eq 0 ]; then
     fbautostart
 fi
 
-lxrandr &
-fbsetbg -f ~/wallpaper.jpg &
-
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.
 
