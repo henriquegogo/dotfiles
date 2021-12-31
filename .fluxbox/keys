@@ -43,8 +43,8 @@ Mod1 Tab :NextWindow {groups} (workspace=[current])
 Mod1 Shift Tab :PrevWindow {groups} (workspace=[current])
 
 # cycle through tabs in the current window
-Mod4 Tab :NextTab
-Mod4 Shift Tab :PrevTab
+#Mod4 Tab :NextTab
+#Mod4 Shift Tab :PrevTab
 
 # go to a specific tab in the current window
 Mod4 1 :Tab 1
@@ -137,7 +137,8 @@ Control Mod4 F12 :TakeToWorkspace 12
 
 # custom shortcuts
 Mod4 t :Exec x-terminal-emulator
-Mod4 r :Exec dmenu_run
+Mod4 r :Exec rofi -modi drun -show drun -theme launcher
+Mod4 Tab :Exec rofi -modi window -show window -theme window
 Mod4 b :Exec x-www-browser
 Mod4 l :Exec slock
 Mod4 Up :Maximize
