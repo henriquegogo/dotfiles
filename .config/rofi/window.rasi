@@ -1,7 +1,6 @@
 configuration {
   font: "Noto Sans Bold 10";
   show-icons: true;
-  icon-theme: "Papirus";
   disable-history: false;
   sidebar-mode: false;
 }

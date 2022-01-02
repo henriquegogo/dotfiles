@@ -136,13 +136,22 @@ Control Mod4 F11 :TakeToWorkspace 11
 Control Mod4 F12 :TakeToWorkspace 12
 
 # custom shortcuts
-Mod4 t :Exec x-terminal-emulator
 Mod4 r :Exec rofi -modi drun -show drun -theme launcher
-Mod4 Tab :Exec rofi -modi window -show window -theme window
+Mod4 t :Exec x-terminal-emulator
 Mod4 b :Exec x-www-browser
-Mod4 l :Exec slock
+Mod4 l :Exec lxlock
+Mod4 Tab :Exec rofi -modi window -show window -theme window
+Control Shift w :Close
 Mod4 Up :Maximize
 Mod4 Down :MacroCmd {ResizeTo 90% 90%} {MoveTo 5% 5%}
 Mod4 Left :MacroCmd {ResizeTo 75% 100%} {MoveTo 0 0 Left}
 Mod4 Right :MacroCmd {ResizeTo 25% 100%} {MoveTo 0 0 Right}
-Print :Exec xterm -iconic -e scrot -s
+Mod1 Mod4 Up :MacroCmd {MoveUp 50}
+Mod1 Mod4 Down :MacroCmd {MoveDown 50}
+Mod1 Mod4 Left :MacroCmd {MoveLeft 50}
+Mod1 Mod4 Right :MacroCmd {MoveRight 50}
+Shift Mod4 Up :MacroCmd {ResizeVertical -50}
+Shift Mod4 Down :MacroCmd {ResizeVertical 50}
+Shift Mod4 Left :MacroCmd {ResizeHorizontal -50}
+Shift Mod4 Right :MacroCmd {ResizeHorizontal 50}
+Print :Exec scrot -s

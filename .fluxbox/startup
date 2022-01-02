@@ -26,6 +26,11 @@ fi
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.
 
+xrandr --output HDMI-1-2 --auto --right-of LVDS-1 --output VGA-1-2 --off --output LVDS-1 --mode 1366x768 --rate 60.06
+feh --bg-scale ~/wallpaper.jpg &
+xcompmgr &
+tint2 &
+
 exec fluxbox
 # or if you want to keep a log:
 # exec fluxbox -log "/home/henrique/.fluxbox/log"
