@@ -27,6 +27,7 @@ map <Leader>P "+P
 
 let g:netrw_banner=0
 let g:netrw_winsize=-25
+let g:netrw_liststyle = 3
 
 set background=dark
 hi Normal     ctermfg=15  ctermbg=233
