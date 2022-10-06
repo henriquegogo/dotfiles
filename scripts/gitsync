@@ -4,10 +4,8 @@ for repo in $(echo */)
 do
   if [ -d $repo/.git ]
   then
-    echo $repo:
-    cd $repo
-    git pull
-    cd ..
+    echo $repo
+    git -C $repo pull
     echo
   fi
 done
