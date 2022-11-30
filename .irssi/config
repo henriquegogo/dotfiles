@@ -1,0 +1,276 @@
+servers = (
+  {
+    address = "irc.libera.chat";
+    chatnet = "liberachat";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
+  }
+);
+
+chatnets = {
+  liberachat = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+    sasl_mechanism = "PLAIN";
+    sasl_username = "";
+    sasl_password = "";
+  };
+};
+
+channels = (
+  { name = "#linux"; chatnet = "liberachat"; autojoin = "Yes"; },
+  { name = "#archlinux"; chatnet = "liberachat"; autojoin = "Yes"; },
+  { name = "#python"; chatnet = "liberachat"; autojoin = "Yes"; },
+  { name = "#javascript"; chatnet = "liberachat"; autojoin = "Yes"; }
+);
+
+aliases = {
+  ATAG = "WINDOW SERVER";
+  ADDALLCHANS = "SCRIPT EXEC foreach my \\$channel (Irssi::channels()) { Irssi::command(\"CHANNEL ADD -auto \\$channel->{visible_name} \\$channel->{server}->{tag} \\$channel->{key}\")\\;}";
+  B = "BAN";
+  BACK = "AWAY";
+  BANS = "BAN";
+  BYE = "QUIT";
+  C = "CLEAR";
+  CALC = "EXEC - if command -v bc >/dev/null 2>&1\\; then printf '%s=' '$*'\\; echo '$*' | bc -l\\; else echo bc was not found\\; fi";
+  CHAT = "DCC CHAT";
+  CS = "QUOTE CS";
+  DATE = "TIME";
+  DEHIGHLIGHT = "DEHILIGHT";
+  DESCRIBE = "ACTION";
+  DHL = "DEHILIGHT";
+  EXEMPTLIST = "MODE $C +e";
+  EXIT = "QUIT";
+  GOTO = "SCROLLBACK GOTO";
+  HIGHLIGHT = "HILIGHT";
+  HL = "HILIGHT";
+  HOST = "USERHOST";
+  INVITELIST = "MODE $C +I";
+  J = "JOIN";
+  K = "KICK";
+  KB = "KICKBAN";
+  KN = "KNOCKOUT";
+  LAST = "LASTLOG";
+  LEAVE = "PART";
+  M = "MSG";
+  MS = "QUOTE MS";
+  MUB = "UNBAN *";
+  N = "NAMES";
+  NMSG = "^MSG";
+  NS = "QUOTE NS";
+  OS = "QUOTE OS";
+  P = "PART";
+  Q = "QUERY";
+  RESET = "SET -default";
+  RUN = "SCRIPT LOAD";
+  SAY = "MSG *";
+  SB = "SCROLLBACK";
+  SBAR = "STATUSBAR";
+  SHELP = "QUOTE HELP";
+  SIGNOFF = "QUIT";
+  SV = "MSG * Irssi $J ($V) - https://irssi.org";
+  T = "TOPIC";
+  UB = "UNBAN";
+  UMODE = "MODE $N";
+  UNSET = "SET -clear";
+  W = "WHO";
+  WC = "WINDOW CLOSE";
+  WG = "WINDOW GOTO";
+  WJOIN = "JOIN -window";
+  WI = "WHOIS";
+  WII = "WHOIS $0 $0";
+  WL = "WINDOW LIST";
+  WN = "WINDOW NEW HIDDEN";
+  WQUERY = "QUERY -window";
+  WW = "WHOWAS";
+};
+
+statusbar = {
+  # formats:
+  # when using {templates}, the template is shown only if it's argument isn't
+  # empty unless no argument is given. for example {sb} is printed always,
+  # but {sb $T} is printed only if $T isn't empty.
+
+  items = {
+    # start/end text in statusbars
+    barstart = "{sbstart}";
+    barend = "{sbend}";
+
+    topicbarstart = "{topicsbstart}";
+    topicbarend = "{topicsbend}";
+
+    # treated "normally", you could change the time/user name to whatever
+    time = "%K {sb %G$Z}%K {sbaway $A} %g$topic%K";
+    user = "{sb {sbnickmode $cumode}{sbmode $usermode}}";
+
+    # treated specially .. window is printed with non-empty windows,
+    # window_empty is printed with empty windows
+
+    window = "";
+    #window_empty = "{sb %C{sbservertag $tag}}%n";   
+    window_empty = "{sb $winref/{sbservertag $tag}}";
+    #prompt = "$winref%K/{prompt $[.15]itemname}";
+    prompt = "";
+    prompt_empty = "{prompt $winname}";
+    topic = " $topic";
+    topic_empty = " Irssi v$J - http://irssi.org/help/";
+
+    # all of these treated specially, they're only displayed when needed
+    lag = "{sb Lag: $0-}";
+    act = "{sb $0-}";
+    more = "-- %Ymore below%n --";
+  };
+
+  # there's two type of statusbars. root statusbars are either at the top
+  # of the screen or at the bottom of the screen. window statusbars are at
+  # the top/bottom of each split window in screen.
+  default = {
+    # the "default statusbar" to be displayed at the bottom of the window.
+    # contains all the normal items.
+    window = {
+      disabled = "no";
+
+      # window, root
+      type = "window";
+      # top, bottom
+      placement = "top";
+      # number
+      position = "1";
+      # active, inactive, always
+      visible = "active";
+
+      # list of items in statusbar in the display order
+      items = {
+        barstart = { priority = "100"; };
+        time = { };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+
+    # statusbar to use in inactive split windows
+    window_inact = {
+      type = "window";
+      placement = "bottom";
+      position = "1";
+      visible = "inactive";
+      items = {
+        barstart = { priority = "100"; };
+        window = { };
+        window_empty = { };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+      disabled = "yes";
+    };
+
+    # we treat input line as yet another statusbar :) It's possible to
+    # add other items before or after the input line item.
+    prompt = {
+      type = "root";
+      placement = "bottom";
+      # we want to be at the bottom always
+      position = "1";
+      visible = "active";
+      items = { input = { }; };
+    };
+
+    # topicbar
+    topic = {
+      type = "root";
+      placement = "top";
+      position = "2";
+      visible = "always";
+      items = {
+        topicbarstart = { priority = "100"; };
+        topic = { };
+        topic_empty = { };
+        topicbarend = { priority = "100"; alignment = "right"; };
+      };
+      disabled = "yes";
+    };
+    window_add = { items = { }; disabled = "yes"; };
+    add = { disabled = "yes"; };
+    delete = { disabled = "yes"; };
+    prompt_empty = { position = "0"; disabled = "yes"; };
+    #   rollestatus = { items = {  = { }; }; disabled = "yes"; };
+    #   status = { items = { }; disabled = "yes"; };
+    #   rollstatus = { disabled = "yes"; };
+    asd = {
+      position = "0";
+      placement = "bottom";
+      items = { };
+      disabled = "yes";
+    };
+    topic_empty = { disabled = "yes"; };
+    remove = { items = { }; disabled = "yes"; };
+    channels = { items = { chanact = { }; }; disabled = "yes"; };
+    statusbar = {
+
+      #rollen statusbar:
+
+      items = {
+        #           barstart = "--------------";
+        awaybar = { alignment = "right"; };
+        erotin = {
+          items = { barstart = "asdasd--------------"; };
+          priority = "100";
+          alignment = "left";
+          disabled = "no";
+          placement = "bottom";
+          position = "0";
+        };
+      };
+    };
+
+
+    "-before" = { disabled = "yes"; };
+    aw1_0 = { position = "0"; disabled = "yes"; };
+    empty = { placement = "bottom"; position = "0"; disabled = "yes"; };
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+  };
+};
+settings = {
+  core = {
+    real_name = "";
+    user_name = "";
+    nick = "";
+  };
+  "fe-text" = { actlist_sort = "refnum"; };
+  "fe-common/core" = { theme = "weed"; };
+  "perl/core/scripts" = {
+    awl_all_disable = "no";
+    awl_automode = "sbar";
+    awl_block = "20";
+    awl_columns = "1";
+    awl_display_key = "%K%0$H $N %N";
+    awl_display_key_active = "%1 %W$C %N";
+    awl_display_nokey = "%K%0$H $N %N";
+    awl_display_nokey_active = "%1 %W$C %N";
+    awl_height_adjust = "1";
+    awl_hide_data = "0";
+    awl_maxlines = "9";
+    awl_placement = "bottom";
+    awl_position = "0";
+    awl_prefer_name = "yes";
+    awl_sbar_maxlength = "yes";
+    awl_separator = "%N %N";
+    awl_sort = "refnum";
+    awl_shared_sbar = "OFF";
+    awl_viewer = "no";
+  };
+};
+ignores = ( { level = "JOINS PARTS QUITS"; } );
