@@ -1,1 +1,0 @@
-while true; do echo -ne "\033[2K\r$(xdotool getwindowfocus getwindowname)"; sleep 0.2; done
