@@ -19,12 +19,12 @@ loadenv() {
 }
 
 unloadenv() {
-  export MANPATH=$__MANPATH
-  export CPATH=$__CPATH
-  export LD_LIBRARY_PATH=$__LD_LIBRARY_PATH
-  export LIBRARY_PATH=$__LIBRARY_PATH
-  export PKG_CONFIG_PATH=$__PKG_CONFIG_PATH
-  export PATH=$__PATH
+  [ -v __MANPATH ] && export MANPATH=$__MANPATH
+  [ -v __CPATH ] && export CPATH=$__CPATH
+  [ -v __LD_LIBRARY_PATH ] && export LD_LIBRARY_PATH=$__LD_LIBRARY_PATH
+  [ -v __LIBRARY_PATH ] && export LIBRARY_PATH=$__LIBRARY_PATH
+  [ -v __PKG_CONFIG_PATH ] && export PKG_CONFIG_PATH=$__PKG_CONFIG_PATH
+  [ $__PATH ] && export PATH=$__PATH
 
   unset __MANPATH
   unset __CPATH
@@ -32,6 +32,12 @@ unloadenv() {
   unset __LIBRARY_PATH
   unset __PKG_CONFIG_PATH
   unset __PATH
+
+  [ ! $MANPATH ] && unset MANPATH
+  [ ! $CPATH ] && unset CPATH
+  [ ! $LD_LIBRARY_PATH ] && unset LD_LIBRARY_PATH
+  [ ! $LIBRARY_PATH ] && unset LIBRARY_PATH
+  [ ! $PKG_CONFIG_PATH ] && unset PKG_CONFIG_PATH
 }
 
 [ $1 ] && loadenv $1 
