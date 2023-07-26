@@ -30,6 +30,7 @@ unloadenv() {
   unset __LIBRARY_PATH
   unset __PKG_CONFIG_PATH
   unset __PATH
+  unset loadenv
   unset unloadenv
 }
 
