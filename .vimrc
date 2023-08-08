@@ -18,13 +18,6 @@ set path=**
 syntax enable
 filetype plugin indent on
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-vnoremap <Leader>y "+y
-nnoremap <Leader>yy "+yy
-map <Leader>p "+p
-map <Leader>P "+P
-
 let g:netrw_banner=0
 let g:netrw_winsize=-25
 let g:netrw_liststyle = 3
