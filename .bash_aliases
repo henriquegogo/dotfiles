@@ -64,7 +64,7 @@ chrootstart() {
     sudo umount -R {dev/,proc/,sys/,tmp/}
     cd - > /dev/null
   else
-    echo "Usage: chroot-start [PATH]"
+    echo "Usage: chrootstart [PATH]"
   fi
 }
 
