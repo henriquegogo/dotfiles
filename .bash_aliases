@@ -32,7 +32,7 @@ gitsync() {
   done
 }
 
-chroot-start() {
+chrootstart() {
   # Create a folder, download Alpine Linux MINI ROOT FILESYSTEM and unpack
   # Save this file in that folder and run
 
@@ -72,11 +72,11 @@ wintitle() {
   while true; do echo -ne "\033[2K\r\033[7m $(date +%a\ %d\ %b\ %R) \033[0m\033[1m $(xdotool getwindowfocus getwindowname) \033[0m"; sleep 0.2; done
 }
 
-qemu-create() {
+qemucreate() {
   qemu-img create -f qcow2 "$@" 80G
 }
 
-qemu-start() {
+qemustart() {
   kvm \
     -cpu host \
     -m 4096M \
