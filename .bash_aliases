@@ -30,18 +30,36 @@ chroot-start() {
   # Create a folder, download Alpine Linux MINI ROOT FILESYSTEM and unpack
   # Save this file in that folder and run
 
-  sudo mount -o bind /dev dev/
-  sudo mount -t proc none proc/
-  sudo mount -o bind /sys sys/
-  sudo mount -o bind /tmp tmp/
+  if [ -n "$1" ]
+  then
+    cd `realpath $1`
 
-  mkdir -p etc/
-  cp -L /etc/resolv.conf etc/
-  xhost + local: > /dev/null
+    for dir in "dev/" "proc/" "sys/" "tmp/" "etc/"
+    do
+      if [ ! -d "$dir" ]
+      then
+        echo "Directory `pwd`/$dir doesn't exist"
+        echo "Please, make sure dev/ proc/ sys/ tmp/ etc/ are created"
+        cd - > /dev/null
+        return 1
+      fi
+    done
 
-  sudo chroot . sh -l
+    sudo mount -o bind /dev dev/
+    sudo mount -t proc none proc/
+    sudo mount -o bind /sys sys/
+    sudo mount -o bind /tmp tmp/
 
-  sudo umount -R {dev/,proc/,sys/,tmp/}
+    cp -L /etc/resolv.conf etc/
+    xhost + local: > /dev/null
+
+    sudo chroot . sh -l
+
+    sudo umount -R {dev/,proc/,sys/,tmp/}
+    cd - > /dev/null
+  else
+    echo "Usage: chroot-start [PATH]"
+  fi
 }
 
 wintitle() {
