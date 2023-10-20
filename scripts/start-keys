@@ -1,3 +1,0 @@
-fluidsynth -a alsa -C no -R yes -i -s Downloads/DefinitiveKeys.sf2 &
-while ! aconnect 20 128; do sleep 1; done
-echo Connected

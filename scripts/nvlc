@@ -1,1 +1,0 @@
-/usr/bin/nvlc --no-video --global-key-faster Ctrl+] --global-key-slower Ctrl+[ --global-key-play-pause Ctrl+p $@

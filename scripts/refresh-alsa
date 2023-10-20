@@ -1,3 +1,0 @@
-sudo apt remove --purge alsa-base pulseaudio pavucontrol
-sudo apt install alsa-base pulseaudio pavucontrol
-sudo alsa force-reload

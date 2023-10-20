@@ -1,5 +1,0 @@
-echo "Removing old events..."
-rm .config/khal/calendars -rf
-echo "Importing agenda..."
-curl -s https://example.com/calendar.ics | khal import -a agenda_name --batch
-ikhal
