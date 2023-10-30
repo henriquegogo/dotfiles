@@ -3,6 +3,7 @@
 " - lightline (bottom bar)
 " - fzf + fzf.vim (finder)
 " - vim-polyglot (syntax highlighting)
+" - vim-surround (handle blocks and quotes)
 " - CoC (autocompletion)
 "   * coc-tabnine, coc-prettier, coc-git, coc-html,
 "   * coc-eslint, coc-tsserver, coc-pyright, coc-clangd
