@@ -14,6 +14,7 @@ set nobackup
 set nofixeol
 set noswapfile
 set path=**
+set background=dark
 
 syntax enable
 filetype plugin indent on
