@@ -8,7 +8,15 @@
 "   * coc-tabnine, coc-prettier, coc-git, coc-html,
 "   * coc-eslint, coc-tsserver, coc-pyright, coc-clangd
 
-colorscheme onedark
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 let g:clipboard = {
       \   'name': 'WslClipboard',
@@ -24,15 +32,11 @@ let g:clipboard = {
       \ }
 
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'onedark',
       \ }
 
-" Mapping selecting mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
+let g:onedark_color_overrides = {
+      \ "background": {"gui": "#2F343F", "cterm": "233", "cterm16": "0" },
+      \ }
 
-" Insert mode completion
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+colorscheme onedark
