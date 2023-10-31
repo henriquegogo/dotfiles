@@ -1,5 +1,3 @@
-" Made by @henriquegogo
-
 set number
 set autoindent
 set expandtab
