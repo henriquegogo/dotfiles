@@ -17,6 +17,6 @@
 	path = .vim/pack/plugins/start/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
 	branch = release
-[submodule ".vim/pack/themes/opt/onedark.vim"]
-	path = .vim/pack/themes/opt/onedark.vim
+[submodule ".vim/pack/plugins/start/onedark.vim"]
+	path = .vim/pack/plugins/start/onedark.vim
 	url = https://github.com/joshdick/onedark.vim
