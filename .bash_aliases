@@ -13,10 +13,6 @@ duckduckgo() {
   lynx duckduckgo.com/html?q="$*"
 }
 
-nvlc() {
-  /usr/bin/nvlc --no-video --global-key-faster Ctrl+] --global-key-slower Ctrl+[ --global-key-play-pause Ctrl+p $@
-}
-
 gitlog() {
   git log --format='%Cred%h %Creset%s (%Cgreen%an) %Creset- %Cblue%cr' --graph
 }
@@ -31,24 +27,6 @@ gitsync() {
       echo
     fi
   done
-}
-
-wintitle() {
-  while true; do echo -ne "\033[2K\r\033[7m $(date +%a\ %d\ %b\ %R) \033[0m\033[1m $(xdotool getwindowfocus getwindowname) \033[0m"; sleep 0.2; done
-}
-
-qemucreate() {
-  qemu-img create -f qcow2 "$@" 80G
-}
-
-qemustart() {
-  kvm \
-    -cpu host \
-    -m 4096M \
-    -soundhw hda \
-    -net nic -net user \
-    -vga virtio \
-    "$@"
 }
 
 loadenv() {
