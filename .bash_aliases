@@ -53,7 +53,7 @@ loadenv() {
       [ -d "$__PREFIX/lib" ]           && export LD_LIBRARY_PATH="$__PREFIX/lib:$LD_LIBRARY_PATH"
       [ -d "$__PREFIX/lib" ]           && export LIBRARY_PATH="$__PREFIX/lib:$LIBRARY_PATH"
       [ -d "$__PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$__PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
-      [ -d "$__PREFIX/bin" ]           && export PATH="$__PREFIX/bin:$PATH"
+      [ -d "$__PREFIX/bin" ]           && export PATH="$__PREFIX/bin:$PATH" || export PATH="$__PREFIX:$PATH"
 
       unset __PREFIX
     done
