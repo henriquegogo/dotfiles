@@ -30,7 +30,7 @@ gitsync() {
 }
 
 loadenv() {
-  if [ -z "$@" ]
+  if [ -z "$1" ]
   then
     echo "Load folder into env variables"
     echo
@@ -83,7 +83,7 @@ unloadenv() {
 }
 
 chrootstart() {
-  if [ -z "$@" ]
+  if [ -z "$1" ]
   then
     echo "Usage: chrootstart [PATH]"
   else
