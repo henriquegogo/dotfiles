@@ -40,7 +40,6 @@ loadenv() {
     for arg in "$@"
     do
       __PREFIX=`realpath $arg`
-      echo $__PREFIX
 
       [ ! $__MANPATH ]         && __MANPATH=$MANPATH
       [ ! $__CPATH ]           && __CPATH=$CPATH
