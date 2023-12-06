@@ -42,19 +42,19 @@ loadenv() {
       __PREFIX=`realpath $arg`
       echo $__PREFIX
 
-      [ ! $__MANPATH ] && __MANPATH=$MANPATH
-      [ ! $__CPATH ] && __CPATH=$CPATH
+      [ ! $__MANPATH ]         && __MANPATH=$MANPATH
+      [ ! $__CPATH ]           && __CPATH=$CPATH
       [ ! $__LD_LIBRARY_PATH ] && __LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-      [ ! $__LIBRARY_PATH ] && __LIBRARY_PATH=$LIBRARY_PATH
+      [ ! $__LIBRARY_PATH ]    && __LIBRARY_PATH=$LIBRARY_PATH
       [ ! $__PKG_CONFIG_PATH ] && __PKG_CONFIG_PATH=$PKG_CONFIG_PATH
-      [ ! $__PATH ] && __PATH=$PATH
+      [ ! $__PATH ]            && __PATH=$PATH
 
-      export MANPATH="$__PREFIX/share/man:$MANPATH"
-      export CPATH="$__PREFIX/include:$CPATH"
-      export LD_LIBRARY_PATH="$__PREFIX/lib:$LD_LIBRARY_PATH"
-      export LIBRARY_PATH="$__PREFIX/lib:$LIBRARY_PATH"
-      export PKG_CONFIG_PATH="$__PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
-      export PATH="$__PREFIX/bin:$PATH"
+      [ -d "$__PREFIX/share/man" ]     && export MANPATH="$__PREFIX/share/man:$MANPATH"
+      [ -d "$__PREFIX/include" ]       && export CPATH="$__PREFIX/include:$CPATH"
+      [ -d "$__PREFIX/lib" ]           && export LD_LIBRARY_PATH="$__PREFIX/lib:$LD_LIBRARY_PATH"
+      [ -d "$__PREFIX/lib" ]           && export LIBRARY_PATH="$__PREFIX/lib:$LIBRARY_PATH"
+      [ -d "$__PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$__PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+      [ -d "$__PREFIX/bin" ]           && export PATH="$__PREFIX/bin:$PATH"
 
       unset __PREFIX
     done
@@ -62,12 +62,12 @@ loadenv() {
 }
 
 unloadenv() {
-  [ -v __MANPATH ] && export MANPATH=$__MANPATH
-  [ -v __CPATH ] && export CPATH=$__CPATH
+  [ -v __MANPATH ]         && export MANPATH=$__MANPATH
+  [ -v __CPATH ]           && export CPATH=$__CPATH
   [ -v __LD_LIBRARY_PATH ] && export LD_LIBRARY_PATH=$__LD_LIBRARY_PATH
-  [ -v __LIBRARY_PATH ] && export LIBRARY_PATH=$__LIBRARY_PATH
+  [ -v __LIBRARY_PATH ]    && export LIBRARY_PATH=$__LIBRARY_PATH
   [ -v __PKG_CONFIG_PATH ] && export PKG_CONFIG_PATH=$__PKG_CONFIG_PATH
-  [ $__PATH ] && export PATH=$__PATH
+  [ $__PATH ]              && export PATH=$__PATH
 
   unset __MANPATH
   unset __CPATH
@@ -76,10 +76,10 @@ unloadenv() {
   unset __PKG_CONFIG_PATH
   unset __PATH
 
-  [ ! $MANPATH ] && unset MANPATH
-  [ ! $CPATH ] && unset CPATH
+  [ ! $MANPATH ]         && unset MANPATH
+  [ ! $CPATH ]           && unset CPATH
   [ ! $LD_LIBRARY_PATH ] && unset LD_LIBRARY_PATH
-  [ ! $LIBRARY_PATH ] && unset LIBRARY_PATH
+  [ ! $LIBRARY_PATH ]    && unset LIBRARY_PATH
   [ ! $PKG_CONFIG_PATH ] && unset PKG_CONFIG_PATH
 }
 
