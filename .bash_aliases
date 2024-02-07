@@ -8,10 +8,6 @@ google() {
   lynx google.com/search?q="$*"
 }
 
-duckduckgo() {
-  lynx duckduckgo.com/html?q="$*"
-}
-
 gitlog() {
   git log --format='%Cred%h %Creset%s (%Cgreen%an) %Creset- %Cblue%cr' --graph
 }
