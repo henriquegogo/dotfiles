@@ -41,13 +41,6 @@ loadenv() {
       __PREFIX=`realpath $arg`
 
       if [[ "$PATH" != *"$__PREFIX"* ]]; then
-        [ ! $__MANPATH ]         && __MANPATH=$MANPATH
-        [ ! $__CPATH ]           && __CPATH=$CPATH
-        [ ! $__LD_LIBRARY_PATH ] && __LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-        [ ! $__LIBRARY_PATH ]    && __LIBRARY_PATH=$LIBRARY_PATH
-        [ ! $__PKG_CONFIG_PATH ] && __PKG_CONFIG_PATH=$PKG_CONFIG_PATH
-        [ ! $__PATH ]            && __PATH=$PATH
-
         [ -d "$__PREFIX/share/man" ]     && export MANPATH="$__PREFIX/share/man:$MANPATH"
         [ -d "$__PREFIX/include" ]       && export CPATH="$__PREFIX/include:$CPATH"
         [ -d "$__PREFIX/lib" ]           && export LD_LIBRARY_PATH="$__PREFIX/lib:$LD_LIBRARY_PATH"
@@ -59,28 +52,6 @@ loadenv() {
       unset __PREFIX
     done
   fi
-}
-
-unloadenv() {
-  [ -v __MANPATH ]         && export MANPATH=$__MANPATH
-  [ -v __CPATH ]           && export CPATH=$__CPATH
-  [ -v __LD_LIBRARY_PATH ] && export LD_LIBRARY_PATH=$__LD_LIBRARY_PATH
-  [ -v __LIBRARY_PATH ]    && export LIBRARY_PATH=$__LIBRARY_PATH
-  [ -v __PKG_CONFIG_PATH ] && export PKG_CONFIG_PATH=$__PKG_CONFIG_PATH
-  [ $__PATH ]              && export PATH=$__PATH
-
-  unset __MANPATH
-  unset __CPATH
-  unset __LD_LIBRARY_PATH
-  unset __LIBRARY_PATH
-  unset __PKG_CONFIG_PATH
-  unset __PATH
-
-  [ ! $MANPATH ]         && unset MANPATH
-  [ ! $CPATH ]           && unset CPATH
-  [ ! $LD_LIBRARY_PATH ] && unset LD_LIBRARY_PATH
-  [ ! $LIBRARY_PATH ]    && unset LIBRARY_PATH
-  [ ! $PKG_CONFIG_PATH ] && unset PKG_CONFIG_PATH
 }
 
 chrootstart() {
