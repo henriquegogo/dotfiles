@@ -90,6 +90,10 @@ require('lazy').setup({
       }
     end
   },
+  {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter'
+  },
 }, {
   ui = {
     icons = {
