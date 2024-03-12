@@ -1,5 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = -25
 vim.g.netrw_liststyle = 3
@@ -52,9 +50,19 @@ require('lazy').setup({
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
     },
     config = function()
       require('mason').setup()
+      require('mason-tool-installer').setup({
+        ensure_installed = {
+          'clangd',
+          'pyright',
+          'typescript-language-server',
+        },
+        run_on_start = true,
+        start_delay = 3000,
+      })
       require('mason-lspconfig').setup({
         handlers = {
           function(server_name)
