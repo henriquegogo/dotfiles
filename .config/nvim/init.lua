@@ -19,7 +19,9 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.hlsearch = true
 
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+local map = vim.keymap.set
+
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -69,6 +71,30 @@ require('lazy').setup({
             require('lspconfig')[server_name].setup({})
           end
         }
+      })
+      local buf = vim.lsp.buf
+      map('n', '<leader>e', vim.diagnostic.open_float)
+      map('n', '[d', vim.diagnostic.goto_prev)
+      map('n', ']d', vim.diagnostic.goto_next)
+      map('n', '<leader>q', vim.diagnostic.setloclist)
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+          local opts = { buffer = ev.buf }
+          map('n', 'gD', buf.declaration, opts)
+          map('n', 'gd', buf.definition, opts)
+          map('n', 'K', buf.hover, opts)
+          map('n', 'gi', buf.implementation, opts)
+          map('n', '<C-k>', buf.signature_help, opts)
+          map('n', '<leader>D', buf.type_definition, opts)
+          map('n', '<leader>rn', buf.rename, opts)
+          map({ 'n', 'v' }, '<leader>ca', buf.code_action, opts)
+          map('n', 'gr', buf.references, opts)
+          map('n', '<leader>f', function()
+            buf.format { async = true }
+          end, opts)
+        end,
       })
     end
   },
