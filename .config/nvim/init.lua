@@ -114,7 +114,6 @@ require('lazy').setup({
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
           ['<Down>'] = cmp.mapping.select_next_item(),
           ['<Up>'] = cmp.mapping.select_prev_item(),
-          ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
         },
         sources = {
