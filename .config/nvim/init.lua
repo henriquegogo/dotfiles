@@ -18,6 +18,8 @@ vim.opt.splitbelow = true
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.hlsearch = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 
 local map = vim.keymap.set
 
@@ -36,6 +38,8 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   'tpope/vim-commentary',
   'tpope/vim-fugitive',
+  'tpope/vim-surround',
+  'tpope/vim-repeat',
   'airblade/vim-gitgutter',
   'itchyny/lightline.vim',
   {
@@ -58,9 +62,11 @@ require('lazy').setup({
       require('mason').setup()
       require('mason-tool-installer').setup({
         ensure_installed = {
-          'clangd',
-          'pyright',
+          'html-lsp',
+          'json-lsp',
           'typescript-language-server',
+          'pyright',
+          'clangd',
         },
         run_on_start = true,
         start_delay = 3000,
