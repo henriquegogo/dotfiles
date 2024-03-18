@@ -164,9 +164,8 @@ require('lazy').setup({
     config = function()
       vim.g.codeium_disable_bindings = 1
       local opts = {expr = true, silent = true}
-      map('i', '<c-g>', 'codeium#Accept()', opts)
-      map('i', '<c-;>', 'codeium#CycleCompletions(1)', opts)
-      map('i', '<c-,>', 'codeium#CycleCompletions(-1)', opts)
+      -- Tab compatibility with CoC
+      map("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()', opts)
       map('i', '<c-x>', 'codeium#Clear()', opts)
     end
   },
