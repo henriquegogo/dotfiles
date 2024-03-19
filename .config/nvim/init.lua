@@ -121,6 +121,9 @@ vim.api.nvim_create_user_command('Find', function(opts)
 end, { nargs = 1 })
 map('n', '<leader>e', ':Find ')
 
+-- Git integration
+map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line("v") .. "," .. line("v"))<CR>')
+
 -- vim.cmd('sign define TextChange text=*')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
