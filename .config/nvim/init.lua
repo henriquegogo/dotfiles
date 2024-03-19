@@ -1,10 +1,5 @@
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = -25
-vim.g.netrw_liststyle = 3
-
 vim.opt.number = true
 vim.opt.mouse = 'a'
-vim.opt.showmode = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.breakindent = true
 vim.opt.undofile = true
@@ -17,13 +12,116 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.path:append '**'
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = -25
+vim.g.netrw_liststyle = 3
 
 local map = vim.keymap.set
 
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- Colorscheme
+vim.opt.background = 'dark'
+vim.cmd([[
+	hi Boolean      ctermfg=173             " Dark Yellow
+	hi ColorColumn              ctermbg=237 " Dark Gray
+	hi Comment      ctermfg=059             " Gray
+	hi Constant     ctermfg=075             " Light Blue
+	hi CursorColumn             ctermbg=237 " Dark Gray
+	hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
+	hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
+	hi Function     ctermfg=075             " Blue
+	hi Identifier   ctermfg=167 cterm=NONE  " Red
+	hi Keyword      ctermfg=134             " Purple
+	hi LineNr       ctermfg=238             " Gray
+	hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
+	hi Number       ctermfg=173             " Dark Yellow
+	hi MatchParen               ctermbg=059 " Gray
+	hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
+	hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
+	hi PreProc      ctermfg=179             " Light Yellow
+	hi Search       ctermfg=235 ctermbg=179 " Black | Light Yellow
+	hi SignColumn               ctermbg=235 " Light Gray
+	hi Special      ctermfg=075             " Blue
+	hi Statement    ctermfg=134             " Purple
+	hi String       ctermfg=107             " Green
+	hi Structure    ctermfg=179             " Light Yellow
+	hi TabLine      cterm=NONE              " Remove underline
+	hi Type         ctermfg=179             " Light Yellow
+	hi Visual                   ctermbg=237 " Dark Gray
+]])
+
+-- Statusline
+vim.cmd([[
+  hi StatusBlue  ctermfg=251 ctermbg=025 cterm=bold
+  hi StatusBlack ctermfg=145 ctermbg=237
+  hi StatusGray  ctermfg=145 ctermbg=239
+]])
+vim.opt.laststatus = 2            -- Always show statusbar
+vim.o.statusline = ""
+  .. "%#StatusBlue# %Y "          -- Filetype
+  .. "%#StatusGray# %{fnamemodify(getcwd(), ':t')} " -- Current folder
+  .. "%#StatusBlack# %f %M %R %=" -- Filename / Modified / Readonly / Right Aligned
+  .. "%#StatusGray# %p%% "        -- Percentage
+  .. "%#StatusBlue# %l:%c "       -- Line: Column
+
+-- Buffers and tabs navigation
+map('n', '<leader>q', ':q<CR>')
+map('n', '<leader>t', ':tabnew<CR>')
+map('n', '<leader>l', ':tabnext<CR>')
+map('n', '<leader>h', ':tabprevious<CR>')
+map('n', '<leader>j', ':bnext<CR>')
+map('n', '<leader>k', ':bprevious<CR>')
+map('n', '<leader>b', ':b ')
+map('n', '<leader>v', ':vsplit<CR>')
+map('n', '<leader>s', ':split<CR>')
+
+-- Add / Remove words and comments in front of line
+map('n', '<space>0', '0i')
+map('v', '<space>0', '0<C-Q>I')
+map('n', '<space>00', '0de')
+map('v', '<space>00', ':norm 0de<CR>')
+
+-- Surround blocks and quotes
+map('n', '<space>\'', 'bvec\'\'<ESC>P')
+map('n', '<space>"', 'bvec""<ESC>P')
+map('n', '<space>(', 'bvec()<ESC>P')
+map('n', '<space>{', 'bvec{}<ESC>P')
+map('n', '<space>[', 'bvec[]<ESC>P')
+map('v', '<space>\'', 'c\'\'<ESC>P')
+map('v', '<space>"', 'c""<ESC>P')
+map('v', '<space>(', 'c()<ESC>P')
+map('v', '<space>{', 'c{}<ESC>P')
+map('v', '<space>[', 'c[]<ESC>P')
+map('n', '<space>\'\'', 'va\':s/\\%V\'\\(.*\\)\'/\\1/<CR>')
+map('n', '<space>""', 'va":s/\\%V"\\(.*\\)"/\\1/<CR>')
+map('n', '<space>((', 'va(:s/\\%V(\\(.*\\))/\\1/<CR>')
+map('n', '<space>{{', 'va{:s/\\%V{\\(.*\\)}/\\1/<CR>')
+map('n', '<space>[[', 'va[:s/\\%V\\[\\(.*\\)\\]/\\1/<CR>')
+map('v', '<space>\'\'', ':s/\\%V\'\\(.*\\)\'/\\1/<CR>')
+map('v', '<space>""', ':s/\\%V"\\(.*\\)"/\\1/<CR>')
+map('v', '<space>((', ':s/\\%V(\\(.*\\))/\\1/<CR>')
+map('v', '<space>{{', ':s/\\%V{\\(.*\\)}/\\1/<CR>')
+map('v', '<space>[[', ':s/\\%V[\\(.*\\)]/\\1/<CR>')
+
+-- Search / Find
+if vim.fn.executable('rg') == 1 then
+  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case'
+end
+
+vim.api.nvim_create_user_command('Search', function(opts)
+	vim.cmd('silent grep! "' .. opts.fargs[1] .. '" | cw')
+end, { nargs = 1 })
+map('n', '<leader>/', ':Search ')
+
+vim.api.nvim_create_user_command('Find', function(opts)
+	vim.cmd(':cgetexpr system(\'find . -not -path "*/.*" -type f -name "*' .. opts.fargs[1] .. '*" -printf "%p:0: \\n" \') | cw')
+end, { nargs = 1 })
+map('n', '<leader>e', ':Find ')
+
+-- vim.cmd('sign define TextChange text=*')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -33,24 +131,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'junegunn/fzf',
-  'junegunn/fzf.vim',
-  'tpope/vim-sleuth',
-  'tpope/vim-commentary',
   'tpope/vim-fugitive',
-  'tpope/vim-surround',
-  'tpope/vim-repeat',
   'airblade/vim-gitgutter',
-  'itchyny/lightline.vim',
-  {
-    'navarasu/onedark.nvim',
-    config = function()
-      require('onedark').setup({
-        style = 'darker'
-      })
-      vim.cmd.colorscheme 'onedark'
-    end,
-  },
   {
     'neoclide/coc.nvim',
     branch = 'release',
@@ -144,8 +226,6 @@ require('lazy').setup({
       vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
       vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", {nargs = '?'})
       vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
-
-      vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
       local opts = {silent = true, nowait = true}
       map("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
