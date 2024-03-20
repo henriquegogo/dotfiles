@@ -114,9 +114,13 @@ map('v', '<space>[[', '<ESC>`>x`<x')
 
 -- Git blame
 if vim.fn.executable('git') == 1 then
-  map('n', '<leader>gb', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
-  map('v', '<leader>gb', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+  map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
+  map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
 end
+
+-- Diff
+map('n', '<leader>d', ':silent diffoff! | diffthis | enew | setlocal buftype=nofile nobuflisted | read ++edit # | 0d_ | '
+.. 'diffthis | bprevious | diffthis | setlocal nofoldenable foldcolumn=0 nocursorline<CR><CR>')
 
 -- Search / Find
 if vim.fn.executable('rg') == 1 then
