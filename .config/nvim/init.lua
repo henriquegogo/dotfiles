@@ -106,6 +106,10 @@ map('v', '<space>((', ':s/\\%V(\\(.*\\))/\\1/<CR>')
 map('v', '<space>{{', ':s/\\%V{\\(.*\\)}/\\1/<CR>')
 map('v', '<space>[[', ':s/\\%V[\\(.*\\)]/\\1/<CR>')
 
+-- Git blame
+map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
+map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+
 -- Search / Find
 if vim.fn.executable('rg') == 1 then
   vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case'
@@ -121,10 +125,6 @@ vim.api.nvim_create_user_command('Find', function(opts)
 end, { nargs = 1 })
 map('n', '<leader>e', ':Find ')
 
--- Git integration
-map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
-map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
-
 -- vim.cmd('sign define TextChange text=*')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -135,7 +135,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'tpope/vim-fugitive',
   'airblade/vim-gitgutter',
   {
     'neoclide/coc.nvim',
