@@ -33,24 +33,30 @@ hi Constant     ctermfg=075             " Light Blue
 hi CursorColumn             ctermbg=237 " Dark Gray
 hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
 hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
+hi DiffAdd      ctermfg=107 ctermbg=235 " Green | Black
+hi DiffChange   ctermfg=179 ctermbg=235 " Yellow | Black
+hi DiffDelete   ctermfg=167 ctermbg=235 " Red | Black
+hi DiffText     ctermfg=179 ctermbg=235 " Yellow | Black
+hi Folded       ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
+hi FoldColumn               ctermbg=235 " Black
 hi Function     ctermfg=075             " Blue
 hi Identifier   ctermfg=167 cterm=NONE  " Red
 hi Keyword      ctermfg=134             " Purple
 hi LineNr       ctermfg=238             " Gray
+hi MatchParen               ctermbg=059 " Gray
 hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
 hi Number       ctermfg=173             " Dark Yellow
-hi MatchParen               ctermbg=059 " Gray
 hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
 hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
-hi PreProc      ctermfg=179             " Light Yellow
-hi Search       ctermfg=235 ctermbg=179 " Black | Light Yellow
+hi PreProc      ctermfg=179             " Yellow
+hi Search       ctermfg=235 ctermbg=179 " Black | Yellow
 hi SignColumn               ctermbg=235 " Light Gray
 hi Special      ctermfg=075             " Blue
 hi Statement    ctermfg=134             " Purple
 hi String       ctermfg=107             " Green
-hi Structure    ctermfg=179             " Light Yellow
+hi Structure    ctermfg=179             " Yellow
 hi TabLine      cterm=NONE              " Remove underline
-hi Type         ctermfg=179             " Light Yellow
+hi Type         ctermfg=179             " Yellow
 hi Visual                   ctermbg=237 " Dark Gray
 ]])
 
