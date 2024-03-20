@@ -119,6 +119,7 @@ if vim.fn.executable('git') == 1 then
 end
 
 -- Diff
+vim.opt.diffopt:remove('filler')
 map('n', '<leader>d', ':silent diffoff! | diffthis | enew | setlocal buftype=nofile nobuflisted | read ++edit # | 0d_ | '
 .. 'diffthis | bprevious | diffthis | setlocal nofoldenable foldcolumn=0 nocursorline<CR><CR>')
 map('n', '<leader>D', ':silent diffoff!<CR>')
