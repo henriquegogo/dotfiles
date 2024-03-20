@@ -13,6 +13,7 @@ vim.opt.splitbelow = true
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.hlsearch = false
+vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.path:append '**'
@@ -25,47 +26,47 @@ local map = vim.keymap.set
 -- Colorscheme
 vim.opt.background = 'dark'
 vim.cmd([[
-	hi Boolean      ctermfg=173             " Dark Yellow
-	hi ColorColumn              ctermbg=237 " Dark Gray
-	hi Comment      ctermfg=059             " Gray
-	hi Constant     ctermfg=075             " Light Blue
-	hi CursorColumn             ctermbg=237 " Dark Gray
-	hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
-	hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
-	hi Function     ctermfg=075             " Blue
-	hi Identifier   ctermfg=167 cterm=NONE  " Red
-	hi Keyword      ctermfg=134             " Purple
-	hi LineNr       ctermfg=238             " Gray
-	hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
-	hi Number       ctermfg=173             " Dark Yellow
-	hi MatchParen               ctermbg=059 " Gray
-	hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
-	hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
-	hi PreProc      ctermfg=179             " Light Yellow
-	hi Search       ctermfg=235 ctermbg=179 " Black | Light Yellow
-	hi SignColumn               ctermbg=235 " Light Gray
-	hi Special      ctermfg=075             " Blue
-	hi Statement    ctermfg=134             " Purple
-	hi String       ctermfg=107             " Green
-	hi Structure    ctermfg=179             " Light Yellow
-	hi TabLine      cterm=NONE              " Remove underline
-	hi Type         ctermfg=179             " Light Yellow
-	hi Visual                   ctermbg=237 " Dark Gray
+hi Boolean      ctermfg=173             " Dark Yellow
+hi ColorColumn              ctermbg=237 " Dark Gray
+hi Comment      ctermfg=059             " Gray
+hi Constant     ctermfg=075             " Light Blue
+hi CursorColumn             ctermbg=237 " Dark Gray
+hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
+hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
+hi Function     ctermfg=075             " Blue
+hi Identifier   ctermfg=167 cterm=NONE  " Red
+hi Keyword      ctermfg=134             " Purple
+hi LineNr       ctermfg=238             " Gray
+hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
+hi Number       ctermfg=173             " Dark Yellow
+hi MatchParen               ctermbg=059 " Gray
+hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
+hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
+hi PreProc      ctermfg=179             " Light Yellow
+hi Search       ctermfg=235 ctermbg=179 " Black | Light Yellow
+hi SignColumn               ctermbg=235 " Light Gray
+hi Special      ctermfg=075             " Blue
+hi Statement    ctermfg=134             " Purple
+hi String       ctermfg=107             " Green
+hi Structure    ctermfg=179             " Light Yellow
+hi TabLine      cterm=NONE              " Remove underline
+hi Type         ctermfg=179             " Light Yellow
+hi Visual                   ctermbg=237 " Dark Gray
 ]])
 
 -- Statusline
 vim.cmd([[
-  hi StatusBlue  ctermfg=251 ctermbg=025 cterm=bold
-  hi StatusBlack ctermfg=145 ctermbg=237
-  hi StatusGray  ctermfg=145 ctermbg=239
+hi StatusBlue  ctermfg=251 ctermbg=025 cterm=bold
+hi StatusBlack ctermfg=145 ctermbg=237
+hi StatusGray  ctermfg=145 ctermbg=239
 ]])
 vim.opt.laststatus = 2            -- Always show statusbar
 vim.o.statusline = ""
-  .. "%#StatusBlue# %Y "          -- Filetype
-  .. "%#StatusGray# %{fnamemodify(getcwd(), ':t')} " -- Current folder
-  .. "%#StatusBlack# %f %M %R %=" -- Filename / Modified / Readonly / Right Aligned
-  .. "%#StatusGray# %p%% "        -- Percentage
-  .. "%#StatusBlue# %l:%c "       -- Line: Column
+.. "%#StatusBlue# %Y "          -- Filetype
+.. "%#StatusGray# %{fnamemodify(getcwd(), ':t')} " -- Current folder
+.. "%#StatusBlack# %f %M %R %=" -- Filename / Modified / Readonly / Right Aligned
+.. "%#StatusGray# %p%% "        -- Percentage
+.. "%#StatusBlue# %l:%c "       -- Line: Column
 
 -- Buffers and tabs navigation
 map('n', '<leader>q', ':q<CR>')
@@ -107,23 +108,30 @@ map('v', '<space>{{', '<ESC>`>x`<x')
 map('v', '<space>[[', '<ESC>`>x`<x')
 
 -- Git blame
-map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
-map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+if vim.fn.executable('git') == 1 then
+  map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
+  map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+end
 
 -- Search / Find
 if vim.fn.executable('rg') == 1 then
-  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case'
+  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case '
+  .. '-g \'!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}\''
+  vim.api.nvim_create_user_command('Search', function(opts)
+    vim.cmd('silent grep! "' .. opts.fargs[1] .. '" | cw')
+  end, { nargs = 1 })
+  map('n', '<leader>/', ':Search ')
 end
 
-vim.api.nvim_create_user_command('Search', function(opts)
-	vim.cmd('silent grep! "' .. opts.fargs[1] .. '" | cw')
-end, { nargs = 1 })
-map('n', '<leader>/', ':Search ')
-
-vim.api.nvim_create_user_command('Find', function(opts)
-	vim.cmd(':cgetexpr system(\'find . -not -path "*/.*" -type f -name "*' .. opts.fargs[1] .. '*" -printf "%p:0: \\n" \') | cw')
-end, { nargs = 1 })
-map('n', '<leader>e', ':Find ')
+if vim.fn.executable('find') == 1 then
+  vim.api.nvim_create_user_command('Find', function(opts)
+    vim.cmd(':cgetexpr system(\'find . -type f '
+    .. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
+    .. '! -path "**/build/* ! -path "**/dist/*"" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
+    .. '-name "*' .. opts.fargs[1] .. '*" -printf "%p:0:%CF %Cr \\n" \') | cw')
+  end, { nargs = 1 })
+  map('n', '<leader>e', ':Find ')
+end
 
 -- vim.cmd('sign define TextChange text=*')
 
@@ -141,8 +149,8 @@ require('lazy').setup({
     branch = 'release',
     config = function()
       function _G.check_back_space()
-          local col = vim.fn.col('.') - 1
-          return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+        local col = vim.fn.col('.') - 1
+        return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
       end
 
       local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
@@ -159,22 +167,22 @@ require('lazy').setup({
       map("n", "gr", "<Plug>(coc-references)", {silent = true})
 
       function _G.show_docs()
-          local cw = vim.fn.expand('<cword>')
-          if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
-              vim.api.nvim_command('h ' .. cw)
-          elseif vim.api.nvim_eval('coc#rpc#ready()') then
-              vim.fn.CocActionAsync('doHover')
-          else
-              vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
-          end
+        local cw = vim.fn.expand('<cword>')
+        if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+          vim.api.nvim_command('h ' .. cw)
+        elseif vim.api.nvim_eval('coc#rpc#ready()') then
+          vim.fn.CocActionAsync('doHover')
+        else
+          vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+        end
       end
       map("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
       vim.api.nvim_create_augroup("CocGroup", {})
       vim.api.nvim_create_autocmd("CursorHold", {
-          group = "CocGroup",
-          command = "silent call CocActionAsync('highlight')",
-          desc = "Highlight symbol under cursor on CursorHold"
+        group = "CocGroup",
+        command = "silent call CocActionAsync('highlight')",
+        desc = "Highlight symbol under cursor on CursorHold"
       })
 
       map("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
@@ -182,17 +190,17 @@ require('lazy').setup({
       map("n", "<leader>f", "<Plug>(coc-format-selected)", {silent = true})
 
       vim.api.nvim_create_autocmd("FileType", {
-          group = "CocGroup",
-          pattern = "typescript,json",
-          command = "setl formatexpr=CocAction('formatSelected')",
-          desc = "Setup formatexpr specified filetype(s)."
+        group = "CocGroup",
+        pattern = "typescript,json",
+        command = "setl formatexpr=CocAction('formatSelected')",
+        desc = "Setup formatexpr specified filetype(s)."
       })
 
       vim.api.nvim_create_autocmd("User", {
-          group = "CocGroup",
-          pattern = "CocJumpPlaceholder",
-          command = "call CocActionAsync('showSignatureHelp')",
-          desc = "Update signature help on jump placeholder"
+        group = "CocGroup",
+        pattern = "CocJumpPlaceholder",
+        command = "call CocActionAsync('showSignatureHelp')",
+        desc = "Update signature help on jump placeholder"
       })
 
       local opts = {silent = true, nowait = true}
@@ -218,9 +226,9 @@ require('lazy').setup({
       map("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
       map("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
       map("i", "<C-f>",
-             'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
+      'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
       map("i", "<C-b>",
-             'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
+      'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
       map("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
       map("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
       map("n", "<C-s>", "<Plug>(coc-range-select)", {silent = true})
