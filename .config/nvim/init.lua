@@ -121,6 +121,7 @@ end
 -- Diff
 map('n', '<leader>d', ':silent diffoff! | diffthis | enew | setlocal buftype=nofile nobuflisted | read ++edit # | 0d_ | '
 .. 'diffthis | bprevious | diffthis | setlocal nofoldenable foldcolumn=0 nocursorline<CR><CR>')
+map('n', '<leader>D', ':silent diffoff!<CR>')
 
 -- Search / Find
 if vim.fn.executable('rg') == 1 then
