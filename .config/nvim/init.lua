@@ -122,7 +122,8 @@ end, { nargs = 1 })
 map('n', '<leader>e', ':Find ')
 
 -- Git integration
-map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line("v") .. "," .. line("v"))<CR>')
+map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
+map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
 
 -- vim.cmd('sign define TextChange text=*')
 
