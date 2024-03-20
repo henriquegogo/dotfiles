@@ -2,7 +2,6 @@ vim.opt.number = true
 vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.breakindent = true
-vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
@@ -26,45 +25,45 @@ local map = vim.keymap.set
 -- Colorscheme
 vim.opt.background = 'dark'
 vim.cmd([[
-hi Boolean      ctermfg=173             " Dark Yellow
-hi ColorColumn              ctermbg=237 " Dark Gray
-hi Comment      ctermfg=059             " Gray
-hi Constant     ctermfg=075             " Light Blue
-hi CursorColumn             ctermbg=237 " Dark Gray
-hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
-hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
-hi DiffAdd      ctermfg=107 ctermbg=235 " Green | Black
-hi DiffChange   ctermfg=179 ctermbg=235 " Yellow | Black
-hi DiffDelete   ctermfg=167 ctermbg=235 " Red | Black
-hi DiffText     ctermfg=179 ctermbg=235 " Yellow | Black
-hi Folded       ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
-hi FoldColumn               ctermbg=235 " Black
-hi Function     ctermfg=075             " Blue
-hi Identifier   ctermfg=167 cterm=NONE  " Red
-hi Keyword      ctermfg=134             " Purple
-hi LineNr       ctermfg=238             " Gray
-hi MatchParen               ctermbg=059 " Gray
-hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
-hi Number       ctermfg=173             " Dark Yellow
-hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
-hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
-hi PreProc      ctermfg=179             " Yellow
-hi Search       ctermfg=235 ctermbg=179 " Black | Yellow
-hi SignColumn               ctermbg=235 " Light Gray
-hi Special      ctermfg=075             " Blue
-hi Statement    ctermfg=134             " Purple
-hi String       ctermfg=107             " Green
-hi Structure    ctermfg=179             " Yellow
-hi TabLine      cterm=NONE              " Remove underline
-hi Type         ctermfg=179             " Yellow
-hi Visual                   ctermbg=237 " Dark Gray
+  hi Boolean      ctermfg=173             " Dark Yellow
+  hi ColorColumn              ctermbg=237 " Dark Gray
+  hi Comment      ctermfg=059             " Gray
+  hi Constant     ctermfg=075             " Light Blue
+  hi CursorColumn             ctermbg=237 " Dark Gray
+  hi CursorLine   cterm=NONE  ctermbg=236 " Darker Gray
+  hi CursorLineNr ctermfg=145 cterm=NONE  " Light Gray
+  hi DiffAdd      ctermfg=107 ctermbg=235 " Green | Black
+  hi DiffChange   ctermfg=179 ctermbg=235 " Yellow | Black
+  hi DiffDelete   ctermfg=167 ctermbg=235 " Red | Black
+  hi DiffText     ctermfg=179 ctermbg=235 " Yellow | Black
+  hi Folded       ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
+  hi FoldColumn               ctermbg=235 " Black
+  hi Function     ctermfg=075             " Blue
+  hi Identifier   ctermfg=167 cterm=NONE  " Red
+  hi Keyword      ctermfg=134             " Purple
+  hi LineNr       ctermfg=238             " Gray
+  hi MatchParen               ctermbg=059 " Gray
+  hi Normal       ctermfg=145 ctermbg=235 " Light Gray | Black
+  hi Number       ctermfg=173             " Dark Yellow
+  hi Pmenu        ctermfg=145 ctermbg=237 " Light Gray | Dark Gray
+  hi PmenuSel     ctermfg=236 ctermbg=075 " Darker Gray | Purple
+  hi PreProc      ctermfg=179             " Yellow
+  hi Search       ctermfg=235 ctermbg=179 " Black | Yellow
+  hi SignColumn               ctermbg=235 " Light Gray
+  hi Special      ctermfg=075             " Blue
+  hi Statement    ctermfg=134             " Purple
+  hi String       ctermfg=107             " Green
+  hi Structure    ctermfg=179             " Yellow
+  hi TabLine      cterm=NONE              " Remove underline
+  hi Type         ctermfg=179             " Yellow
+  hi Visual                   ctermbg=237 " Dark Gray
 ]])
 
 -- Statusline
 vim.cmd([[
-hi StatusBlue  ctermfg=251 ctermbg=025 cterm=bold
-hi StatusBlack ctermfg=145 ctermbg=237
-hi StatusGray  ctermfg=145 ctermbg=239
+  hi StatusBlue  ctermfg=251 ctermbg=025 cterm=bold
+  hi StatusBlack ctermfg=145 ctermbg=237
+  hi StatusGray  ctermfg=145 ctermbg=239
 ]])
 vim.opt.laststatus = 2            -- Always show statusbar
 vim.o.statusline = ""
@@ -115,8 +114,8 @@ map('v', '<space>[[', '<ESC>`>x`<x')
 
 -- Git blame
 if vim.fn.executable('git') == 1 then
-  map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
-  map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+  map('n', '<leader>gb', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
+  map('v', '<leader>gb', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
 end
 
 -- Search / Find
@@ -124,7 +123,8 @@ if vim.fn.executable('rg') == 1 then
   vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case '
   .. '-g \'!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}\''
   vim.api.nvim_create_user_command('Search', function(opts)
-    vim.cmd('silent grep! "' .. opts.fargs[1] .. '" | cw')
+    vim.cmd('silent grep! "' .. opts.fargs[1]
+    .. '" | cw | setlocal modifiable | sort | setlocal nomodifiable')
   end, { nargs = 1 })
   map('n', '<leader>/', ':Search ')
 end
@@ -132,14 +132,13 @@ end
 if vim.fn.executable('find') == 1 then
   vim.api.nvim_create_user_command('Find', function(opts)
     vim.cmd(':cgetexpr system(\'find . -type f '
-    .. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
-    .. '! -path "**/build/* ! -path "**/dist/*"" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-    .. '-name "*' .. opts.fargs[1] .. '*" -printf "%p:0:%CF %Cr \\n" \') | cw')
+    .. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" ! -path "**/build/* '
+    .. '! -path "**/dist/*"" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" -name "*'
+    .. opts.fargs[1]
+    .. '*" -printf "%p:0:0:%CF %Cr \\n" \') | cw | setlocal modifiable | sort | setlocal nomodifiable')
   end, { nargs = 1 })
   map('n', '<leader>e', ':Find ')
 end
-
--- vim.cmd('sign define TextChange text=*')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
