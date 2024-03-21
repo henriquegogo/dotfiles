@@ -154,7 +154,7 @@ if vim.fn.executable('git') == 1 then
       end
     end
   end, {nargs = 0})
-  vim.cmd('autocmd BufReadPre,BufWritePost * DiffShow')
+  vim.cmd('autocmd BufReadPost,BufWritePost * DiffShow')
 end
 
 -- Plugins
