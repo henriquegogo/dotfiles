@@ -146,16 +146,15 @@ if vim.fn.executable('git') == 1 then
     local bufnr = vim.fn.bufnr('%')
     if vim.api.nvim_buf_get_option(bufnr, 'buftype') == '' and
       vim.fn.system("git -C " .. vim.fn.expand('%:p:h') .. " rev-parse --is-inside-work-tree") == "true\n" then
+      vim.fn.sign_unplace('*', {buffer = bufnr, group = 'DiffGroup'})
       local lines = vim.fn.systemlist('git -C ' .. vim.fn.expand('%:p:h') .. ' blame -sf --abbrev=1 '
       .. vim.fn.expand("%:p") .. ' | grep ^00000 | sed "s/^00000 //; s/  */:/; s/)/:/"')
-      vim.fn.setqflist({}, ' ', { lines = lines })
-      vim.fn.sign_unplace('*', {buffer = bufnr, group = 'DiffGroup'})
-      for _, item in ipairs(vim.fn.getqflist()) do
-        vim.fn.sign_place(bufnr, '', 'DiffSign', bufnr, {lnum = item.lnum})
+      for _, item in ipairs(lines) do
+        vim.fn.sign_place(bufnr, '', 'DiffSign', bufnr, {lnum = vim.split(item, ':')[2]})
       end
     end
   end, {nargs = 0})
-  vim.cmd('autocmd BufReadPost,BufWritePost * DiffShow')
+  vim.cmd('autocmd BufReadPre,BufWritePost * DiffShow')
 end
 
 -- Plugins
