@@ -80,7 +80,6 @@ map('n', '<leader>l', ':tabnext<CR>')
 map('n', '<leader>h', ':tabprevious<CR>')
 map('n', '<leader>j', ':bnext<CR>')
 map('n', '<leader>k', ':bprevious<CR>')
-map('n', '<leader>b', ':b ')
 map('n', '<leader>v', ':vsplit<CR>')
 map('n', '<leader>s', ':split<CR>')
 
@@ -112,29 +111,7 @@ map('v', '<space>((', '<ESC>`>x`<x')
 map('v', '<space>{{', '<ESC>`>x`<x')
 map('v', '<space>[[', '<ESC>`>x`<x')
 
--- Git blame
-if vim.fn.executable('git') == 1 then
-  map('n', '<leader>g', ':echo system("git blame " .. @% .. " -L" .. line(".") .. "," .. line("."))<CR>')
-  map('v', '<leader>g', ':<C-U>echo system("git blame " .. @% .. " -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
-end
-
--- Diff
-vim.opt.diffopt:remove('filler')
-map('n', '<leader>d', ':silent diffoff! | diffthis | enew | setlocal buftype=nofile nobuflisted | read ++edit # | 0d_ | '
-.. 'diffthis | bprevious | diffthis | setlocal nofoldenable foldcolumn=0 nocursorline<CR><CR>')
-map('n', '<leader>D', ':silent diffoff!<CR>')
-
--- Search / Find
-if vim.fn.executable('rg') == 1 then
-  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case '
-  .. '-g \'!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}\''
-  vim.api.nvim_create_user_command('Search', function(opts)
-    vim.cmd('silent grep! "' .. opts.fargs[1]
-    .. '" | cw | setlocal modifiable | sort | setlocal nomodifiable')
-  end, { nargs = 1 })
-  map('n', '<leader>/', ':Search ')
-end
-
+-- Find files by name
 if vim.fn.executable('find') == 1 then
   vim.api.nvim_create_user_command('Find', function(opts)
     vim.cmd(':cgetexpr system(\'find . -type f '
@@ -142,10 +119,46 @@ if vim.fn.executable('find') == 1 then
     .. '! -path "**/dist/*"" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" -name "*'
     .. opts.fargs[1]
     .. '*" -printf "%p:0:0:%CF %Cr \\n" \') | cw | setlocal modifiable | sort | setlocal nomodifiable')
-  end, { nargs = 1 })
+  end, {nargs = 1})
   map('n', '<leader>e', ':Find ')
 end
 
+-- Search files containing text
+if vim.fn.executable('rg') == 1 then
+  vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case '
+  .. '-g \'!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}\''
+  vim.api.nvim_create_user_command('Search', function(opts)
+    vim.cmd('silent grep! "' .. opts.fargs[1]
+    .. '" | cw | setlocal modifiable | sort | setlocal nomodifiable')
+  end, {nargs = 1})
+  map('n', '<leader>/', ':Search ')
+end
+
+-- Git blame / diff
+if vim.fn.executable('git') == 1 then
+  map('n', '<leader>g', ':echo system("git -C " .. expand("%:p:h") .. " blame " .. expand("%:p") .. '
+  .. '" -L" .. line(".") .. "," .. line("."))<CR>')
+  map('v', '<leader>g', ':<C-U>echo system("git -C " .. expand("%:p:h") .. " blame " .. expand("%:p") .. '
+  .. '" -L" .. getpos("\'<")[1] .. "," .. getpos("\'>")[1])<CR>')
+
+  vim.fn.sign_define('DiffSign', {text = '~', texthl = 'DiffChange', group = 'DiffGroup'})
+  vim.api.nvim_create_user_command('DiffShow', function()
+    local bufnr = vim.fn.bufnr('%')
+    if vim.api.nvim_buf_get_option(bufnr, 'buftype') == '' and
+      vim.fn.system("git -C " .. vim.fn.expand('%:p:h') .. " rev-parse --is-inside-work-tree") == "true\n" then
+      local lines = vim.fn.systemlist('git -C ' .. vim.fn.expand('%:p:h') .. ' blame -sf --abbrev=1 '
+      .. vim.fn.expand("%:p") .. ' | grep ^00000 | sed "s/^00000 //; s/  */:/; s/)/:/"')
+      vim.fn.setqflist({}, ' ', { lines = lines })
+      vim.fn.sign_unplace('*', {buffer = bufnr, group = 'DiffGroup'})
+      for _, item in ipairs(vim.fn.getqflist()) do
+        vim.fn.sign_place(bufnr, '', 'DiffSign', bufnr, {lnum = item.lnum})
+      end
+    end
+  end, {nargs = 0})
+  vim.cmd('autocmd BufReadPost,BufWritePost * DiffShow')
+end
+
+-- Plugins
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -154,7 +167,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'airblade/vim-gitgutter',
   {
     'neoclide/coc.nvim',
     branch = 'release',
