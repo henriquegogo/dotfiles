@@ -4,7 +4,6 @@ set breakindent
 set cursorline
 set expandtab
 set hidden
-set hlsearch
 set ignorecase
 set incsearch
 set mouse=a
@@ -20,7 +19,7 @@ set splitbelow
 set splitright
 set tabstop=2
 set timeoutlen=300
-set updatetime=250
+set updatetime=300
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -155,4 +154,3 @@ if executable('git') == 1
   endfunction
   autocmd BufReadPost,BufWritePost * call DiffShow()
 endif
-
