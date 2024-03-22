@@ -1,5 +1,7 @@
--- Load .vimrc
+-- Settings
 vim.cmd('source $HOME/.vimrc')
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.inccommand = 'split'
 
 -- Plugins
 local map = vim.keymap.set  

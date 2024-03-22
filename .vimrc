@@ -1,24 +1,27 @@
-set number
-set mouse=a
-set clipboard=unnamedplus
+" Settings
 set breakindent
-set ignorecase
-set smartcase
-set signcolumn=yes
-set updatetime=250
-set timeoutlen=300
-set splitright
-set splitbelow
 set cursorline
-set hlsearch
-set nohlsearch
 set expandtab
-set tabstop=2
-set shiftwidth=2
+set hlsearch
+set ignorecase
+set mouse=a
+set nohlsearch
+set number
 set path+=**
+set shiftwidth=2
+set signcolumn=yes
+set smartcase
+set splitbelow
+set splitright
+set tabstop=2
+set timeoutlen=300
+set updatetime=250
+
 let g:netrw_banner = 0
-let g:netrw_winsize = -25
 let g:netrw_liststyle = 3
+let g:netrw_winsize = -25
+
+filetype plugin indent on
 syntax enable
 
 " Colorscheme
@@ -34,8 +37,8 @@ hi DiffAdd      ctermfg=107 ctermbg=235  " Green | Black
 hi DiffChange   ctermfg=179 ctermbg=235  " Yellow | Black
 hi DiffDelete   ctermfg=167 ctermbg=235  " Red | Black
 hi DiffText     ctermfg=179 ctermbg=235  " Yellow | Black
-hi Folded       ctermfg=145 ctermbg=237  " Light Gray | Dark Gray
 hi FoldColumn               ctermbg=235  " Black
+hi Folded       ctermfg=145 ctermbg=237  " Light Gray | Dark Gray
 hi Function     ctermfg=075              " Blue
 hi Identifier   ctermfg=167 cterm=NONE   " Red
 hi Keyword      ctermfg=134              " Purple
@@ -57,8 +60,8 @@ hi Type         ctermfg=179              " Yellow
 hi Visual                   ctermbg=237  " Dark Gray
 
 " Statusline
-hi StatusBlue   ctermfg=251 ctermbg=025 cterm=bold
 hi StatusBlack  ctermfg=145 ctermbg=237
+hi StatusBlue   ctermfg=251 ctermbg=025 cterm=bold
 hi StatusGray   ctermfg=145 ctermbg=239
 set laststatus=2                                 " Always show statusbar
 set statusline=%#StatusBlue#\ %Y\ 	             " Filetype
