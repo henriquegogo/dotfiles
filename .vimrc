@@ -77,7 +77,6 @@ set statusline+=%#StatusBlue#\ %l:%c\            " Line: Column
 
 " Popup menu
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <ESC> pumvisible() ? "\<C-e>" : "\<ESC>"
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
