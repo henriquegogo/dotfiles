@@ -1,11 +1,16 @@
 " Settings
+set autoindent
 set breakindent
 set cursorline
 set expandtab
+set hidden
 set hlsearch
 set ignorecase
+set incsearch
 set mouse=a
+set nofixeol
 set nohlsearch
+set noswapfile
 set number
 set path+=**
 set shiftwidth=2
