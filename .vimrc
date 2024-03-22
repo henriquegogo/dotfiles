@@ -70,6 +70,12 @@ set statusline+=%#StatusBlack#\ %f\ %M\ %R\ %=\  " Filename / Modified / Readonl
 set statusline+=%#StatusGray#\ %p%%\             " Percentage
 set statusline+=%#StatusBlue#\ %l:%c\            " Line: Column
 
+" Popup menu
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <ESC> pumvisible() ? "\<C-e>" : "\<ESC>"
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
 " Buffers and tabs navigation
 nnoremap <leader>q :q<CR>
 nnoremap <leader>t :tabnew<CR>
