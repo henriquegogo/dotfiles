@@ -122,15 +122,15 @@ if executable('find') == 1
   command! -nargs=1 Find cgetexpr system('find . -type f '
         \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
         \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-        \. '-name "*' . <q-args> . '*" -printf "%p:0:0:%CF %Cr \\n"') | copen | set modifiable | sort | set nomodifiable
+        \. '-name "*' . <q-args> . '*" -printf "%p:0:0:%CF %Cr \\n"') | copen | setlocal modifiable | sort | setlocal nomodifiable
   nnoremap <leader>e :Find<space>
 endif
 
 " Search files containing text
 if executable('rg') == 1
-  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\
-        \ -g\ '!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}'
-  command! -nargs=1 Search silent grep! <args> | cw | setlocal modifiable | sort
+  command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
+        \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
+        \. '"' . <q-args> . '"') | copen | setlocal modifiable | sort | setlocal nomodifiable
   nnoremap <leader>/ :Search<space>
 endif
 
