@@ -139,18 +139,35 @@ if executable('git') == 1
   nnoremap <leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
   vnoremap <leader>g :<C-U>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
 
-  function! DiffShow()
-    sign define DiffSign text=~ texthl=DiffChange
+  function! Diff()
+    call sign_define('DiffSign', {'text': '~', 'texthl': 'DiffChange'})
     if &buftype == '' && system("git -C " . expand("%:p:h") . " rev-parse --is-inside-work-tree") == "true\n"
       let bufnr = bufnr('%')
       let lines = systemlist('git -C ' . expand('%:p:h') . ' blame -sf --abbrev=1 ' . expand("%:p")
             \. ' | grep ^00000 | sed "s/^00000 //; s/  */:/; s/)/:/"')
-      call sign_unplace('*', {'buffer': bufnr})
+      call sign_unplace('DiffSign', {'buffer': bufnr})
       for item in lines
         let lnum = split(item, ':')[1]
-        execute 'sign place ' . lnum . ' line=' . lnum . ' name=DiffSign buffer=' . bufnr
+        call sign_place(lnum, 'DiffSign', 'DiffSign', bufnr, {'lnum': lnum})
       endfor
     endif
   endfunction
-  autocmd BufReadPost,BufWritePost * call DiffShow()
+  autocmd BufReadPost,BufWritePost * call Diff()
+endif
+
+" Linter
+if executable('eslint') == 1
+  function! Linter()
+    let bufnr = bufnr('%')
+    call sign_define('LintSign', {'text': '>', 'texthl': 'DiffDelete'})
+    call sign_unplace('LintSign', {'buffer': bufnr})
+    lgetexpr system('eslint --no-eslintrc --format unix --parser-options ecmaVersion:latest ' . expand("%:t"))
+    for item in getloclist(winnr())
+      let lnum = item.lnum
+      if lnum > 0
+        call sign_place(lnum, 'LintSign', 'LintSign', bufnr, {'lnum': lnum})
+      endif
+    endfor
+  endfunction
+  "autocmd BufReadPost,BufWritePost *.js call Linter()
 endif
