@@ -155,19 +155,3 @@ if executable('git') == 1
   autocmd BufReadPost,BufWritePost * call Diff()
 endif
 
-" Linter
-if executable('eslint') == 1
-  function! Linter()
-    let bufnr = bufnr('%')
-    call sign_define('LintSign', {'text': '>', 'texthl': 'DiffDelete'})
-    call sign_unplace('LintSign', {'buffer': bufnr})
-    lgetexpr system('eslint --no-eslintrc --format unix --parser-options ecmaVersion:latest ' . expand("%:t"))
-    for item in getloclist(winnr())
-      let lnum = item.lnum
-      if lnum > 0
-        call sign_place(lnum, 'LintSign', 'LintSign', bufnr, {'lnum': lnum})
-      endif
-    endfor
-  endfunction
-  "autocmd BufReadPost,BufWritePost *.js call Linter()
-endif
