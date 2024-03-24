@@ -144,10 +144,10 @@ if executable('git') == 1
     if &buftype == '' && system("git -C " . expand("%:p:h") . " rev-parse --is-inside-work-tree") == "true\n"
       let bufnr = bufnr('%')
       let lines = systemlist('git -C ' . expand('%:p:h') . ' blame -sf --abbrev=1 ' . expand("%:p")
-            \. ' | grep ^00000 | sed "s/^00000 //; s/  */:/; s/)/:/"')
+            \. ' | grep -n "^00000 "')
       call sign_unplace('DiffSign', {'buffer': bufnr})
       for item in lines
-        let lnum = split(item, ':')[1]
+        let lnum = split(item, ':')[0]
         call sign_place(lnum, 'DiffSign', 'DiffSign', bufnr, {'lnum': lnum})
       endfor
     endif
