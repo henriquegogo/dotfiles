@@ -64,18 +64,21 @@ hi Type         ctermfg=179              " Yellow
 hi Visual                   ctermbg=237  " Dark Gray
 
 " Statusline
-hi StatusA      ctermfg=248 ctermbg=239
-hi StatusB      ctermfg=246 ctermbg=000
+hi StatusA      ctermfg=251 ctermbg=239
+hi StatusB      ctermfg=246 ctermbg=232
+hi StatusC      ctermfg=235 ctermbg=232
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
-set statusline+=%#StatusB#\ %f\ %M\ %R\ %= 
-set statusline+=%{expand(&filetype)}\ [%l:%c]\ %p%%\ 
-set statusline+=%#StatusA#\ %{toupper(mode())}\ 
+set statusline+=%#StatusC#█%#StatusB#\ %f\ %M\ %R\ %=
+set statusline+=%{expand(&filetype)}\ 
+set statusline+=%#StatusC#▍%#StatusB#\ %l:%c\ 
+set statusline+=%#StatusC#▍%#StatusB#\ %p%%\ 
+set statusline+=%#StatusC#█%#StatusA#\ %{toupper(mode())}\ 
 
 " Popup menu
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+imap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 " Buffers and tabs navigation
 nnoremap <leader>q :q<CR>
