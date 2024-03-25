@@ -69,11 +69,11 @@ hi StatusB      ctermfg=246 ctermbg=232
 hi StatusC      ctermfg=235 ctermbg=232
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
-set statusline+=%#StatusC#█%#StatusB#\ %f\ %M\ %R\ %=
+set statusline+=%#StatusB#\ %f\ %M\ %R\ %=
 set statusline+=%{expand(&filetype)}\ 
-set statusline+=%#StatusC#▍%#StatusB#\ %l:%c\ 
-set statusline+=%#StatusC#▍%#StatusB#\ %p%%\ 
-set statusline+=%#StatusC#█%#StatusA#\ %{toupper(mode())}\ 
+set statusline+=%#StatusC#┃%#StatusB#\ %l:%c\ 
+set statusline+=%#StatusC#┃%#StatusB#\ %p%%\ 
+set statusline+=%#StatusA#\ %{toupper(mode())}\ 
 
 " Popup menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
