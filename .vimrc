@@ -64,16 +64,13 @@ hi Type         ctermfg=179              " Yellow
 hi Visual                   ctermbg=237  " Dark Gray
 
 " Statusline
-hi StatusBlack  ctermfg=251 ctermbg=000
-hi StatusDark   ctermfg=145 ctermbg=237
-hi StatusGray   ctermfg=145 ctermbg=239
-set laststatus=2                                 " Always show statusbar
-set statusline=%#StatusGray#\ %Y\ 	             " Filetype
-set statusline+=%#StatusDark#\ %{fnamemodify(getcwd(),':t')}\  " Current folder
-set statusline+=%#StatusBlack#\ %f\ %M\ %R\ %=\   " Filename / Modified / Readonly / Right Aligned
-set statusline+=%{toupper(mode())}\ \            " Current mode
-set statusline+=%#StatusDark#\ %p%%\             " Percentage
-set statusline+=%#StatusGray#\ %l:%c\            " Line: Column
+hi StatusA      ctermfg=248 ctermbg=239
+hi StatusB      ctermfg=246 ctermbg=000
+set laststatus=2
+set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
+set statusline+=%#StatusB#\ %f\ %M\ %R\ %= 
+set statusline+=%{expand(&filetype)}\ [%l:%c]\ %p%%\ 
+set statusline+=%#StatusA#\ %{toupper(mode())}\ 
 
 " Popup menu
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
