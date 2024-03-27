@@ -27,7 +27,6 @@ let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
 
 filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
 syntax enable
 
 " Colorscheme
@@ -75,11 +74,16 @@ set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=
 set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\ 
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
+" Autocompletion
+set completeopt=menu,preview,noinsert,noselect
+set omnifunc=syntaxcomplete#Complete
+imap <C-Space> <C-x><C-o>
+imap <C-@> <C-x><C-o>
+
 " Popup menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <C-Space> <C-x><C-o>
 
 " Buffers and tabs navigation
 nnoremap <Leader>q :q<CR>
