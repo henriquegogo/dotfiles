@@ -77,46 +77,47 @@ set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\
 
 " Popup menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-imap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-imap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <C-Space> <C-x><C-o>
 
 " Buffers and tabs navigation
-nnoremap <leader>q :q<CR>
-nnoremap <leader>t :tabnew<CR>
-nnoremap <leader>l :tabnext<CR>
-nnoremap <leader>h :tabprevious<CR>
-nnoremap <leader>j :bnext<CR>
-nnoremap <leader>k :bprevious<CR>
-nnoremap <leader>v :vsplit<CR>
-nnoremap <leader>s :split<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>t :tabnew<CR>
+nnoremap <Leader>l :tabnext<CR>
+nnoremap <Leader>h :tabprevious<CR>
+nnoremap <Leader>j :bnext<CR>
+nnoremap <Leader>k :bprevious<CR>
+nnoremap <Leader>v :vsplit<CR>
+nnoremap <Leader>s :split<CR>
 
 " Add / Remove words and comments in front of line
-nnoremap <space>0 0i
-vnoremap <space>0 0<C-Q>I
-nnoremap <space>00 0de
-vnoremap <space>00 :norm 0de<CR>
+nnoremap <Space>0 0i
+vnoremap <Space>0 0<C-q>I
+nnoremap <Space>00 0de
+vnoremap <Space>00 :norm 0de<CR>
 
 " Surround blocks and quotes
-nnoremap <space>' bvec''<ESC>P
-nnoremap <space>" bvec""<ESC>P
-nnoremap <space>( bvec()<ESC>P
-nnoremap <space>{ bvec{}<ESC>P
-nnoremap <space>[ bvec[]<ESC>P
-vnoremap <space>' c''<ESC>P
-vnoremap <space>" c""<ESC>P
-vnoremap <space>( c()<ESC>P
-vnoremap <space>{ c{}<ESC>P
-vnoremap <space>[ c[]<ESC>P
-nnoremap <space>'' va'<ESC>x`<x
-nnoremap <space>"" va"<ESC>x`<x
-nnoremap <space>(( va()<ESC>x`<x
-nnoremap <space>{{ va{<ESC>x`<x
-nnoremap <space>[[ va[<ESC>x`<x
-vnoremap <space>'' <ESC>`>x`<x
-vnoremap <space>"" <ESC>`>x`<x
-vnoremap <space>(( <ESC>`>x`<x
-vnoremap <space>{{ <ESC>`>x`<x
-vnoremap <space>[[ <ESC>`>x`<x
+nnoremap <Space>' bvec''<Esc>P
+nnoremap <Space>" bvec""<Esc>P
+nnoremap <Space>( bvec()<Esc>P
+nnoremap <Space>{ bvec{}<Esc>P
+nnoremap <Space>[ bvec[]<Esc>P
+vnoremap <Space>' c''<Esc>P
+vnoremap <Space>" c""<Esc>P
+vnoremap <Space>( c()<Esc>P
+vnoremap <Space>{ c{}<Esc>P
+vnoremap <Space>[ c[]<Esc>P
+nnoremap <Space>'' va'<Esc>x`<x
+nnoremap <Space>"" va"<Esc>x`<x
+nnoremap <Space>(( va()<Esc>x`<x
+nnoremap <Space>{{ va{<Esc>x`<x
+nnoremap <Space>[[ va[<Esc>x`<x
+vnoremap <Space>'' <Esc>`>x`<x
+vnoremap <Space>"" <Esc>`>x`<x
+vnoremap <Space>(( <Esc>`>x`<x
+vnoremap <Space>{{ <Esc>`>x`<x
+vnoremap <Space>[[ <Esc>`>x`<x
 
 " Find files by name
 if executable('find') == 1
@@ -124,7 +125,7 @@ if executable('find') == 1
         \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
         \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
         \. '-name "*' . <q-args> . '*" -printf "%p:0:0:%CF %Cr \\n"') | copen | setlocal modifiable | sort | setlocal nomodifiable
-  nnoremap <leader>e :Find<space>
+  nnoremap <Leader>e :Find<Space>
 endif
 
 " Search files containing text
@@ -132,13 +133,13 @@ if executable('rg') == 1
   command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
         \. '"' . <q-args> . '"') | copen | setlocal modifiable | sort | setlocal nomodifiable
-  nnoremap <leader>/ :Search<space>
+  nnoremap <Leader>/ :Search<Space>
 endif
 
 " Git blame / diff
 if executable('git') == 1
-  nnoremap <leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
-  vnoremap <leader>g :<C-U>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
+  nnoremap <Leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
+  vnoremap <Leader>g :<C-u>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
 
   function! Diff()
     call sign_define('DiffSign', {'text': '~', 'texthl': 'DiffChange'})
