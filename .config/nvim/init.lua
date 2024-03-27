@@ -5,7 +5,7 @@ vim.opt.inccommand = 'split'
 
 -- LSP
 --[[
-function LspAutoCmd(filetypes, cmd)
+function LspAutoCmd(filetypes, cmd, settings)
   if vim.fn.executable(cmd[1]) == 1 then
     vim.api.nvim_create_autocmd("FileType", {
       pattern = filetypes,
@@ -14,6 +14,7 @@ function LspAutoCmd(filetypes, cmd)
           name = cmd[1],
           cmd = cmd,
           root_dir = vim.fn.getcwd(),
+          settings = settings or {},
         }))
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
         vim.bo[ev.buf].tagfunc='v:lua.vim.lsp.tagfunc'
@@ -36,10 +37,11 @@ function LspAutoCmd(filetypes, cmd)
     })
 end
 end
-LspAutoCmd({'go'}, {'gopls'})
-LspAutoCmd({'python'}, {'pyright-langserver', '--stdio'})
-LspAutoCmd({'html'}, {'vscode-html-language-server', '--stdio'})
+LspAutoCmd({'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto'}, {'clangd'})
 LspAutoCmd({'css', 'scss', 'less'}, {'vscode-css-language-server', '--stdio'})
+LspAutoCmd({'go'}, {'gopls'})
+LspAutoCmd({'html'}, {'vscode-html-language-server', '--stdio'})
+LspAutoCmd({'python'}, {'pyright-langserver', '--stdio'}, {python = {}})
 LspAutoCmd({
   'javascript', 'javascriptreact', 'javascript.jsx',
   'typescript', 'typescriptreact', 'typescript.tsx'
