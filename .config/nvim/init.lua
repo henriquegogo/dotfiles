@@ -1,7 +1,50 @@
 -- Settings
-vim.cmd('source $HOME/.vimrc')
+vim.cmd.source('$HOME/.vimrc')
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.inccommand = 'split'
+
+-- LSP
+--[[
+function LspAutoCmd(filetypes, cmd)
+  if vim.fn.executable(cmd[1]) == 1 then
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = filetypes,
+      callback = function(ev)
+        vim.lsp.buf_attach_client(ev.buf, vim.lsp.start_client({
+          name = cmd[1],
+          cmd = cmd,
+          root_dir = vim.fn.getcwd(),
+        }))
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+        vim.bo[ev.buf].tagfunc='v:lua.vim.lsp.tagfunc'
+        local opts = {buffer = ev.buf}
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, opts)
+        vim.keymap.set('n', '<leader>f', function()
+          vim.lsp.buf.format { async = true }
+        end, opts)
+      end
+    })
+end
+end
+LspAutoCmd({'go'}, {'gopls'})
+LspAutoCmd({'python'}, {'pyright-langserver', '--stdio'})
+LspAutoCmd({'html'}, {'vscode-html-language-server', '--stdio'})
+LspAutoCmd({'css', 'scss', 'less'}, {'vscode-css-language-server', '--stdio'})
+LspAutoCmd({
+  'javascript', 'javascriptreact', 'javascript.jsx',
+  'typescript', 'typescriptreact', 'typescript.tsx'
+}, {'typescript-language-server', '--stdio'})
+--]]
 
 -- Plugins
 local map = vim.keymap.set  
