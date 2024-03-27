@@ -27,6 +27,7 @@ let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
 
 filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
 syntax enable
 
 " Colorscheme
