@@ -75,6 +75,7 @@ set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
 " Autocompletion
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 set completeopt=menu,preview,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
 imap <C-Space> <C-x><C-o>
