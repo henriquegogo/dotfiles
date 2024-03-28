@@ -21,6 +21,7 @@ set splitright
 set tabstop=2
 set timeoutlen=300
 set updatetime=300
+set wildmenu
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -162,3 +163,22 @@ if executable('git') == 1
   autocmd BufReadPost,BufWritePost * call Diff()
 endif
 
+" Plugin installer
+if executable('git') == 1
+  let s:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+  if !isdirectory(s:pluginspath)
+    call mkdir(s:pluginspath, 'p')
+  endif
+
+  function! s:PluginInstall(repo)
+    let l:pluginfolder = split(a:repo, '/')[-1]
+    if !isdirectory(s:pluginspath . l:pluginfolder)
+      execute '!git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder 
+    endif
+  endfunction
+
+  command! -nargs=1 PluginInstall call s:PluginInstall(<q-args>)
+  command! -nargs=1 PluginRemove execute '!rm -rf ' . s:pluginspath . split(split(<q-args>, ' ')[0], '/')[-1]
+  command! -nargs=0 PluginUpdate execute '!for repo in ' . s:pluginspath . '*; do git -C $repo pull; done'
+  command! -nargs=0 PluginList cgetexpr system('ls ' . s:pluginspath) | copen
+endif
