@@ -35,7 +35,7 @@ function LspAutoCmd(filetypes, cmd, settings)
         end, opts)
       end
     })
-end
+  end
 end
 LspAutoCmd({'javascript', 'typescript'}, {'typescript-language-server', '--stdio'})
 LspAutoCmd({'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto'}, {'clangd'})
