@@ -173,7 +173,7 @@ if executable('git') == 1
   function! s:PluginInstall(repo)
     let l:pluginfolder = split(a:repo, '/')[-1]
     if !isdirectory(s:pluginspath . l:pluginfolder)
-      execute '!git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder 
+      execute '!git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder
     endif
   endfunction
 
