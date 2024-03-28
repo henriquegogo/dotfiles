@@ -73,6 +73,7 @@ set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\
 set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=
 set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\ 
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
+autocmd Filetype qf setlocal statusline=%#StatusB#\ %f%=%l/%L\ 
 
 " Autocompletion
 set completeopt=menu,noinsert,noselect
@@ -128,7 +129,7 @@ if executable('find') == 1
   command! -nargs=1 Find cgetexpr system('find . -type f '
         \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
         \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-        \. '-name "*' . <q-args> . '*" -printf "%p:0:0:%CF %Cr \\n"') | copen | setlocal modifiable | sort | setlocal nomodifiable
+        \. '-name "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
   nnoremap <Leader>e :Find<Space>
 endif
 
@@ -136,7 +137,7 @@ endif
 if executable('rg') == 1
   command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
-        \. '"' . <q-args> . '"') | copen | setlocal modifiable | sort | setlocal nomodifiable
+        \. '"' . <q-args> . '" | sort') | copen
   nnoremap <Leader>/ :Search<Space>
 endif
 
