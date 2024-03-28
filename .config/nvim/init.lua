@@ -37,15 +37,10 @@ function LspAutoCmd(filetypes, cmd, settings)
     })
 end
 end
+LspAutoCmd({'javascript', 'typescript'}, {'typescript-language-server', '--stdio'})
 LspAutoCmd({'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto'}, {'clangd'})
-LspAutoCmd({'css', 'scss', 'less'}, {'vscode-css-language-server', '--stdio'})
-LspAutoCmd({'go'}, {'gopls'})
-LspAutoCmd({'html'}, {'vscode-html-language-server', '--stdio'})
 LspAutoCmd({'python'}, {'pyright-langserver', '--stdio'}, {python = {}})
-LspAutoCmd({
-  'javascript', 'javascriptreact', 'javascript.jsx',
-  'typescript', 'typescriptreact', 'typescript.tsx'
-}, {'typescript-language-server', '--stdio'})
+LspAutoCmd({'go'}, {'gopls'})
 --]]
 
 -- Plugins
