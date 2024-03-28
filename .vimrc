@@ -177,8 +177,12 @@ if executable('git') == 1
     endif
   endfunction
 
+  function s:PluginList(A, L, P)
+    return system('ls -1 --color=never ' . s:pluginspath)
+  endfunction
+
   command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
-  command! -nargs=1 PluginRemove execute '!rm -rf ' . s:pluginspath . split(split(<q-args>, ' ')[0], '/')[-1]
   command! -nargs=0 PluginUpdate execute '!for repo in ' . s:pluginspath . '*; do git -C $repo pull; done'
-  command! -nargs=0 PluginList cgetexpr system('ls ' . s:pluginspath) | copen
+  command! -nargs=0 PluginList cgetexpr s:PluginList(0, 0, 0) | copen
+  command! -nargs=1 -complete=custom,s:PluginList PluginRemove execute '!rm -rf ' . s:pluginspath . split(split(<q-args>, ' ')[0], '/')[-1]
 endif
