@@ -177,7 +177,7 @@ if executable('git') == 1
     endif
   endfunction
 
-  function s:PluginList(A, L, P)
+  function! s:PluginList(A, L, P)
     return system('ls ' . s:pluginspath)
   endfunction
 
