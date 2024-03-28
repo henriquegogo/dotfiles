@@ -173,7 +173,23 @@ if executable('git') == 1
   function! PluginInstall(repo)
     let l:pluginfolder = split(a:repo, '/')[-1]
     if !isdirectory(s:pluginspath . l:pluginfolder)
-      execute '!git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder
+      echo 'Installing ' . l:pluginfolder . '... '
+      echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder)
+    endif
+  endfunction
+
+  function! s:PluginRemove(arg)
+    let l:pluginfolder = split(split(a:arg, ' ')[0], '/')[-1]
+    if isdirectory(s:pluginspath . l:pluginfolder)
+      echo 'Removing ' . l:pluginfolder . '... '
+      echo system('rm -rf ' . s:pluginspath . l:pluginfolder)
+    endif
+  endfunction
+
+  function! s:PluginUpdate()
+    if isdirectory(s:pluginspath)
+      echo 'Updating...'
+      echo system('for repo in ' . s:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
     endif
   endfunction
 
@@ -182,7 +198,7 @@ if executable('git') == 1
   endfunction
 
   command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
-  command! -nargs=0 PluginUpdate execute '!for repo in ' . s:pluginspath . '*; do git -C $repo pull; done'
-  command! -nargs=0 PluginList cgetexpr s:PluginList(0, 0, 0) | copen
-  command! -nargs=1 -complete=custom,s:PluginList PluginRemove execute '!rm -rf ' . s:pluginspath . split(split(<q-args>, ' ')[0], '/')[-1]
+  command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove(<q-args>)
+  command! -nargs=0 PluginUpdate call s:PluginUpdate()
+  command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 endif
