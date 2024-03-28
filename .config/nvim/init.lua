@@ -53,6 +53,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  'sheerun/vim-polyglot',
   {
     'neoclide/coc.nvim',
     branch = 'release',
