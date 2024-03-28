@@ -178,7 +178,7 @@ if executable('git') == 1
   endfunction
 
   function s:PluginList(A, L, P)
-    return system('ls -1 --color=never ' . s:pluginspath)
+    return system('ls ' . s:pluginspath)
   endfunction
 
   command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
