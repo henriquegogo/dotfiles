@@ -170,14 +170,14 @@ if executable('git') == 1
     call mkdir(s:pluginspath, 'p')
   endif
 
-  function! s:PluginInstall(repo)
+  function! PluginInstall(repo)
     let l:pluginfolder = split(a:repo, '/')[-1]
     if !isdirectory(s:pluginspath . l:pluginfolder)
       execute '!git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder
     endif
   endfunction
 
-  command! -nargs=1 PluginInstall call s:PluginInstall(<q-args>)
+  command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
   command! -nargs=1 PluginRemove execute '!rm -rf ' . s:pluginspath . split(split(<q-args>, ' ')[0], '/')[-1]
   command! -nargs=0 PluginUpdate execute '!for repo in ' . s:pluginspath . '*; do git -C $repo pull; done'
   command! -nargs=0 PluginList cgetexpr system('ls ' . s:pluginspath) | copen
