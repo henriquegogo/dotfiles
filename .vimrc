@@ -166,12 +166,12 @@ endif
 " Plugin installer
 if executable('git') == 1
   let s:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
-  if !isdirectory(s:pluginspath)
-    call mkdir(s:pluginspath, 'p')
-  endif
 
   function! PluginInstall(repo)
     let l:pluginfolder = split(a:repo, '/')[-1]
+    if !isdirectory(s:pluginspath)
+      call mkdir(s:pluginspath, 'p')
+    endif
     if !isdirectory(s:pluginspath . l:pluginfolder)
       echo 'Installing ' . l:pluginfolder . '... '
       echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder)
@@ -194,7 +194,9 @@ if executable('git') == 1
   endfunction
 
   function! s:PluginList(A, L, P)
-    return system('ls ' . s:pluginspath)
+    if isdirectory(s:pluginspath)
+      return system('ls ' . s:pluginspath)
+    endif
   endfunction
 
   command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
@@ -202,3 +204,4 @@ if executable('git') == 1
   command! -nargs=0 PluginUpdate call s:PluginUpdate()
   command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 endif
+
