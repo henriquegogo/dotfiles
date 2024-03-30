@@ -1,6 +1,7 @@
 " Settings
 set autoindent
 set breakindent
+set clipboard=unnamedplus
 set cursorline
 set expandtab
 set hidden
