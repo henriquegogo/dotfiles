@@ -1,12 +1,37 @@
-## Installation
+# Installation
 ```sh
 git clone https://github.com/henriquegogo/dotfiles.git ~/.dotfiles
-ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
 ln -s ~/.dotfiles/.vimrc ~/.vimrc                 # For Vim
 ln -s ~/.dotfiles/.vimrc ~/.config/nvim/init.vim  # For NeoVim
 ```
-## Loadenv and binaries
-- Create a local folder ~/opt
-- Download pre-built binaries to ~/opt
-- They will be auto added to PATH and envvars
+# .tmux.conf
+Change prefix to C-a and set some colors and default settings
+
+# .bash_aliases
+Prompt config and bash functions
+## Commands
+### google "Why the sky is blue"
+Search in google using lynx terminal browser. Quotes are optional
+### gitlog
+Show git log in terminal with some format and colors
+### gitsync
+Update all repositories in a folder
+### loadenv ./folder
+Load folder into env variables. ./bin into $PATH, ./lib into $LD_LIBRARY_PATH and others. Auto add every ~/opt/* as default
+### chrootstart ./folder
+Mount dev, proc, sys, tmp, etc and start a chroot in folder
+
+# .vimrc
+Vim and NeoVim default settings, theme, commands and functions
+## Commands
+### :Find
+Use shell "find" command to search file names recursively
+### :Search
+Use shell "rg" or "grep" command to search text in files recursively
+### :PluginInstall, :PluginRemove, :PluginUpdate, :PluginRemove
+Manage plugins installing into packages folder. Install can be used as "call PluginInstall('author/plugin') as well. Some default plugins are being installed
+
+# Disclaimer
+These are my personal settings. You can use them as you wish, but I use to change a lot sometimes
