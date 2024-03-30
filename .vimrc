@@ -75,7 +75,11 @@ set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\
 set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=
 set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\ 
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
-autocmd Filetype qf setlocal statusline=%#StatusB#\ %f%=%l/%L\ | setlocal nonumber
+
+" Autocommands
+autocmd Filetype qf setlocal nonumber
+      \ | setlocal statusline=%#StatusB#\ %f%=%l/%L\ 
+      \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " Autocompletion
 set completeopt=menu,noinsert,noselect
