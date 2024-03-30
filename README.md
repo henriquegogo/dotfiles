@@ -27,13 +27,14 @@ Vim and NeoVim default settings, theme, commands and functions
 - Netrw can be used as a file explorer :Lexplorer
 - Default theme colors based on onedark theme
 - Personalized statusline
-- Insert chars in line beginning. Works in normal and visual mode. Good for comment line: <Space>0
-- Surround keymaps: <Space>', <Space>", <Space>(, <Space>{, <Space>[
-- Begining words and surround chars can be removed using double char: <Space>00, <Space>'' 
+- Buffers and tab navigation keymaps
+- Insert chars in line beginning. Works in normal and visual mode. Good for comment line: \<Space\>0
+- Surround keymaps: \<Space\>', \<Space\>", \<Space\>(, \<Space\>{, \<Space\>[
+- Begining words and surround chars can be removed using double char: \<Space\>00, \<Space\>'' 
 ### :Find
-Use shell "find" command to search file names recursively
+Use shell "find" command to search file names recursively. Keymap: \<Leader\>e
 ### :Search
-Use shell "rg" or "grep" command to search text in files recursively
+Use shell "rg" or "grep" command to search text in files recursively. Keymap: \<Leader\>/
 ### :PluginInstall, :PluginRemove, :PluginUpdate, :PluginList
 Manage plugins into packages folder. PluginInstall can be used as "call PluginInstall('author/plugin') as well. Some default plugins are being installed
 
