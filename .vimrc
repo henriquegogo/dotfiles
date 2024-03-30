@@ -77,8 +77,9 @@ set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
 " Autocommands
+autocmd FileType netrw setlocal statusline=%#StatusB# 
 autocmd FileType qf setlocal nonumber
-      \ | setlocal statusline=%#StatusB#\ %f%=%l/%L\ 
+      \ | setlocal statusline=%#StatusB#\ %=%l/%L\ 
       \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " Autocompletion
