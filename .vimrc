@@ -175,10 +175,10 @@ endif
 
 function! PluginInstall(repo)
   let l:pluginfolder = split(split(a:repo, ' ')[0], '/')[-1]
-  if !isdirectory(g:pluginspath) && executable('git')
+  if !isdirectory(g:pluginspath)
     call mkdir(g:pluginspath, 'p')
   endif
-  if !isdirectory(g:pluginspath . l:pluginfolder)
+  if !isdirectory(g:pluginspath . l:pluginfolder) && executable('git')
     echo 'Installing ' . l:pluginfolder . '... '
     echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . g:pluginspath . l:pluginfolder)
   endif
