@@ -134,20 +134,19 @@ command! -nargs=1 Find cgetexpr system('find . -type f '
 nnoremap <Leader>e :Find<Space>
 
 " Search files containing text
-if executable('rg') == 1
+if executable('rg')
   command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
         \. '"' . <q-args> . '" | sort') | copen
 else
   command! -nargs=1 Search silent execute 'grep! -R -i '
-        \. '--exclude-dir=node_modules --exclude-dir=venv --exclude-dir=vendor --exclude-dir=build '
-        \.'--exclude-dir=dist --exclude-dir=tmp --exclude-dir=out --exclude-dir=bin '
-        \. '"' . <q-args> . ' ." | sort' | copen | redraw!
+        \. '--exclude-dir={node_modules,venv,vendor,build,dist,tmp,out,bin,".?*"} '
+        \. '"' . <q-args> . '" . | sort' | copen | redraw!
 endif
 nnoremap <Leader>/ :Search<Space>
 
 " Git blame / diff
-if executable('git') == 1
+if executable('git')
   nnoremap <Leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
   vnoremap <Leader>g :<C-u>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
 
@@ -168,11 +167,15 @@ if executable('git') == 1
 endif
 
 " Plugins manager
-let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+if exists('*stdpath')
+  let g:pluginspath = stdpath('data') . '/site/pack/plugins/start/'
+else
+  let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+endif
 
 function! PluginInstall(repo)
   let l:pluginfolder = split(split(a:repo, ' ')[0], '/')[-1]
-  if !isdirectory(g:pluginspath) && executable('git') == 1
+  if !isdirectory(g:pluginspath) && executable('git')
     call mkdir(g:pluginspath, 'p')
   endif
   if !isdirectory(g:pluginspath . l:pluginfolder)
@@ -190,7 +193,7 @@ function! s:PluginRemove(plugin)
 endfunction
 
 function! s:PluginUpdate()
-  if isdirectory(g:pluginspath) && executable('git') == 1
+  if isdirectory(g:pluginspath) && executable('git')
     echo 'Updating...'
     echo system('for repo in ' . g:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
   endif
