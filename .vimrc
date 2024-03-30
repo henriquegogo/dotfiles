@@ -127,21 +127,24 @@ vnoremap <Space>{{ <Esc>`>x`<x
 vnoremap <Space>[[ <Esc>`>x`<x
 
 " Find files by name
-if executable('find') == 1
-  command! -nargs=1 Find cgetexpr system('find . -type f '
-        \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
-        \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-        \. '-name "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
-  nnoremap <Leader>e :Find<Space>
-endif
+command! -nargs=1 Find cgetexpr system('find . -type f '
+      \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
+      \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
+      \. '-name "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
+nnoremap <Leader>e :Find<Space>
 
 " Search files containing text
 if executable('rg') == 1
   command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
         \. '"' . <q-args> . '" | sort') | copen
-  nnoremap <Leader>/ :Search<Space>
+else
+  command! -nargs=1 Search silent execute 'grep! -R -i '
+        \. '--exclude-dir=node_modules --exclude-dir=venv --exclude-dir=vendor --exclude-dir=build '
+        \.'--exclude-dir=dist --exclude-dir=tmp --exclude-dir=out --exclude-dir=bin '
+        \. '"' . <q-args> . ' ." | sort' | copen | redraw!
 endif
+nnoremap <Leader>/ :Search<Space>
 
 " Git blame / diff
 if executable('git') == 1
@@ -165,46 +168,44 @@ if executable('git') == 1
 endif
 
 " Plugins manager
-if executable('git') == 1
-  let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
 
-  function! PluginInstall(repo)
-    let l:pluginfolder = split(split(a:repo, ' ')[0], '/')[-1]
-    if !isdirectory(g:pluginspath)
-      call mkdir(g:pluginspath, 'p')
-    endif
-    if !isdirectory(g:pluginspath . l:pluginfolder)
-      echo 'Installing ' . l:pluginfolder . '... '
-      echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . g:pluginspath . l:pluginfolder)
-    endif
-  endfunction
+function! PluginInstall(repo)
+  let l:pluginfolder = split(split(a:repo, ' ')[0], '/')[-1]
+  if !isdirectory(g:pluginspath) && executable('git') == 1
+    call mkdir(g:pluginspath, 'p')
+  endif
+  if !isdirectory(g:pluginspath . l:pluginfolder)
+    echo 'Installing ' . l:pluginfolder . '... '
+    echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . g:pluginspath . l:pluginfolder)
+  endif
+endfunction
 
-  function! s:PluginRemove(plugin)
-    let l:pluginfolder = split(split(a:plugin, ' ')[0], '/')[-1]
-    if isdirectory(g:pluginspath . l:pluginfolder)
-      echo 'Removing ' . l:pluginfolder . '... '
-      echo system('rm -rf ' . g:pluginspath . l:pluginfolder)
-    endif
-  endfunction
+function! s:PluginRemove(plugin)
+  let l:pluginfolder = split(split(a:plugin, ' ')[0], '/')[-1]
+  if isdirectory(g:pluginspath . l:pluginfolder)
+    echo 'Removing ' . l:pluginfolder . '... '
+    echo system('rm -rf ' . g:pluginspath . l:pluginfolder)
+  endif
+endfunction
 
-  function! s:PluginUpdate()
-    if isdirectory(g:pluginspath)
-      echo 'Updating...'
-      echo system('for repo in ' . g:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
-    endif
-  endfunction
+function! s:PluginUpdate()
+  if isdirectory(g:pluginspath) && executable('git') == 1
+    echo 'Updating...'
+    echo system('for repo in ' . g:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
+  endif
+endfunction
 
-  function! s:PluginList(A, L, P)
-    if isdirectory(g:pluginspath)
-      return system('ls ' . g:pluginspath)
-    endif
-  endfunction
+function! s:PluginList(A, L, P)
+  if isdirectory(g:pluginspath)
+    return system('ls ' . g:pluginspath)
+  endif
+endfunction
 
-  command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
-  command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove(<q-args>)
-  command! -nargs=0 PluginUpdate call s:PluginUpdate()
-  command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
-endif
+command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
+command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove(<q-args>)
+command! -nargs=0 PluginUpdate call s:PluginUpdate()
+command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
 " Plugins installation and configuration
 call PluginInstall('sheerun/vim-polyglot')
