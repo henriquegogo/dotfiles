@@ -7,11 +7,10 @@ ln -s ~/.dotfiles/.vimrc ~/.vimrc                 # For Vim
 ln -s ~/.dotfiles/.vimrc ~/.config/nvim/init.vim  # For NeoVim
 ```
 # .tmux.conf
-Change prefix to C-a and set some colors and default settings
+Changes prefix to C-a and set some colors and default settings
 
 # .bash_aliases
 Prompt config and bash functions
-## Commands
 ### google "Why the sky is blue"
 Search in google using lynx terminal browser. Quotes are optional
 ### gitlog
@@ -25,13 +24,12 @@ Mount dev, proc, sys, tmp, etc and start a chroot in folder
 
 # .vimrc
 Vim and NeoVim default settings, theme, commands and functions
-## Commands
 ### :Find
 Use shell "find" command to search file names recursively
 ### :Search
 Use shell "rg" or "grep" command to search text in files recursively
-### :PluginInstall, :PluginRemove, :PluginUpdate, :PluginRemove
-Manage plugins installing into packages folder. Install can be used as "call PluginInstall('author/plugin') as well. Some default plugins are being installed
+### :PluginInstall, :PluginRemove, :PluginUpdate, :PluginList
+Manage plugins into packages folder. PluginInstall can be used as "call PluginInstall('author/plugin') as well. Some default plugins are being installed
 
 # Disclaimer
 These are my personal settings. You can use them as you wish, but I use to change a lot sometimes
