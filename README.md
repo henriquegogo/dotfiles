@@ -24,6 +24,12 @@ Mount dev, proc, sys, tmp, etc and start a chroot in folder
 
 # .vimrc
 Vim and NeoVim default settings, theme, commands and functions
+- Netrw can be used as a file explorer :Lexplorer
+- Default theme colors based on onedark theme
+- Personalized statusline
+- Insert chars in line beginning. Works in normal and visual mode. Good for comment line: <Space>0
+- Surround keymaps: <Space>', <Space>", <Space>(, <Space>{, <Space>[
+- Begining words and surround chars can be removed using double char: <Space>00, <Space>'' 
 ### :Find
 Use shell "find" command to search file names recursively
 ### :Search
