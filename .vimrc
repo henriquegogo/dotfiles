@@ -212,11 +212,15 @@ call PluginInstall('neoclide/coc.nvim --branch release')
 call PluginInstall('Exafunction/codeium.vim')
 
 if isdirectory(g:pluginspath . 'coc.nvim')
+  let s:statusline = &statusline
   execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
+  let &statusline = s:statusline
 endif
 
 if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'coc.nvim')
   let g:codeium_disable_bindings = 1
   imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
-  imap <expr> <C-x> codeium#Clear()
+  imap <M-]> <Cmd>call codeium#CycleCompletions(1)<CR>
+  imap <M-[> <Cmd>call codeium#CycleCompletions(-1)<CR>
+  imap <C-x> <Cmd>call codeium#Clear()<CR>
 endif
