@@ -77,7 +77,7 @@ set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
 " Autocommands
-autocmd Filetype qf setlocal nonumber
+autocmd FileType qf setlocal nonumber
       \ | setlocal statusline=%#StatusB#\ %f%=%l/%L\ 
       \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
 
