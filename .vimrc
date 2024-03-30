@@ -164,39 +164,39 @@ if executable('git') == 1
   autocmd BufReadPost,BufWritePost * call Diff()
 endif
 
-" Plugin installer
+" Plugins manager
 if executable('git') == 1
-  let s:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+  let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
 
   function! PluginInstall(repo)
-    let l:pluginfolder = split(a:repo, '/')[-1]
-    if !isdirectory(s:pluginspath)
-      call mkdir(s:pluginspath, 'p')
+    let l:pluginfolder = split(split(a:repo, ' ')[0], '/')[-1]
+    if !isdirectory(g:pluginspath)
+      call mkdir(g:pluginspath, 'p')
     endif
-    if !isdirectory(s:pluginspath . l:pluginfolder)
+    if !isdirectory(g:pluginspath . l:pluginfolder)
       echo 'Installing ' . l:pluginfolder . '... '
-      echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . s:pluginspath . l:pluginfolder)
+      echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . g:pluginspath . l:pluginfolder)
     endif
   endfunction
 
-  function! s:PluginRemove(arg)
-    let l:pluginfolder = split(split(a:arg, ' ')[0], '/')[-1]
-    if isdirectory(s:pluginspath . l:pluginfolder)
+  function! s:PluginRemove(plugin)
+    let l:pluginfolder = split(split(a:plugin, ' ')[0], '/')[-1]
+    if isdirectory(g:pluginspath . l:pluginfolder)
       echo 'Removing ' . l:pluginfolder . '... '
-      echo system('rm -rf ' . s:pluginspath . l:pluginfolder)
+      echo system('rm -rf ' . g:pluginspath . l:pluginfolder)
     endif
   endfunction
 
   function! s:PluginUpdate()
-    if isdirectory(s:pluginspath)
+    if isdirectory(g:pluginspath)
       echo 'Updating...'
-      echo system('for repo in ' . s:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
+      echo system('for repo in ' . g:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
     endif
   endfunction
 
   function! s:PluginList(A, L, P)
-    if isdirectory(s:pluginspath)
-      return system('ls ' . s:pluginspath)
+    if isdirectory(g:pluginspath)
+      return system('ls ' . g:pluginspath)
     endif
   endfunction
 
@@ -206,3 +206,17 @@ if executable('git') == 1
   command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 endif
 
+" Plugins installation and configuration
+call PluginInstall('sheerun/vim-polyglot')
+call PluginInstall('neoclide/coc.nvim --branch release')
+call PluginInstall('Exafunction/codeium.vim')
+
+if isdirectory(g:pluginspath . 'coc.nvim')
+  execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
+endif
+
+if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'coc.nvim')
+  let g:codeium_disable_bindings = 1
+  imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
+  imap <C-x> codeium#Clear()
+endif
