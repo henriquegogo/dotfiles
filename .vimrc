@@ -4,6 +4,7 @@ set breakindent
 set clipboard=unnamedplus
 set cursorline
 set expandtab
+set fillchars+=vert:\█
 set hidden
 set ignorecase
 set incsearch
@@ -64,6 +65,7 @@ hi String       ctermfg=107              " Green
 hi Structure    ctermfg=179              " Yellow
 hi TabLine      cterm=NONE               " Remove underline
 hi Type         ctermfg=179              " Yellow
+hi VertSplit    ctermfg=232 cterm=NONE   " Dark Black
 hi Visual                   ctermbg=237  " Dark Gray
 
 " Statusline
