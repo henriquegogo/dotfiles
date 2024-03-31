@@ -159,7 +159,9 @@ if executable('git')
 
   function! Diff()
     call sign_define('DiffSign', {'text': '~', 'texthl': 'DiffChange'})
-    if &buftype == '' && system("git -C " . expand("%:p:h") . " rev-parse --is-inside-work-tree") == "true\n"
+    if &buftype == ''
+          \&& system('git -C ' . expand("%:p:h") . ' rev-parse --is-inside-work-tree') == "true\n"
+          \&& strlen(system('git -C ' . expand("%:p:h") . ' ls-files -- ' . expand("%:p")))
       let bufnr = bufnr('%')
       let lines = systemlist('git -C ' . expand('%:p:h') . ' blame -sf --abbrev=1 ' . expand("%:p")
             \. ' | grep -n "^00000 "')
