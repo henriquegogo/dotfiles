@@ -72,10 +72,11 @@ hi Visual                   ctermbg=237  " Dark Gray
 hi StatusA      ctermfg=251 ctermbg=060
 hi StatusB      ctermfg=247 ctermbg=232
 hi StatusC      ctermfg=060 ctermbg=232
+hi StatusD      ctermfg=233 ctermbg=232
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
-set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=
-set statusline+=%{expand(&filetype)}\ │\ %l:%c\ │\ %p%%\ 
+set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=%{expand(&filetype)}\ 
+set statusline+=%#StatusD#┃%#StatusB#\ %l:%c\ %#StatusD#┃%#StatusB#\ %p%%\ 
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
 " Autocommands
