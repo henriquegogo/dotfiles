@@ -1,0 +1,13 @@
+[user]
+	name = Henrique Gogó
+	email = henriquegogo@gmail.com
+[push]
+	default = simple
+[core]
+	editor = nvim
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = nvimdiff

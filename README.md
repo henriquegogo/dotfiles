@@ -1,11 +1,7 @@
 # Installation
-```sh
-git clone https://github.com/henriquegogo/dotfiles.git ~/.dotfiles
-ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
-ln -s ~/.dotfiles/.bash_aliases ~/.bash_aliases
-ln -s ~/.dotfiles/.vimrc ~/.vimrc                 # For Vim
-ln -s ~/.dotfiles/.vimrc ~/.config/nvim/init.vim  # For NeoVim
-```
+- Clone repository
+- Create symbolic links for each file dot files
+
 # .tmux.conf
 Changes prefix to C-a and set some colors and default settings
 
