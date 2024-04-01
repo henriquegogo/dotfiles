@@ -2,8 +2,14 @@
 - Clone repository
 - Create symbolic links for each file dot files
 
+# .gitconfig
+Set user, email and diff tool
+
 # .tmux.conf
 Changes prefix to C-a and set some colors and default settings
+
+# .muttrc
+Default configuration for Gmail accounts. Create a .mutt/account file to set realname, imap_user and imap_pass
 
 # .bash_aliases
 Prompt config and bash functions
