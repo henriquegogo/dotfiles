@@ -16,6 +16,9 @@ unset imap_passive
 
 auto_view text/x-vcard text/html text/enriched
 
+bind pager <up> previous-line
+bind pager <down> next-line
+
 ###############################################################################
 # Dracula Theme for Mutt: https://draculatheme.com/
 #
