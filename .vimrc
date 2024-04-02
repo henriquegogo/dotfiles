@@ -25,12 +25,14 @@ set timeoutlen=300
 set updatetime=300
 set wildmenu
 
+filetype plugin indent on
+syntax enable
+
+" File explorer
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
-
-filetype plugin indent on
-syntax enable
+nnoremap <Leader><Enter> :Lexplore<CR>
 
 " Colorscheme
 set background=dark
