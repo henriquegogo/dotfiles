@@ -7,6 +7,7 @@ set smtp_url      = smtps://$imap_user@smtp.gmail.com
 set smtp_pass     = $imap_pass
 set ssl_force_tls = yes
 set read_only     = yes
+set copy          = no
 set sort          = reverse-threads
 mailboxes         = +INBOX
 set spoolfile     = +INBOX
@@ -19,6 +20,7 @@ auto_view text/x-vcard text/html text/enriched
 
 bind pager <up> previous-line
 bind pager <down> next-line
+bind index <f5> imap-fetch-mail
 
 ###############################################################################
 # Dracula Theme for Mutt: https://draculatheme.com/
