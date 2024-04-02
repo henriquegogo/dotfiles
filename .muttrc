@@ -1,6 +1,6 @@
 source ~/.mutt/account
 set editor        = nvim
-set from          = "$realname <$imap_user>"
+set from          = $imap_user
 set folder        = imaps://imap.gmail.com/
 set smtp_url      = smtps://$imap_user@smtp.gmail.com 
 set smtp_pass     = $imap_pass
