@@ -1,0 +1,4 @@
+accept_all_cookies = on
+file_editor        = nvim
+user_mode          = ADVANCED
+vi_keys            = on
