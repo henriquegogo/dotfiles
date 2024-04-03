@@ -11,6 +11,9 @@ Changes prefix to C-a and set some colors and default settings
 # .muttrc
 Default configuration for Gmail accounts. Create a .mutt/account file to set realname, imap_user and imap_pass
 
+# .lynxrc
+Vi keymaps, nvim editor and accept cookies
+
 # .bash_aliases
 Prompt config and bash functions
 ### google "Why the sky is blue"
