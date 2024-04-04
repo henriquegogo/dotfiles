@@ -1,7 +1,6 @@
 " Settings
 set autoindent
 set breakindent
-set clipboard=unnamedplus
 set cursorline
 set expandtab
 set fillchars+=vert:\ 
@@ -97,6 +96,9 @@ imap <C-@> <C-x><C-o>
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Clipboard register
+noremap <Leader><Leader> "+
 
 " Buffers and tabs navigation
 nnoremap <Leader>q :q<CR>
