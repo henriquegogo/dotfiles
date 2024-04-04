@@ -22,6 +22,7 @@ set splitright
 set tabstop=2
 set timeoutlen=300
 set updatetime=300
+set wildcharm=<C-z>
 set wildmenu
 
 filetype plugin indent on
@@ -62,6 +63,7 @@ hi Search       ctermfg=233 ctermbg=179  " Black - Yellow
 hi SignColumn               ctermbg=233  " Light Gray
 hi Special      ctermfg=075              " Blue
 hi Statement    ctermfg=134              " Purple
+hi StatusLine   cterm=NONE  ctermbg=236  " Darker Gray
 hi String       ctermfg=107              " Green
 hi Structure    ctermfg=179              " Yellow
 hi TabLine      ctermfg=145 ctermbg=232 cterm=NONE  " Light Gray - Dark Black 
@@ -70,6 +72,7 @@ hi TabLineSel   ctermfg=232 ctermbg=145  " Dark Black -  Light Gray
 hi Type         ctermfg=179              " Yellow
 hi VertSplit    cterm=NONE  ctermbg=232  " Dark Black
 hi Visual                   ctermbg=237  " Dark Gray
+hi WildMenu     ctermfg=233 ctermbg=075  " Black - Blue
 
 " Statusline
 hi StatusA      ctermfg=251 ctermbg=060
@@ -104,13 +107,14 @@ noremap <Leader><Leader> "+
 
 " Buffers and tabs navigation
 nnoremap <Leader>q :q<CR>
+nnoremap <Leader>v :vsplit<CR>
+nnoremap <Leader>s :split<CR>
 nnoremap <Leader>t :tabnew<CR>
 nnoremap <Leader>l :tabnext<CR>
 nnoremap <Leader>h :tabprevious<CR>
 nnoremap <Leader>j :bnext<CR>
 nnoremap <Leader>k :bprevious<CR>
-nnoremap <Leader>v :vsplit<CR>
-nnoremap <Leader>s :split<CR>
+nnoremap <Leader>b :buffer <C-z>
 
 " Add / Remove words and comments in front of line
 nnoremap <Space>0 0i
