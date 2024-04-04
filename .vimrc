@@ -32,7 +32,7 @@ syntax enable
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
-nnoremap <Leader><Enter> :Lexplore<CR>
+nnoremap <Leader><CR> :Lexplore<CR>
 
 " Colorscheme
 set background=dark
@@ -87,6 +87,7 @@ set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\
 
 " Autocommands
 autocmd FileType netrw setlocal statusline=%#StatusB# 
+      \ | nmap <buffer> <Space> gncd:cd .<CR>
 autocmd FileType qf setlocal nonumber
       \ | setlocal statusline=%#StatusB#\ %=%l/%L\ 
       \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
