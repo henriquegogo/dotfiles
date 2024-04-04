@@ -28,12 +28,6 @@ set wildmenu
 filetype plugin indent on
 syntax enable
 
-" File explorer
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_winsize = -25
-nnoremap <Leader><CR> :Lexplore<CR>
-
 " Colorscheme
 set background=dark
 hi Boolean      ctermfg=173              " Dark Yellow
@@ -85,9 +79,15 @@ set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=%{expand(&filetype)}\
 set statusline+=%#StatusD#┃%#StatusB#\ %l:%c\ %#StatusD#┃%#StatusB#\ %p%%\ 
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
-" Autocommands
+" File explorer
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = -25
+nnoremap <Leader><CR> :Lexplore<CR>
 autocmd FileType netrw setlocal statusline=%#StatusB# 
       \ | nmap <buffer> <Space> gncd:cd .<CR>
+
+" Quickfix list
 autocmd FileType qf setlocal nonumber
       \ | setlocal statusline=%#StatusB#\ %=%l/%L\ 
       \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
