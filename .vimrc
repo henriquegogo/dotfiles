@@ -41,6 +41,7 @@ hi DiffAdd      ctermfg=107 ctermbg=233  " Green - Black
 hi DiffChange   ctermfg=179 ctermbg=233  " Yellow - Black
 hi DiffDelete   ctermfg=167 ctermbg=233  " Red - Black
 hi DiffText     ctermfg=179 ctermbg=233  " Yellow - Black
+hi EndOfBuffer  ctermfg=233              " Black
 hi FoldColumn               ctermbg=233  " Black
 hi Folded       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi Function     ctermfg=075              " Blue
@@ -48,7 +49,6 @@ hi Identifier   ctermfg=167 cterm=NONE   " Red
 hi Keyword      ctermfg=134              " Purple
 hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
-hi NonText      ctermfg=233              " Black
 hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
 hi Number       ctermfg=173              " Dark Yellow
 hi Pmenu        ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
