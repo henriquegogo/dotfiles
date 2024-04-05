@@ -48,6 +48,7 @@ hi Identifier   ctermfg=167 cterm=NONE   " Red
 hi Keyword      ctermfg=134              " Purple
 hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
+hi NonText      ctermfg=233              " Black
 hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
 hi Number       ctermfg=173              " Dark Yellow
 hi Pmenu        ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
@@ -65,7 +66,7 @@ hi TabLineFill  ctermfg=232              " Dark Black
 hi TabLineSel   ctermfg=232 ctermbg=145  " Dark Black -  Light Gray
 hi Type         ctermfg=179              " Yellow
 hi VertSplit    cterm=NONE  ctermbg=232  " Dark Black
-hi Visual                   ctermbg=237  " Dark Gray
+hi Visual       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi WildMenu     ctermfg=233 ctermbg=075  " Black - Blue
 
 " Statusline
@@ -80,6 +81,7 @@ set statusline+=%#StatusD#┃%#StatusB#\ %l:%c\ %#StatusD#┃%#StatusB#\ %p%%\
 set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
 
 " File explorer
+hi netrwTreeBar ctermfg=233
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
