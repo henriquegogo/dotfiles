@@ -13,7 +13,9 @@ mailboxes         = +INBOX
 set spoolfile     = +INBOX
 set record        = "+[Gmail]/Sent Mail"
 set postponed     = "+[Gmail]/Drafts"
+set hostname      = "localhost"
 
+unset use_domain
 unset imap_passive
 
 auto_view text/x-vcard text/html text/enriched
