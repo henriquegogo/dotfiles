@@ -1,6 +1,5 @@
-[user]
-	name = Henrique Gogó
-	email = henriquegogo@gmail.com
+[include]
+	path = ~/.gitconfig.user
 [push]
 	default = simple
 [core]
