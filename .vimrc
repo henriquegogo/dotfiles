@@ -72,13 +72,15 @@ hi WildMenu     ctermfg=233 ctermbg=075  " Black - Blue
 " Statusline
 hi StatusA      ctermfg=251 ctermbg=060
 hi StatusB      ctermfg=247 ctermbg=232
-hi StatusC      ctermfg=060 ctermbg=232
-hi StatusD      ctermfg=233 ctermbg=232
+hi StatusC      ctermfg=233 ctermbg=232
+if $USER == 'root'
+  hi StatusA      ctermfg=251 ctermbg=167
+endif
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
-set statusline+=%#StatusC#┃%#StatusB#\ %f\ %M\ %R\ %=%{expand(&filetype)}\ 
-set statusline+=%#StatusD#┃%#StatusB#\ %l:%c\ %#StatusD#┃%#StatusB#\ %p%%\ 
-set statusline+=%#StatusC#┃%#StatusA#\ %{toupper(mode())}\ 
+set statusline+=%#StatusB#\ %f\ %M\ %R\ %=%{expand(&filetype)}\ 
+set statusline+=%#StatusC#\|%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
+set statusline+=%#StatusA#\ %{toupper(mode())}\ 
 
 " File explorer
 hi netrwTreeBar ctermfg=233
