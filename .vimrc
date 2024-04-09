@@ -233,17 +233,17 @@ command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove
 command! -nargs=0 PluginUpdate call s:PluginUpdate()
 command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
-" Plugins installation and configuration
-call PluginInstall('sheerun/vim-polyglot')
-call PluginInstall('neoclide/coc.nvim --branch release')
-call PluginInstall('Exafunction/codeium.vim')
+" Plugins configuration
+" call PluginInstall('sheerun/vim-polyglot')
 
+" call PluginInstall('neoclide/coc.nvim --branch release')
 if isdirectory(g:pluginspath . 'coc.nvim')
   let s:statusline = &statusline
   execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
   let &statusline = s:statusline
 endif
 
+" call PluginInstall('Exafunction/codeium.vim')
 if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'coc.nvim')
   let g:codeium_disable_bindings = 1
   imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
