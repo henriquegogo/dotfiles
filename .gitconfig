@@ -11,3 +11,6 @@
 	prompt = false
 [merge]
 	tool = nvimdiff
+[alias]
+	sync = "!for repo in $(echo */); do if [ -d \"$repo/.git\" ]; then echo \"$repo\"; git -C \"$repo\" pull; echo; fi; done"
+	history = "log --format='%Cred%h %Creset%s (%Cgreen%an) %Creset- %Cblue%cr' --graph"

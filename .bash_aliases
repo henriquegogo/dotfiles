@@ -8,22 +8,6 @@ google() {
   lynx google.com/search?q="$*"
 }
 
-gitlog() {
-  git log --format='%Cred%h %Creset%s (%Cgreen%an) %Creset- %Cblue%cr' --graph
-}
-
-gitsync() {
-  for repo in $(echo */)
-  do
-    if [ -d $repo/.git ]
-    then
-      echo $repo
-      git -C $repo pull
-      echo
-    fi
-  done
-}
-
 loadenv() {
   if [ -z "$1" ]
   then
