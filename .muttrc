@@ -6,13 +6,13 @@ set folder        = imaps://imap.gmail.com/
 set smtp_url      = smtps://$imap_user@smtp.gmail.com 
 set smtp_pass     = $imap_pass
 set ssl_force_tls = yes
-set read_only     = yes
 set copy          = no
 set sort          = reverse-threads
 mailboxes         = +INBOX
 set spoolfile     = +INBOX
 set record        = "+[Gmail]/Sent Mail"
 set postponed     = "+[Gmail]/Drafts"
+set trash         = "+[Gmail]/Trash"
 set hostname      = "localhost"
 
 unset use_domain
