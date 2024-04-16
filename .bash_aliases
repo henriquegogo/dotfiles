@@ -4,6 +4,8 @@ if which git > /dev/null; then
   export PS1=$PS1'$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\]) ")'    # Git branch
 fi
 
+alias ll='ls -aoghp1 --group-directories-first --color --time-style=+""'
+
 google() {
   lynx google.com/search?q="$*"
 }

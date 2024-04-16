@@ -14,6 +14,8 @@ set record        = "+[Gmail]/Sent Mail"
 set postponed     = "+[Gmail]/Drafts"
 set trash         = "+[Gmail]/Trash"
 set hostname      = "localhost"
+set charset       = "utf-8"
+set send_charset  = "us-ascii:utf-8:iso-8859-1"
 
 unset use_domain
 unset imap_passive
