@@ -1,10 +1,10 @@
 export PROMPT_DIRTRIM=2                                       # Trim long prompts
 export PS1='\n\[\e[01;33m\]\$ \[\e[34m\]\w \[\e[0m\]'         # Fancy prompt
-if which git > /dev/null; then
+if [ $(type -t __git_ps1) ]; then
   export PS1=$PS1'$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\]) ")'    # Git branch
 fi
 
-alias ll='ls -aoghp1 --group-directories-first --color --time-style=+""'
+alias ll='ls -ahps1 --group-directories-first --color'
 
 google() {
   lynx google.com/search?q="$*"
@@ -35,7 +35,7 @@ loadenv() {
     done
   fi
 }
-loadenv $HOME/opt/*
+[ -d "$HOME/opt" ] && loadenv $HOME/opt/*
 
 chrootstart() {
   if [ -z "$1" ]
