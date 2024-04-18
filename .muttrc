@@ -35,7 +35,7 @@ bind pager <up> previous-line
 bind pager <down> next-line
 bind index <f5> imap-fetch-mail
 
-source ~/.mutt/config
+source ~/.mutt/local
 
 ###############################################################################
 # Dracula Theme for Mutt: https://draculatheme.com/
