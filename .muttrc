@@ -15,11 +15,12 @@ set hostname      = "localhost"
 set charset       = "utf-8"
 set send_charset  = "us-ascii:utf-8:iso-8859-1"
 
-set sidebar_visible      = yes
+set sidebar_delim_chars  = "/"
 set sidebar_divider_char = "│"
 set sidebar_format       = "%B%* %<%N/%S"
 set sidebar_short_path   = yes
-set sidebar_delim_chars  = "/"
+set sidebar_visible      = yes
+set sidebar_width        = 25
 set mail_check_stats
 bind index,pager <tab> sidebar-next
 bind index,pager <backtab> sidebar-prev
@@ -33,7 +34,7 @@ auto_view text/x-vcard text/html text/enriched
 
 bind pager <up> previous-line
 bind pager <down> next-line
-bind index <f5> imap-fetch-mail
+bind index <f5> imap-fetch-mail; set mail_check_stats
 
 source ~/.mutt/local
 
