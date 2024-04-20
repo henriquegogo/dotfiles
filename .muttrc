@@ -1,3 +1,5 @@
+source ~/.mutt/local
+
 set editor        = nvim
 set from          = $imap_user
 set folder        = imaps://imap.gmail.com/
@@ -34,9 +36,7 @@ auto_view text/x-vcard text/html text/enriched
 
 bind pager <up> previous-line
 bind pager <down> next-line
-bind index <f5> imap-fetch-mail; set mail_check_stats
-
-source ~/.mutt/local
+bind index <f5> imap-fetch-mail
 
 ###############################################################################
 # Dracula Theme for Mutt: https://draculatheme.com/
