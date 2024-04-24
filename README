@@ -1,63 +1,63 @@
-Installation
-============
-- Clone repository
-- Create symbolic links for each file dot files
+My dotfiles - by Henrique Gogó
 
-.tmux.conf
-----------
-Changes prefix to C-a and set some colors and default settings
+Installation:
 
-.muttrc
--------
-Default configuration for Gmail accounts. Create a .mutt/account file to set realname, imap_user and imap_pass
+  - Clone the repository
+  - Create symbolic links for each file dot files
 
-.lynxrc
--------
-Vi keymaps, nvim editor and accept cookies
+Files:
 
-.gitconfig
-----------
-Set user, email and diff tool
+  .tmux.conf - Changes prefix to C-a and set some colors and default settings
 
-$ git history
-Show git log in terminal with some format and colors
+  .muttrc - Default configuration for Gmail accounts. Create a .mutt/account
+  file to set realname, imap_user and imap_pass
 
-$ git sync
-Update all repositories in a folder
+  .lynxrc - Vi keymaps, nvim editor and accept cookies
 
-.bash_aliases
--------------
-Prompt config and bash functions
+  .gitconfig - Set user, email and diff tool
 
-$ google "Why the sky is blue"
-Search in google using lynx terminal browser. Quotes are optional
+    $ git history
+    Show git log in terminal with some format and colors
 
-$ loadenv ./folder
-Load folder into env variables. ./bin into $PATH, ./lib into $LD_LIBRARY_PATH and others. Auto add every ~/opt/* as default
+    $ git sync
+    Update all repositories in a folder
 
-$ chrootstart ./folder
-Mount dev, proc, sys, tmp, etc and start a chroot in folder
+  .bash_aliases - Prompt config and bash functions
 
-.vimrc
-------
-Vim and NeoVim default settings, theme, commands and functions
-- Netrw can be used as a file explorer :Lexplorer
-- Default theme colors based on onedark theme
-- Personalized statusline
-- Buffers and tab navigation keymaps
-- Insert chars in line beginning. Works in normal and visual mode. Good for comment line: \<Space\>0
-- Surround keymaps: \<Space\>', \<Space\>", \<Space\>(, \<Space\>{, \<Space\>[
-- Begining words and surround chars can be removed using double char: \<Space\>00, \<Space\>'' 
+    $ google "Why the sky is blue"
+    Search in google using lynx terminal browser. Quotes are optional
 
-:Find
-Use shell "find" command to search file names recursively. Keymap: \<Leader\>e
+    $ loadenv ./folder
+    Load folder into env variables. ./bin into $PATH, ./lib into
+    $LD_LIBRARY_PATH and others. Auto add every ~/opt/* as default
 
-:Search
-Use shell "rg" or "grep" command to search text in files recursively. Keymap: \<Leader\>/
+    $ chrootstart ./folder
+    Mount dev, proc, sys, tmp, etc and start a chroot in folder
 
-:PluginInstall, :PluginRemove, :PluginUpdate, :PluginList
-Manage plugins into packages folder. PluginInstall can be used as "call PluginInstall('author/plugin') as well. Some default plugins are being installed
+  .vimrc - Vim and NeoVim default settings, theme, commands and functions
 
-Disclaimer
-==========
-These are my personal settings. You can use them as you wish, but I use to change a lot sometimes
+    - Netrw can be used as a file explorer :Lexplorer
+    - Default theme colors based on onedark theme
+    - Personalized statusline
+    - Buffers and tab navigation keymaps
+    - Insert chars in line beginning. Works in normal and visual mode. Good for
+      comment a line: <Space>0
+    - Surround keymaps: <Space>', <Space>", <Space>(, <Space>{, <Space>[
+    - Begining words and surround chars can be removed using double char:
+      <Space>00, <Space>'' 
+
+    :Find
+    Use shell "find" command to search file names recursively.
+    Keymap: <Leader>e
+
+    :Search
+    Use shell "rg" or "grep" command to search text in files recursively.
+    Keymap: <Leader>/
+
+    :PluginInstall, :PluginRemove, :PluginUpdate, :PluginList
+    Manage plugins into packages folder.
+    PluginInstall can be used as "call PluginInstall('author/plugin')" as well.
+
+Disclaimer:
+
+  These are my personal settings. You can use them as you wish, but I use to change a lot sometimes
