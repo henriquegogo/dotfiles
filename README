@@ -3,7 +3,7 @@ My dotfiles - by Henrique Gogó
 Installation:
 
   - Clone the repository
-  - Create symbolic links for each file dot files
+  - Create symbolic links for each dot files
 
 Files:
 
@@ -60,4 +60,9 @@ Files:
 
 Disclaimer:
 
-  These are my personal settings. You can use them as you wish, but I use to change a lot sometimes
+  These are my personal settings. You can use them as you wish, but I use to
+  change a lot sometimes.
+
+License:
+
+  Use as you wish.
