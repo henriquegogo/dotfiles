@@ -8,6 +8,7 @@ set smtp_pass     = $imap_pass
 set ssl_force_tls = yes
 set copy          = no
 set sort          = reverse-threads
+set sort_aux      = last-date-sent
 mailboxes         = =INBOX +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts +[Gmail]/Trash
 set spoolfile     = +INBOX
 set record        = "+[Gmail]/Sent Mail"
