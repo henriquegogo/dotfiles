@@ -16,6 +16,7 @@ set trash         = "+[Gmail]/Trash"
 set hostname      = "localhost"
 set charset       = "utf-8"
 set send_charset  = "us-ascii:utf-8:iso-8859-1"
+alternative_order = text/plain text/html
 
 set sidebar_delim_chars  = "/"
 set sidebar_divider_char = "│"
