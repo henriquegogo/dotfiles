@@ -40,6 +40,9 @@ bind pager <up> previous-line
 bind pager <down> next-line
 bind index <f5> imap-fetch-mail
 
+set collapse_unread = no
+folder-hook . "exec collapse-all"
+
 ###############################################################################
 # Dracula Theme for Mutt: https://draculatheme.com/
 #
