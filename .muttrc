@@ -40,7 +40,7 @@ bind pager <up> previous-line
 bind pager <down> next-line
 bind index <f5> imap-fetch-mail
 
-set collapse_unread = no
+unset collapse_unread
 folder-hook . "exec collapse-all"
 
 ###############################################################################
