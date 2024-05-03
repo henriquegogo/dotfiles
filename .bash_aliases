@@ -16,7 +16,6 @@ loadenv() {
     echo "Load folder into env variables"
     echo
     echo "Usage: loadenv [FOLDER1] [FOLDER2]..."
-    echo "After load, type 'unloadenv' to revert"
   else
     for arg in "$@"
     do
@@ -37,35 +36,14 @@ loadenv() {
 }
 [ -d "$HOME/opt" ] && loadenv $HOME/opt/*
 
-chrootstart() {
+chrootless() {
   if [ -z "$1" ]
   then
-    echo "Usage: chrootstart [PATH]"
+    echo "Start chroot with clean environment"
+    echo
+    echo "Usage: chrootless [PATH]"
+    echo "Copy /etc/resolv.conf to [PATH]/etc to make network works"
   else
-    cd `realpath $1`
-
-    for dir in "dev/" "proc/" "sys/" "tmp/" "etc/"
-    do
-      if [ ! -d "$dir" ]
-      then
-        echo "Directory `pwd`/$dir doesn't exist"
-        echo "Please, make sure dev/ proc/ sys/ tmp/ etc/ are created"
-        cd - > /dev/null
-        return 1
-      fi
-    done
-
-    sudo mount -o bind /dev dev/
-    sudo mount -t proc none proc/
-    sudo mount -o bind /sys sys/
-    sudo mount -o bind /tmp tmp/
-
-    cp -L /etc/resolv.conf etc/
-    xhost + local: > /dev/null
-
-    sudo chroot . sh -l
-
-    sudo umount -R {dev/,proc/,sys/,tmp/}
-    cd - > /dev/null
+    unshare --mount-proc -prf chroot $1 env - DISPLAY=$DISPLAY sh -l
   fi
 }

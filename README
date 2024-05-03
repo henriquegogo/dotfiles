@@ -31,8 +31,8 @@ Files:
     Load folder into env variables. ./bin into $PATH, ./lib into
     $LD_LIBRARY_PATH and others. Auto add every ~/opt/* as default
 
-    $ chrootstart ./folder
-    Mount dev, proc, sys, tmp, etc and start a chroot in folder
+    $ chrootless ./folder
+    Run chroot without root privileges. Automount /proc
 
   .vimrc - Vim and NeoVim default settings, theme, commands and functions
 
