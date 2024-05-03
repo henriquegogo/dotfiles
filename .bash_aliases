@@ -44,6 +44,9 @@ chrootless() {
     echo "Usage: chrootless [PATH]"
     echo "Copy /etc/resolv.conf to [PATH]/etc to make network works"
   else
-    unshare --mount-proc -prf chroot $1 env - DISPLAY=$DISPLAY sh -l
+    __COMMAND="${@:2}"
+    [ -z "$2" ] && __COMMAND="sh -l"
+    unshare --mount-proc -prf chroot $1 env - DISPLAY=$DISPLAY $__COMMAND
+    unset __COMMAND
   fi
 }
