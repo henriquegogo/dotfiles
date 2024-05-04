@@ -38,6 +38,8 @@ auto_view text/x-vcard text/html text/enriched
 
 bind pager <up> previous-line
 bind pager <down> next-line
+bind pager k previous-line
+bind pager j next-line
 bind index <left> collapse-all
 bind index <right> collapse-thread
 bind index <f5> imap-fetch-mail
