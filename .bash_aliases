@@ -5,6 +5,7 @@ if [ $(type -t __git_ps1) ]; then
 fi
 
 alias ll='ls -ahps1 --group-directories-first --color'
+alias battery='cat /sys/class/power_supply/*/capacity'
 
 google() {
   lynx google.com/search?q="$*"
