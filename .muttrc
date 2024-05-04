@@ -23,7 +23,6 @@ set sidebar_delim_chars  = "/"
 set sidebar_divider_char = "│"
 set sidebar_format       = "%B%* %<%N/%S"
 set sidebar_short_path   = yes
-set sidebar_visible      = yes
 set sidebar_width        = 25
 set mail_check_stats
 
