@@ -35,18 +35,3 @@ loadenv() {
   fi
 }
 [ -d "$HOME/opt" ] && loadenv $HOME/opt/*
-
-chrootless() {
-  if [ -z "$1" ]
-  then
-    echo "Start chroot with clean environment"
-    echo
-    echo "Usage: chrootless [PATH]"
-    echo "Copy /etc/resolv.conf to [PATH]/etc to make network works"
-  else
-    __COMMAND="${@:2}"
-    [ -z "$2" ] && __COMMAND="sh -l"
-    unshare --mount-proc -prf chroot $1 env - DISPLAY=$DISPLAY $__COMMAND
-    unset __COMMAND
-  fi
-}
