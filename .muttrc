@@ -27,6 +27,7 @@ set sidebar_width        = 25
 set mail_check_stats
 
 unset use_domain
+unset mark_old
 unset imap_passive
 
 auto_view text/x-vcard text/html text/enriched
