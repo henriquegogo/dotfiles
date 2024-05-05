@@ -3,14 +3,14 @@ My dotfiles - by Henrique Gogó
 Installation:
 
   - Clone the repository
-  - Create symbolic links for each dot files
+  - Create symbolic links for each dot file
 
 Files:
 
   .tmux.conf - Changes prefix to C-a and set some colors and default settings
 
-  .muttrc - Default configuration for Gmail accounts. Create a .mutt/account
-  file to set realname, imap_user and imap_pass
+  .muttrc - Default configuration for Gmail accounts.
+  Create a .mutt/local file to set realname, imap_user and imap_pass
 
   .lynxrc - Vi keymaps, nvim editor and accept cookies
 
@@ -31,8 +31,8 @@ Files:
     Load folder into env variables. ./bin into $PATH, ./lib into
     $LD_LIBRARY_PATH and others. Auto add every ~/opt/* as default
 
-    $ chrootless ./folder
-    Run chroot without root privileges. Automount /proc
+    $ confine ./folder
+    Start chroot with clean environment. Automount /proc
 
   .vimrc - Vim and NeoVim default settings, theme, commands and functions
 
@@ -40,8 +40,8 @@ Files:
     - Default theme colors based on onedark theme
     - Personalized statusline
     - Buffers and tab navigation keymaps
-    - Insert chars in line beginning. Works in normal and visual mode. Good for
-      comment a line: <Space>0
+    - Insert chars in line beginning. Works in normal and visual mode.
+      Good for comment a line: <Space>0
     - Surround keymaps: <Space>', <Space>", <Space>(, <Space>{, <Space>[
     - Begining words and surround chars can be removed using double char:
       <Space>00, <Space>'' 
@@ -56,13 +56,9 @@ Files:
 
     :PluginInstall, :PluginRemove, :PluginUpdate, :PluginList
     Manage plugins into packages folder.
-    PluginInstall can be used as "call PluginInstall('author/plugin')" as well.
+    Alternative syntax: "call PluginInstall('author/plugin')"
 
 Disclaimer:
 
-  These are my personal settings. You can use them as you wish, but I use to
-  change a lot sometimes.
-
-License:
-
-  Use as you wish.
+  These are my personal settings. You can use them as you wish,
+  but I use to change it a lot sometimes.
