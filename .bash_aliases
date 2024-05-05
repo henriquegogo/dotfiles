@@ -36,3 +36,17 @@ loadenv() {
   fi
 }
 [ -d "$HOME/opt" ] && loadenv $HOME/opt/*
+
+confine() {
+  if [ -z "$1" ]
+  then
+    echo "Start chroot with clean environment"
+    echo
+    echo "Usage: confine [PATH]"
+  else
+    __COMMAND="${@:2}"
+    [ -z "$2" ] && __COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
+    sudo unshare --mount-proc -pfR $1 $__COMMAND
+    unset __COMMAND
+  fi
+}
