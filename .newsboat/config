@@ -3,6 +3,8 @@ bind-key k up
 bind-key l open
 bind-key h quit
 
+browser "lynx %u"
+
 feedlist-title-format "Feeds (%u/%t)"
 searchresult-title-format "Search result (%u/%t)"
 articlelist-format "%4i %f %D %?T?%-12T ?%t"
