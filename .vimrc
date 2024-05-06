@@ -94,7 +94,7 @@ let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
 nnoremap <Leader><CR> :Lexplore<CR>
 autocmd FileType netrw setlocal statusline=%#StatusB# 
-      \ | nmap <buffer> <Space> gncd:cd .<CR>
+      \ | nmap <buffer> . gncd:cd .<CR>
 
 " Quickfix list
 autocmd FileType qf setlocal nonumber
