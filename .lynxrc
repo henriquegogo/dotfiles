@@ -4,6 +4,8 @@
 # TEXTFIELDS_NEED_ACTIVATION:TRUE
 # KEYMAP:j:DOWN_TWO
 # KEYMAP:k:UP_TWO
+# KEYMAP:l:ACTIVATE
+# KEYMAP:h:PREV_DOC
 
 accept_all_cookies = on
 file_editor        = nvim
