@@ -3,6 +3,12 @@ bind-key k up
 bind-key l open
 bind-key h quit
 
+feedlist-title-format "Feeds (%u/%t)"
+searchresult-title-format "Search result (%u/%t)"
+articlelist-format "%4i %f %D %?T?%-12T ?%t"
+articlelist-title-format "%T (%u/%t)"
+itemview-title-format "%T (%u/%t)"
+
 color background default default
 color listnormal color246 default
 color listfocus color238 color246 standout
