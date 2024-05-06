@@ -39,12 +39,7 @@ Files:
     - Netrw can be used as a file explorer :Lexplorer
     - Default theme colors based on onedark theme
     - Personalized statusline
-    - Buffers and tab navigation keymaps
-    - Insert chars in line beginning. Works in normal and visual mode.
-      Good for comment a line: <Space>0
-    - Surround keymaps: <Space>', <Space>", <Space>(, <Space>{, <Space>[
-    - Begining words and surround chars can be removed using double char:
-      <Space>00, <Space>'' 
+    - Buffers navigation keymaps
 
     :Find
     Use shell "find" command to search file names recursively.

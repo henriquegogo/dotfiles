@@ -118,40 +118,9 @@ noremap <Leader><Leader> "+
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>v :vsplit<CR>
 nnoremap <Leader>s :split<CR>
-nnoremap <Leader>t :tabnew<CR>
-nnoremap <Leader>l :tabnext<CR>
-nnoremap <Leader>h :tabprevious<CR>
 nnoremap <Leader>j :bnext<CR>
 nnoremap <Leader>k :bprevious<CR>
 nnoremap <Leader>b :buffer <C-z>
-
-" Add / Remove words and comments in front of line
-nnoremap <Space>0 0i
-vnoremap <Space>0 0<C-q>I
-nnoremap <Space>00 0de
-vnoremap <Space>00 :norm 0de<CR>
-
-" Surround blocks and quotes
-nnoremap <Space>' bvec''<Esc>P
-nnoremap <Space>" bvec""<Esc>P
-nnoremap <Space>( bvec()<Esc>P
-nnoremap <Space>{ bvec{}<Esc>P
-nnoremap <Space>[ bvec[]<Esc>P
-vnoremap <Space>' c''<Esc>P
-vnoremap <Space>" c""<Esc>P
-vnoremap <Space>( c()<Esc>P
-vnoremap <Space>{ c{}<Esc>P
-vnoremap <Space>[ c[]<Esc>P
-nnoremap <Space>'' va'<Esc>x`<x
-nnoremap <Space>"" va"<Esc>x`<x
-nnoremap <Space>(( va()<Esc>x`<x
-nnoremap <Space>{{ va{<Esc>x`<x
-nnoremap <Space>[[ va[<Esc>x`<x
-vnoremap <Space>'' <Esc>`>x`<x
-vnoremap <Space>"" <Esc>`>x`<x
-vnoremap <Space>(( <Esc>`>x`<x
-vnoremap <Space>{{ <Esc>`>x`<x
-vnoremap <Space>[[ <Esc>`>x`<x
 
 " Find files by name
 command! -nargs=1 Find cgetexpr system('find . -type f '
