@@ -34,7 +34,7 @@ set background=dark
 hi Boolean      ctermfg=173              " Dark Yellow
 hi ColorColumn              ctermbg=237  " Dark Gray
 hi Comment      ctermfg=059              " Gray
-hi Constant     ctermfg=075              " Light Blue
+hi Constant     ctermfg=075              " Blue
 hi CursorColumn             ctermbg=237  " Dark Gray
 hi CursorLine   cterm=NONE  ctermbg=236  " Darker Gray
 hi CursorLineNr ctermfg=145 cterm=NONE   " Light Gray
