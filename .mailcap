@@ -1,0 +1,1 @@
+application/pdf; pdftotext -layout %s -; copiousoutput;
