@@ -7,7 +7,7 @@ feedlist-title-format "Feeds (%u/%t)"
 searchresult-title-format "Search result (%u/%t)"
 articlelist-format "%4i %f %D %?T?%-12T ?%t"
 articlelist-title-format "%T (%u/%t)"
-itemview-title-format "%T (%u/%t)"
+itemview-title-format "%F - %T (%u/%t)"
 
 color background default default
 color listnormal color246 default
