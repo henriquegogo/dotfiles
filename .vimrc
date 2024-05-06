@@ -27,6 +27,7 @@ set wildmenu
 
 filetype plugin indent on
 syntax enable
+let mapleader = " "
 
 " Colorscheme
 set background=dark
@@ -116,18 +117,16 @@ noremap <Leader><Leader> "+
 
 " Buffers and tabs navigation
 nnoremap <Leader>q :q<CR>
-nnoremap <Leader>v :vsplit<CR>
-nnoremap <Leader>s :split<CR>
-nnoremap <Leader>j :bnext<CR>
-nnoremap <Leader>k :bprevious<CR>
-nnoremap <Leader>b :buffer <C-z>
+nnoremap <Leader>% :vsplit<CR>
+nnoremap <Leader>" :split<CR>
+nnoremap <Leader><Tab> :buffer <C-z>
 
 " Find files by name
 command! -nargs=1 Find cgetexpr system('find . -type f '
       \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
       \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
       \. '-name "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
-nnoremap <Leader>e :Find<Space>
+nnoremap <Leader>. :Find<Space>
 
 " Search files containing text
 if executable('rg')

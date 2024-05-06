@@ -39,11 +39,11 @@ Files:
     - Netrw can be used as a file explorer :Lexplorer
     - Default theme colors based on onedark theme
     - Personalized statusline
-    - Buffers navigation keymaps
+    - Custom keymaps
 
     :Find
     Use shell "find" command to search file names recursively.
-    Keymap: <Leader>e
+    Keymap: <Leader>.
 
     :Search
     Use shell "rg" or "grep" command to search text in files recursively.
