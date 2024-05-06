@@ -122,15 +122,15 @@ nnoremap <Leader>" :split<CR>
 nnoremap <Leader><Tab> :buffer <C-z>
 
 " Find files by name
-command! -nargs=1 Find cgetexpr system('find . -type f '
+command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
       \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
       \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-      \. '-name "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
+      \. '-path "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
 nnoremap <Leader>. :Find<Space>
 
 " Search files containing text
 if executable('rg')
-  command! -nargs=1 Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
+  command! -nargs=1 -complete=tag Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
         \. '"' . <q-args> . '" | sort') | copen
 else
