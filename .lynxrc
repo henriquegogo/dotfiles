@@ -2,8 +2,9 @@
 # NO_PAUSE:TRUE
 # SET_COOKIES:IGNORE
 # TEXTFIELDS_NEED_ACTIVATION:TRUE
+# KEYMAP:j:DOWN_TWO
+# KEYMAP:k:UP_TWO
 
 accept_all_cookies = on
 file_editor        = nvim
 user_mode          = ADVANCED
-vi_keys            = on
