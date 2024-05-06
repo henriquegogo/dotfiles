@@ -47,7 +47,7 @@ folder-hook . "exec collapse-all"
 
 # Colors
 color error     color233 color167
-color indicator color233 color241
+color indicator default  color239
 color markers   color167 default
 color message   default  default
 color normal    default  default
