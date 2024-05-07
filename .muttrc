@@ -49,8 +49,12 @@ folder-hook . "exec collapse-all"
 color error     color167 default
 color indicator default  color239
 color markers   color167 default
+color message   default  default
+color normal    default  default
+color prompt    default  default
 color search    color107 default
 color status    color248 color236
+color tilde     default  default
 color tree      color146 default
 
 color index color167 default ~D # deleted messages
