@@ -49,7 +49,7 @@ folder-hook . "exec collapse-all"
 color error     color167 default
 color indicator default  color239
 color markers   color167 default
-color message   default  default
+color message   color255 default
 color normal    default  default
 color prompt    default  default
 color search    color107 default
@@ -64,14 +64,14 @@ color index color146 default ~v # messages part of a collapsed thread
 color index color146 default ~Q # messages which have been replied to
 color index color173 default ~T # tagged messages
 
-color hdrdefault color140 default
-color header     color179 default ^Subject:.*  
 color attachment color238 default
 color body       color75  default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
 color body       color75  default [a-z]+://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
-color quoted     color241 default
-color quoted1    color238 default
-color quoted2    color241 default
-color quoted3    color238 default
-color quoted4    color241 default
-color signature  color238 default
+color hdrdefault color140 default
+color header     color179 default ^Subject:.*  
+color quoted     color246 default
+color quoted1    color241 default
+color quoted2    color246 default
+color quoted3    color241 default
+color quoted4    color246 default
+color signature  color241 default
