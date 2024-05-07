@@ -46,15 +46,11 @@ unset collapse_unread
 folder-hook . "exec collapse-all"
 
 # Colors
-color error     color233 color167
+color error     color167 default
 color indicator default  color239
 color markers   color167 default
-color message   default  default
-color normal    default  default
-color prompt    default  default
 color search    color107 default
 color status    color248 color236
-color tilde     color233 default
 color tree      color146 default
 
 color index color167 default ~D # deleted messages
@@ -64,15 +60,11 @@ color index color146 default ~v # messages part of a collapsed thread
 color index color146 default ~Q # messages which have been replied to
 color index color173 default ~T # tagged messages
 
-color hdrdefault color75  default
-color header     color233 default ^Subject:.*
-
+color hdrdefault color140 default
+color header     color179 default ^Subject:.*  
 color attachment color238 default
-color body       color233 default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+           # email addresses
-color body       color179 default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+    # URLs
-color body       color233 default (^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text
-color body       color233 default (^|[[:space:]])_[^[:space:]]+_([[:space:]]|$) # _underlined_ text
-color body       color233 default (^|[[:space:]])/[^[:space:]]+/([[:space:]]|$) # /italic/ text
+color body       color75  default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+color body       color75  default [a-z]+://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
 color quoted     color241 default
 color quoted1    color238 default
 color quoted2    color241 default
