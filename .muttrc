@@ -67,15 +67,15 @@ color index color173 default ~T # tagged messages
 color hdrdefault color75  default
 color header     color233 default ^Subject:.*
 
-color attachment color240 default
+color attachment color238 default
 color body       color233 default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+           # email addresses
 color body       color179 default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+    # URLs
 color body       color233 default (^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text
 color body       color233 default (^|[[:space:]])_[^[:space:]]+_([[:space:]]|$) # _underlined_ text
 color body       color233 default (^|[[:space:]])/[^[:space:]]+/([[:space:]]|$) # /italic/ text
-color quoted     color250  default
-color quoted1    color245  default
-color quoted2    color240 default
-color quoted3    color240 default
-color quoted4    color240 default
-color signature  color245 default
+color quoted     color241 default
+color quoted1    color238 default
+color quoted2    color241 default
+color quoted3    color238 default
+color quoted4    color241 default
+color signature  color238 default
