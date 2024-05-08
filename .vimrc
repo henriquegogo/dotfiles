@@ -4,12 +4,14 @@ set breakindent
 set cursorline
 set expandtab
 set fillchars+=vert:\ 
+set foldmethod=indent
 set hidden
 set ignorecase
 set incsearch
 set linebreak
 set mouse=a
 set nofixeol
+set nofoldenable
 set nohlsearch
 set noswapfile
 set number
