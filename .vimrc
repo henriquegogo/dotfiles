@@ -83,12 +83,11 @@ endif
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
 set statusline+=%#StatusB#\ %f\ %#StatusC#%M\ %R\ %=
-if executable('git')
-  set statusline+=%#StatusC#\ %{trim(system('git\ branch\ --show-current\ 2>/dev/null'))}\ 
-endif
-set statusline+=%#StatusC#\ %y\ 
+set statusline+=%#StatusC#\ %{&filetype}\ 
 set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
-set statusline+=%#StatusA#\ %{toupper(mode())}\ 
+if executable('git')
+  set statusline+=%#StatusA#\ %{trim(system('git\ branch\ --show-current\ 2>/dev/null'))}\ 
+endif
 
 " File explorer
 hi netrwTreeBar ctermfg=233
