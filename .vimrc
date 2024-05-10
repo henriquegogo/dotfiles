@@ -61,7 +61,7 @@ hi Search       ctermfg=233 ctermbg=179  " Black - Yellow
 hi SignColumn               ctermbg=233  " Light Gray
 hi Special      ctermfg=075              " Blue
 hi Statement    ctermfg=134              " Purple
-hi StatusLine   cterm=NONE  ctermbg=236  " Darker Gray
+hi StatusLine   cterm=NONE  ctermbg=232  " Dark Black
 hi String       ctermfg=107              " Green
 hi Structure    ctermfg=179              " Yellow
 hi TabLine      ctermfg=145 ctermbg=232 cterm=NONE  " Light Gray - Dark Black 
@@ -73,20 +73,21 @@ hi Visual       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi WildMenu     ctermfg=233 ctermbg=075  " Black - Blue
 
 " Statusline
-hi StatusA      ctermfg=254 ctermbg=060
-hi StatusB      ctermfg=247 ctermbg=232
-hi StatusC      ctermfg=244 ctermbg=236
-hi StatusD      ctermfg=232 ctermbg=236
+hi StatusA      ctermfg=248 ctermbg=235
+hi StatusB      ctermfg=248 ctermbg=232
+hi StatusC      ctermfg=239 ctermbg=232
 if $USER == 'root'
   hi StatusA      ctermfg=254 ctermbg=167
+  hi StatusB      ctermfg=167 ctermbg=232
 endif
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
+set statusline+=%#StatusB#\ %f\ %#StatusC#%M\ %R\ %=
 if executable('git')
   set statusline+=%#StatusC#\ %{trim(system('git\ branch\ --show-current\ 2>/dev/null'))}\ 
 endif
-set statusline+=%#StatusB#\ %f\ %M\ %R\ %=%{expand(&filetype)}\ 
-set statusline+=%#StatusC#\ %l:%c\ %#StatusD#\|%#StatusC#\ %p%%\ 
+set statusline+=%#StatusC#\ %y\ 
+set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
 set statusline+=%#StatusA#\ %{toupper(mode())}\ 
 
 " File explorer
