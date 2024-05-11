@@ -29,7 +29,7 @@ set wildmenu
 
 filetype plugin indent on
 syntax enable
-let mapleader = " "
+let mapleader = ' '
 
 " Colorscheme
 set background=dark
