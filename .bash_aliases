@@ -17,18 +17,16 @@ loadenv() {
   else
     for arg in "$@"
     do
-      __PREFIX=`realpath $arg`
+      local PREFIX=`realpath $arg`
 
-      if [[ "$PATH" != *"$__PREFIX"* ]]; then
-        [ -d "$__PREFIX/share/man" ]     && export MANPATH="$__PREFIX/share/man:$MANPATH"
-        [ -d "$__PREFIX/include" ]       && export CPATH="$__PREFIX/include:$CPATH"
-        [ -d "$__PREFIX/lib" ]           && export LD_LIBRARY_PATH="$__PREFIX/lib:$LD_LIBRARY_PATH"
-        [ -d "$__PREFIX/lib" ]           && export LIBRARY_PATH="$__PREFIX/lib:$LIBRARY_PATH"
-        [ -d "$__PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$__PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
-        [ -d "$__PREFIX/bin" ]           && export PATH="$__PREFIX/bin:$PATH" || export PATH="$__PREFIX:$PATH"
+      if [[ "$PATH" != *"$PREFIX"* ]]; then
+        [ -d "$PREFIX/share/man" ]     && export MANPATH="$PREFIX/share/man:$MANPATH"
+        [ -d "$PREFIX/include" ]       && export CPATH="$PREFIX/include:$CPATH"
+        [ -d "$PREFIX/lib" ]           && export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
+        [ -d "$PREFIX/lib" ]           && export LIBRARY_PATH="$PREFIX/lib:$LIBRARY_PATH"
+        [ -d "$PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+        [ -d "$PREFIX/bin" ]           && export PATH="$PREFIX/bin:$PATH" || export PATH="$PREFIX:$PATH"
       fi
-
-      unset __PREFIX
     done
   fi
 }
@@ -41,9 +39,25 @@ confine() {
     echo
     echo "Usage: confine [PATH]"
   else
-    __COMMAND="${@:2}"
-    [ -z "$2" ] && __COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
-    sudo unshare --mount-proc -pfR $1 $__COMMAND
-    unset __COMMAND
+    local COMMAND="${@:2}"
+    [ -z "$2" ] && COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
+    sudo unshare --mount-proc -pfR $1 $COMMAND
   fi
 }
+
+ticker() {
+  for arg in "$@"
+  do
+    curl -s https://query1.finance.yahoo.com/v8/finance/chart/$arg |\
+      jq '.chart.result[0].meta' |\
+      jq -M '[.symbol,.regularMarketPrice,.previousClose] | join(" ")' |\
+      tr -d '"' | { read symbol price previous
+        local LC_NUMERIC=en_US.UTF-8
+        [ `bc <<< "$price<$previous"` -eq 1 ] && COLOR="\e[31m" || COLOR="\e[32m "
+        printf "\e[37m%-12s \e[36m$%-10.2f $COLOR%-8.2f %.2f%%\n" $symbol $price \
+          $(bc -l <<< "$price - $previous") \
+          $(bc -l <<< "($price - $previous) / (($price + $previous) / 2) * 100")
+      }
+  done
+}
+
