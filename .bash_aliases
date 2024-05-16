@@ -53,10 +53,10 @@ ticker() {
       jq -M '[.symbol,.regularMarketPrice,.previousClose] | join(" ")' |\
       tr -d '"' | { read symbol price previous
         local LC_NUMERIC=en_US.UTF-8
-        [ `bc <<< "$price<$previous"` -eq 1 ] && COLOR="\e[31m" || COLOR="\e[32m "
-        printf "\e[37m%-12s \e[36m$%-10.2f $COLOR%-8.2f %.2f%%\n" $symbol $price \
-          $(bc -l <<< "$price - $previous") \
-          $(bc -l <<< "($price - $previous) / (($price + $previous) / 2) * 100")
+        [ `bc <<< "$price<$previous"` -eq 1 ] && COLOR="\e[31m" || COLOR="\e[32m"
+        printf "\e[37m%-10s \e[36m%10.2f $COLOR%9.2f %8.2f%%\n" $symbol $price \
+          `bc -l <<< "$price - $previous"` \
+          `bc -l <<< "($price - $previous) / (($price + $previous) / 2) * 100"`
       }
   done
 }
