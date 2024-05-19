@@ -84,6 +84,7 @@ set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\
 set statusline+=%#StatusB#\ %f\ %#StatusC#%M\ %R\ %=
 set statusline+=%#StatusC#\ %{&filetype}\ 
 set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
+let g:statusline = &statusline
 
 " File explorer
 hi netrwTreeBar ctermfg=233
@@ -138,12 +139,17 @@ else
 endif
 nnoremap <Leader>/ :Search<Space>
 
-" Git blame / diff
+" Git blame / diff / branch
 if executable('git')
   nnoremap <Leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
   vnoremap <Leader>g :<C-u>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
 
   function! Diff()
+    if system('git rev-parse --is-inside-work-tree') == "true\n"
+      let &statusline = g:statusline . '%#StatusA# ' . trim(system('git branch --show-current 2>/dev/null')) . ' '
+    else
+      let &statusline = g:statusline
+    endif
     call sign_define('DiffSign', {'text': '~', 'texthl': 'DiffChange'})
     if &buftype == ''
           \&& system('git -C ' . expand("%:p:h") . ' rev-parse --is-inside-work-tree') == "true\n"
@@ -158,7 +164,7 @@ if executable('git')
       endfor
     endif
   endfunction
-  autocmd BufReadPost,BufWritePost * call Diff()
+  autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * call Diff()
 endif
 
 " Plugins manager
@@ -210,9 +216,8 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
 " call PluginInstall('neoclide/coc.nvim --branch release')
 if isdirectory(g:pluginspath . 'coc.nvim')
-  let s:statusline = &statusline
   execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
-  let &statusline = s:statusline
+  let &statusline = g:statusline
 endif
 
 " call PluginInstall('Exafunction/codeium.vim')
