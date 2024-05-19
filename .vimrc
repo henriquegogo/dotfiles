@@ -85,9 +85,6 @@ set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\
 set statusline+=%#StatusB#\ %f\ %#StatusC#%M\ %R\ %=
 set statusline+=%#StatusC#\ %{&filetype}\ 
 set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
-if executable('git')
-  set statusline+=%#StatusA#\ %{trim(system('git\ branch\ --show-current\ 2>/dev/null'))}\ 
-endif
 
 " File explorer
 hi netrwTreeBar ctermfg=233
