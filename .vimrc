@@ -78,7 +78,6 @@ hi StatusB      ctermfg=248 ctermbg=232
 hi StatusC      ctermfg=239 ctermbg=232
 if $USER == 'root'
   hi StatusA      ctermfg=254 ctermbg=167
-  hi StatusB      ctermfg=167 ctermbg=232
 endif
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
