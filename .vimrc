@@ -54,8 +54,8 @@ hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
 hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
 hi Number       ctermfg=173              " Dark Yellow
-hi Pmenu        ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
-hi PmenuSel     ctermfg=236 ctermbg=075  " Darker Gray - Purple
+hi Pmenu        ctermfg=237 ctermbg=145  " Light Gray - Dark Gray
+hi PmenuSel     ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 hi PreProc      ctermfg=179              " Yellow
 hi Search       ctermfg=233 ctermbg=179  " Black - Yellow
 hi SignColumn               ctermbg=233  " Light Gray
