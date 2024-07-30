@@ -14,6 +14,7 @@ set nofixeol
 set nofoldenable
 set nohlsearch
 set noswapfile
+set notermguicolors
 set number
 set path+=**
 set shiftwidth=2
@@ -164,7 +165,7 @@ if executable('git')
       endfor
     endif
   endfunction
-  autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * call Diff()
+  autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * if &filetype != '' | call Diff() | endif
 endif
 
 " Plugins manager
