@@ -9,29 +9,21 @@ google() {
 }
 
 email() {
-  if [ -z "$1" ]
-  then
-    echo "Send email"
-    echo
+  if [ -z "$1" ]; then
     echo "Usage: email <FILE>"
-  elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]
-  then
+  elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]; then
     echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
   else
-    curl --ssl-reqd $SMTP_SERVER -u $SMTP_USER:$SMTP_PASS \
-      --mail-rcpt "$(sed -n 's/^To: \([^<]*<\)\?\([^>]*\).*/\2/pI' $1)" --upload-file $1
+    curl --ssl-reqd "$SMTP_SERVER" -u "$SMTP_USER:$SMTP_PASS" --upload-file "$1" "${@:2}" \
+      $(sed -n 's/^\(To:\|Cc:\).*<\([^>]*\)>$/--mail-rcpt \2/p; s/^\(To:\|Cc:\)\([^<]*\)$/--mail-rcpt \2/p' "$1" | tr '\n' ' ')
   fi
 }
 
 loadenv() {
-  if [ -z "$1" ]
-  then
-    echo "Load folder into env variables"
-    echo
+  if [ -z "$1" ]; then
     echo "Usage: loadenv [FOLDER1] [FOLDER2]..."
   else
-    for arg in "$@"
-    do
+    for arg in "$@"; do
       local PREFIX=`realpath $arg`
 
       if [[ "$PATH" != *"$PREFIX"* ]]; then
@@ -48,10 +40,7 @@ loadenv() {
 [ -d "$HOME/opt" ] && loadenv $HOME/opt/*
 
 confine() {
-  if [ -z "$1" ]
-  then
-    echo "Start chroot with clean environment"
-    echo
+  if [ -z "$1" ]; then
     echo "Usage: confine [PATH]"
   else
     local COMMAND="${@:2}"
@@ -61,8 +50,7 @@ confine() {
 }
 
 ticker() {
-  for arg in "$@"
-  do
+  for arg in "$@"; do
     curl -s https://query1.finance.yahoo.com/v8/finance/chart/$arg |\
       jq '.chart.result[0].meta' |\
       jq -M '[.symbol,.regularMarketPrice,.previousClose] | join(" ")' |\
