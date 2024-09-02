@@ -9,16 +9,18 @@ google() {
 }
 
 email() {
-  if [[ -z "$1" || -z "$2" ]]
+  if [ -z "$1" ]
   then
     echo "Send email"
     echo
-    echo "Usage: email <RECIPIENT> <FILE>"
+    echo "Usage: email <FILE>"
   elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]
   then
     echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
   else
-    curl --ssl-reqd $SMTP_SERVER -u $SMTP_USER:$SMTP_PASS --mail-rcpt $1 --upload-file $2
+    echo "The email: $(sed -n 's/^To: //pI' $1)"
+    curl --ssl-reqd $SMTP_SERVER -u $SMTP_USER:$SMTP_PASS \
+      --mail-rcpt "$(sed -n 's/^To: \([^<]*<\)\?\([^>]*\).*/\2/pI' $1)" --upload-file $1
   fi
 }
 
