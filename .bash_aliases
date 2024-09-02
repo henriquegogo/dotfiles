@@ -18,7 +18,6 @@ email() {
   then
     echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
   else
-    echo "The email: $(sed -n 's/^To: //pI' $1)"
     curl --ssl-reqd $SMTP_SERVER -u $SMTP_USER:$SMTP_PASS \
       --mail-rcpt "$(sed -n 's/^To: \([^<]*<\)\?\([^>]*\).*/\2/pI' $1)" --upload-file $1
   fi
