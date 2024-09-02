@@ -8,6 +8,20 @@ google() {
   lynx google.com/search?q="$*"
 }
 
+email() {
+  if [[ -z "$1" || -z "$2" ]]
+  then
+    echo "Send email"
+    echo
+    echo "Usage: email <RECIPIENT> <FILE>"
+  elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]
+  then
+    echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
+  else
+    curl --ssl-reqd $SMTP_SERVER -u $SMTP_USER:$SMTP_PASS --mail-rcpt $1 --upload-file $2
+  fi
+}
+
 loadenv() {
   if [ -z "$1" ]
   then
