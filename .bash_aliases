@@ -15,7 +15,7 @@ email() {
     echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
   else
     curl --ssl-reqd "$SMTP_SERVER" -u "$SMTP_USER:$SMTP_PASS" --upload-file "$1" "${@:2}" \
-      $(sed -n 's/^\(To:\|Cc:\).*<\([^>]*\)>$/--mail-rcpt \2/p; s/^\(To:\|Cc:\)\([^<]*\)$/--mail-rcpt \2/p' "$1" | tr '\n' ' ')
+      $(sed -nE 's/^(To:|Cc:) *(.*)$/--mail-rcpt \2/p' "$1" | sed 's/ .*</ /; s/>//' | tr '\r\n' ' ')
   fi
 }
 
