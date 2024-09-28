@@ -55,7 +55,7 @@ hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
 hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
 hi Number       ctermfg=173              " Dark Yellow
-hi Pmenu        ctermfg=237 ctermbg=145  " Light Gray - Dark Gray
+hi Pmenu        ctermfg=236 ctermbg=145  " Light Gray - Dark Gray
 hi PmenuSel     ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 hi PreProc      ctermfg=179              " Yellow
 hi Search       ctermfg=233 ctermbg=179  " Black - Yellow
@@ -71,7 +71,7 @@ hi TabLineSel   ctermfg=232 ctermbg=145  " Dark Black -  Light Gray
 hi Type         ctermfg=179              " Yellow
 hi VertSplit    cterm=NONE  ctermbg=232  " Dark Black
 hi Visual       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
-hi WildMenu     ctermfg=233 ctermbg=075  " Black - Blue
+hi WildMenu     ctermfg=236 ctermbg=075  " Black - Blue
 
 " Statusline
 hi StatusA      ctermfg=248 ctermbg=235
@@ -219,6 +219,8 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 if isdirectory(g:pluginspath . 'coc.nvim')
   execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
   let &statusline = g:statusline
+  hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
+  hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 endif
 
 " call PluginInstall('Exafunction/codeium.vim')
