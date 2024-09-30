@@ -227,7 +227,8 @@ endif
 if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'coc.nvim')
   let g:codeium_disable_bindings = 1
   imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
-  imap <M-]> <Cmd>call codeium#CycleCompletions(1)<CR>
-  imap <M-[> <Cmd>call codeium#CycleCompletions(-1)<CR>
-  imap <M-e> <Cmd>call codeium#Clear()<CR>
+  imap <M-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
+  imap <M-j> <Cmd>call codeium#CycleCompletions(1)<CR>
+  imap <expr> <M-Backspace> codeium#Clear()
+  imap <expr> <M-Enter> codeium#Accept()
 endif
