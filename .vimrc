@@ -229,6 +229,6 @@ if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'co
   imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
   imap <M-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
   imap <M-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-  imap <expr> <M-Backspace> codeium#Clear()
-  imap <expr> <M-Enter> codeium#Accept()
+  imap <expr> <M-h> codeium#Clear()
+  imap <expr> <M-l> codeium#Accept()
 endif
