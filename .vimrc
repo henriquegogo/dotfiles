@@ -46,6 +46,7 @@ hi DiffChange   ctermfg=179 ctermbg=233  " Yellow - Black
 hi DiffDelete   ctermfg=167 ctermbg=233  " Red - Black
 hi DiffText     ctermfg=179 ctermbg=233  " Yellow - Black
 hi EndOfBuffer  ctermfg=233              " Black
+hi ErrorMsg     ctermfg=167 ctermbg=233  " Red - Black
 hi FoldColumn               ctermbg=233  " Black
 hi Folded       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi Function     ctermfg=075              " Blue
@@ -167,6 +168,44 @@ if executable('git')
   endfunction
   autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * if &filetype != '' | call Diff() | endif
 endif
+
+" Linter
+function! s:Linter(cmd)
+  cclose
+  call setqflist([], 'r')
+  if exists('*jobstart')
+    call jobstart([&shell, &shellcmdflag, a:cmd . ' ' . expand('%')], { 'on_stdout': function('s:LinterCallback') })
+  else
+    call job_start([&shell, &shellcmdflag, a:cmd . ' ' . expand('%')], { 'callback': function('s:LinterCallback') })
+  endif
+endfunction
+
+function! s:LinterCallback(...)
+  sign define ErrorSign text=>> texthl=ErrorMsg
+  call sign_unplace('Linter', { 'buffer': bufnr('%') })
+  
+  call setqflist([], 'a', {'efm':&errorformat, 'lines': type(a:2) == type('') ? split(a:2, "\n") : a:2})
+  for item in getqflist()
+    if item.bufnr != 0
+      call sign_place(0, 'Linter', 'ErrorSign', item.bufnr, {'lnum': item.lnum})
+    endif
+  endfor
+  call s:LinterLineMsg()
+endfunction
+
+function! s:LinterLineMsg()
+  echohl ErrorMsg
+  echomsg join(map(filter(getqflist(), "v:val.lnum == line('.') && v:val.col >= col('.')"), "trim(v:val.text)"), " || ")
+  echohl NONE
+endfunction
+
+if executable('tsc')
+  autocmd BufEnter,BufWritePost *.py set errorformat=%f:%l:%c\ -\ %t%*[^:]:\ %m | call s:Linter('pyright')
+endif
+if executable('pyright')
+  autocmd BufEnter,BufWritePost *.js,*.ts set errorformat=%+A\ %#%f\ %#(%l\\,%c):\ %m,%C%m | call s:Linter('tsc --noEmit --allowJs')
+endif
+autocmd CursorMoved * if &modifiable | call s:LinterLineMsg() | endif
 
 " Plugins manager
 if exists('*stdpath')
