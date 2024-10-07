@@ -195,7 +195,7 @@ endfunction
 
 function! s:LinterLineMsg()
   echohl ErrorMsg
-  echomsg join(map(filter(getqflist(), "v:val.lnum == line('.') && v:val.col >= col('.')"), "trim(v:val.text)"), " || ")
+  echomsg join(map(filter(getqflist(), "v:val.lnum == line('.') && v:val.col == col('.')"), "trim(v:val.text)"), " || ")
   echohl NONE
 endfunction
 
