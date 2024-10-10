@@ -56,8 +56,8 @@ hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
 hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
 hi Number       ctermfg=173              " Dark Yellow
-hi Pmenu        ctermfg=236 ctermbg=145  " Light Gray - Dark Gray
-hi PmenuSel     ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
+hi Pmenu        ctermfg=145 ctermbg=236 cterm=NONE  " Light Gray - Dark Gray
+hi PmenuSel     ctermfg=236 ctermbg=075 cterm=NONE  " Darker Gray - Purple
 hi PreProc      ctermfg=179              " Yellow
 hi Search       ctermfg=233 ctermbg=179  " Black - Yellow
 hi SignColumn               ctermbg=233  " Light Gray
@@ -220,6 +220,7 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 if isdirectory(g:pluginspath . 'coc.nvim')
   execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
   let &statusline = g:statusline
+  let g:coc_disable_startup_warning = 1
   hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
   hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 endif
