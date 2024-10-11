@@ -35,7 +35,7 @@ let mapleader = ' '
 " Colorscheme
 set background=dark
 hi Boolean      ctermfg=173              " Dark Yellow
-hi ColorColumn              ctermbg=237  " Dark Gray
+hi ColorColumn  cterm=NONE  ctermbg=232  " Dark Black
 hi Comment      ctermfg=059              " Gray
 hi Constant     ctermfg=075              " Blue
 hi CursorColumn             ctermbg=237  " Dark Gray
@@ -73,6 +73,7 @@ hi Type         ctermfg=179              " Yellow
 hi VertSplit    cterm=NONE  ctermbg=232  " Dark Black
 hi Visual       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi WildMenu     ctermfg=236 ctermbg=075  " Black - Blue
+hi WinSeparator cterm=NONE  ctermbg=232  " Dark Black
 
 " Statusline
 hi StatusA      ctermfg=248 ctermbg=235
