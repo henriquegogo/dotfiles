@@ -7,8 +7,8 @@ set smtp_url      = smtps://$imap_user@smtp.gmail.com
 set smtp_pass     = $imap_pass
 set ssl_force_tls = yes
 set copy          = no
-set sort          = reverse-threads
-set sort_aux      = last-date-sent
+set sort          = threads
+set sort_aux      = reverse-last-date-sent
 mailboxes         = =INBOX +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts +[Gmail]/Trash
 set spoolfile     = +INBOX
 set record        = "+[Gmail]/Sent Mail"
