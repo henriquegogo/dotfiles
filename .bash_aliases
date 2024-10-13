@@ -10,7 +10,7 @@ google() {
 
 email() {
   if [ -z "$1" ]; then
-    echo "Usage: email <FILE>"
+    echo "Usage: email [FILE]"
   elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]; then
     echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
   else
@@ -46,6 +46,21 @@ confine() {
     local COMMAND="${@:2}"
     [ -z "$2" ] && COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
     sudo unshare --mount-proc -pfR $1 $COMMAND
+  fi
+}
+
+selfextract() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: selfextract [FOLDER] [COMMAND] [PARAMS]"
+  else
+    local OUTPUT_BIN="${2}.bin"
+    echo "#!/bin/bash" > "${OUTPUT_BIN}"
+    echo "TMPDIR=\$(mktemp -d)" >> "${OUTPUT_BIN}"
+    echo "tail -n +6 \$0 | tar x -C \$TMPDIR" >> "${OUTPUT_BIN}"
+    echo "(cd \$TMPDIR && ./$2 $3 \$@)" >> "${OUTPUT_BIN}"
+    echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
+    tar cf - -C "$1" . >> "${OUTPUT_BIN}"
+    chmod +x "${OUTPUT_BIN}"
   fi
 }
 
