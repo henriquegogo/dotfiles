@@ -76,6 +76,11 @@ My dotfiles - by Henrique Gogó
     Usage: `confine [PATH] [COMMAND]`
     If no command is specified, a default shell environment is used.
 
+  - watchpath:
+    Watches a directory for changes and executes a command when files
+    are added or modified.
+    Usage: `watchpath [PATH] [COMMAND]`
+
   - selfextract: 
     Creates a self-extracting archive with the specified command.
     Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`

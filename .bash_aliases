@@ -49,6 +49,20 @@ confine() {
   fi
 }
 
+watchpath() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: watchpath [PATH] [COMMAND]"
+  else
+    while :; do
+      if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
+        local OLD=$(ls -lR --full-time "$1")
+        eval "${@:2}"
+      fi
+      sleep 1
+    done
+  fi
+}
+
 selfextract() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: selfextract [FOLDER] [COMMAND] [PARAMS]"
