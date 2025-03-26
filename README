@@ -85,12 +85,6 @@ My dotfiles - by Henrique Gogó
     Creates a self-extracting archive with the specified command.
     Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`
 
-  - ticker: 
-    Fetches stock data from Yahoo Finance for specified stock symbols,
-    displaying the current price, previous close, and percentage change
-    with color-coded output.
-    Usage: `ticker [STOCK1] [STOCK2]...`
-
 .vimrc
 ======
   Overview
@@ -115,10 +109,14 @@ My dotfiles - by Henrique Gogó
   Buffers and Tabs Navigation
   ---------------------------
   - Navigation Shortcuts: Map keys for quick buffer and tab management:
-    - <Leader>q: Close the current buffer.
-    - <Leader>%: Open a vertical split.
-    - <Leader>": Open a horizontal split.
-    - <Leader><Tab>: Switch buffers.
+    - <Leader>q Close the current buffer.
+    - <Leader>% Open a vertical split.
+    - <Leader>" Open a horizontal split.
+    - <Leader>b List all buffers.
+    - <Leader>1-9 Switch buffers by numbers.
+    - <Leader><Tab> Switch recent buffer.
+    - <Leader><Tab><Tab> Go to next buffer.
+    - <Leader><S-Tab> Go to previous buffer.
 
   Find Files by Name or Containing Text
   -------------------------------------

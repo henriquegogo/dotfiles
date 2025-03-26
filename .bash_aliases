@@ -77,19 +77,3 @@ selfextract() {
     chmod +x "${OUTPUT_BIN}"
   fi
 }
-
-ticker() {
-  for arg in "$@"; do
-    curl -s https://query1.finance.yahoo.com/v8/finance/chart/$arg |\
-      jq '.chart.result[0].meta' |\
-      jq -M '[.symbol,.regularMarketPrice,.previousClose] | join(" ")' |\
-      tr -d '"' | { read symbol price previous
-        local LC_NUMERIC=en_US.UTF-8
-        [ `bc <<< "$price<$previous"` -eq 1 ] && COLOR="\e[31m" || COLOR="\e[32m"
-        busybox printf "\e[37m%-9s \e[36m%9.2f $COLOR%8.2f %6.2f%%\n" $symbol $price \
-          `bc -l <<< "$price - $previous"` \
-          `bc -l <<< "($price - $previous) / (($price + $previous) / 2) * 100"`
-      }
-  done
-}
-

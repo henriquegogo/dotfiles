@@ -84,7 +84,7 @@ if $USER == 'root'
 endif
 set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
-set statusline+=%#StatusB#\ %f\ %#StatusC#%M\ %R\ %=
+set statusline+=%#StatusC#\ %n\ %#StatusB#%f\ %#StatusC#%M\ %R\ %=
 set statusline+=%#StatusC#\ %{&filetype}\ 
 set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
 let g:statusline = &statusline
@@ -117,11 +117,17 @@ imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Clipboard register
 noremap <Leader><Leader> "+
 
-" Buffers and tabs navigation
+" Buffers navigation
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>% :vsplit<CR>
 nnoremap <Leader>" :split<CR>
-nnoremap <Leader><Tab> :buffer <C-z>
+nnoremap <Leader>b :buffer <C-z>
+nnoremap <Leader><Tab> :buffer #<CR>
+nnoremap <Leader><Tab><Tab> :bnext<CR>
+nnoremap <Leader><S-Tab> :bprevious<CR>
+for i in range(1, 9)
+  execute 'nnoremap <Leader>' . i . ' :buffer ' . i . '<CR>'
+endfor
 
 " Find files by name
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
