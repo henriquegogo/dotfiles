@@ -94,7 +94,7 @@ hi netrwTreeBar ctermfg=233
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
-nnoremap <Leader><CR> :Lexplore<CR>
+nnoremap <Leader><CR> <Cmd>Lexplore<CR>
 autocmd FileType netrw setlocal statusline=%#StatusB# 
       \ | nmap <buffer> . gncd:cd .<CR>
 
@@ -114,17 +114,19 @@ imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" Esc alternative
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
+
 " Clipboard register
 noremap <Leader><Leader> "+
 
 " Buffers navigation
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>% :vsplit<CR>
-nnoremap <Leader>" :split<CR>
+nnoremap <Leader>% <Cmd>vsplit<CR>
+nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z>
-nnoremap <Leader><Tab> :buffer #<CR>
-nnoremap <Leader><Tab><Tab> :bnext<CR>
-nnoremap <Leader><S-Tab> :bprevious<CR>
+nnoremap <Leader><Tab> <Cmd>bnext<CR>
+nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
 for i in range(1, 9)
   execute 'nnoremap <Leader>' . i . ' :buffer ' . i . '<CR>'
 endfor

@@ -101,6 +101,7 @@ My dotfiles - by Henrique Gogó
 
   Shortcuts
   ---------
+  - <C-c> to exit insert mode.
   - <Leader><CR> to open the file explorer.
   - <C-Space> to trigger the omnifunction for syntax completion.
   - <Leader><Leader> to use the system clipboard for yank and paste
@@ -109,13 +110,11 @@ My dotfiles - by Henrique Gogó
   Buffers and Tabs Navigation
   ---------------------------
   - Navigation Shortcuts: Map keys for quick buffer and tab management:
-    - <Leader>q Close the current buffer.
     - <Leader>% Open a vertical split.
     - <Leader>" Open a horizontal split.
     - <Leader>b List all buffers.
     - <Leader>1-9 Switch buffers by numbers.
-    - <Leader><Tab> Switch recent buffer.
-    - <Leader><Tab><Tab> Go to next buffer.
+    - <Leader><Tab> Go to next buffer.
     - <Leader><S-Tab> Go to previous buffer.
 
   Find Files by Name or Containing Text
