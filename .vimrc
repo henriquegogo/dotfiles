@@ -184,12 +184,12 @@ endif
 
 " Ctags
 if executable('ctags')
-  command! Ctags silent! execute '!nohup ctags --tag-relative=yes -R -f /tmp/tags-' 
-        \. fnamemodify(getcwd(), ':t') . ' ' . getcwd() . ' >/dev/null 2>&1 &' | redraw!
-  command! CtagsDelete silent! execute '!rm /tmp/tags-' . fnamemodify(getcwd(), ':t') | redraw!
-  let &tags = '/tmp/tags-' . fnamemodify(getcwd(), ':t')
-  autocmd BufWritePost * if filereadable('/tmp/tags-' 
-        \. fnamemodify(getcwd(), ':t')) && getcwd() !=# '/' && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
+  let s:tagfilename = '/tmp/tags-' . fnamemodify(getcwd(), ':h:t') . '-' . fnamemodify(getcwd(), ':t')
+  command! Ctags silent! execute '!nohup ctags --tag-relative=yes -R -f ' 
+        \. shellescape(s:tagfilename) . ' ' . shellescape(getcwd()) . ' >/dev/null 2>&1 &' | redraw!
+  command! CtagsDelete silent! execute '!rm ' . shellescape(s:tagfilename) | redraw!
+  let &tags = s:tagfilename
+  autocmd BufWritePost * if filereadable(s:tagfilename) && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
 endif
 
 " Plugins manager
