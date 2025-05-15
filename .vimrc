@@ -138,7 +138,7 @@ command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
       \. '-path "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
 nnoremap <Leader>. :Find<Space>
 
-" Search files containing text
+" Search / Replace text
 if executable('rg')
   command! -nargs=1 -complete=tag Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
@@ -148,7 +148,11 @@ else
         \. '--exclude-dir={node_modules,venv,vendor,build,dist,tmp,out,bin,".?*"} '
         \. '"' . <q-args> . '" . | sort' | copen | redraw!
 endif
+command! -nargs=+ Replace execute 'Search ' . split(<q-args>)[0] | cclose
+      \| execute 'cfdo %s/\V\C' . split(<q-args>)[0] . '/' . split(<q-args>)[1] . '/gc'
 nnoremap <Leader>/ :Search<Space>
+nnoremap <Leader>? :%s/<C-R><C-W>//gc<Left><Left><Left>
+nnoremap <Leader>?? :Replace <C-R><C-W><Space>
 
 " Git blame / diff / branch
 if executable('git')
