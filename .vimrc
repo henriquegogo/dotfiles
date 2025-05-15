@@ -178,6 +178,16 @@ if executable('git')
   autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * if &filetype != '' | call Diff() | endif
 endif
 
+" Ctags
+if executable('ctags')
+  command! Ctags silent! execute '!nohup ctags --tag-relative=yes -R -f /tmp/tags-' 
+        \. fnamemodify(getcwd(), ':t') . ' ' . getcwd() . ' >/dev/null 2>&1 &' | redraw!
+  command! CtagsDelete silent! execute '!rm /tmp/tags-' . fnamemodify(getcwd(), ':t') | redraw!
+  let &tags = '/tmp/tags-' . fnamemodify(getcwd(), ':t')
+  autocmd BufWritePost * if filereadable('/tmp/tags-' 
+        \. fnamemodify(getcwd(), ':t')) && getcwd() !=# '/' && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
+endif
+
 " Plugins manager
 if exists('*stdpath')
   let g:pluginspath = stdpath('data') . '/site/pack/plugins/start/'
