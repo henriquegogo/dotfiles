@@ -243,6 +243,7 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
 " Plugins configuration
 " call PluginInstall('sheerun/vim-polyglot')
+" call PluginInstall('github/copilot.vim')
 
 " call PluginInstall('neoclide/coc.nvim --branch release')
 if isdirectory(g:pluginspath . 'coc.nvim')
@@ -251,14 +252,4 @@ if isdirectory(g:pluginspath . 'coc.nvim')
   let g:coc_disable_startup_warning = 1
   hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
   hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
-endif
-
-" call PluginInstall('Exafunction/codeium.vim')
-if isdirectory(g:pluginspath . 'codeium.vim') && isdirectory(g:pluginspath . 'coc.nvim')
-  let g:codeium_disable_bindings = 1
-  imap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : codeium#Accept()
-  imap <M-k> <Cmd>call codeium#CycleCompletions(-1)<CR>
-  imap <M-j> <Cmd>call codeium#CycleCompletions(1)<CR>
-  imap <expr> <M-h> codeium#Clear()
-  imap <expr> <M-l> codeium#Accept()
 endif
