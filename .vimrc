@@ -95,6 +95,7 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
 nnoremap <Leader><CR> <Cmd>Lexplore<CR>
+autocmd FileType netrw nmap <buffer> <2-LeftMouse> <Nop>
 autocmd FileType netrw setlocal statusline=%#StatusB# 
       \ | nmap <buffer> . gncd:cd .<CR>
 
