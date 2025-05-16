@@ -118,8 +118,12 @@ imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
+" Suppress default behavior
+nnoremap <Space> <Nop>
+vnoremap <Space> <Nop>
+
 " Clipboard register
-noremap <Leader><Leader> "+
+noremap <Leader> "+
 
 " Buffers navigation
 nnoremap <Leader>% <Cmd>vsplit<CR>
