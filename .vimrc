@@ -196,6 +196,7 @@ if executable('ctags')
   command! CtagsDelete silent! execute '!rm ' . shellescape(s:tagfilename) | redraw!
   let &tags = s:tagfilename
   autocmd BufWritePost * if filereadable(s:tagfilename) && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
+  nnoremap <Leader>t :tag *
 endif
 
 " Plugins manager
