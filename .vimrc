@@ -4,6 +4,7 @@ set breakindent
 set cursorline
 set expandtab
 set fillchars+=vert:\ 
+set foldlevel=9999
 set foldmethod=indent
 set hidden
 set ignorecase
