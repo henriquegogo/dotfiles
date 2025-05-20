@@ -161,7 +161,7 @@ nnoremap <Leader>?? :Replace <C-R><C-W><Space>
 if executable('git')
   nnoremap <Leader>g :echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line("."))<CR>
   vnoremap <Leader>g :<C-u>echo system('git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1])<CR>
-  if executable('tmux') | nnoremap <Leader>d :!tmux neww "git difftool"<CR> | endif
+  if executable('tmux') | nnoremap <Leader>d :!tmux neww "git difftool %"<CR> | endif
 
   function! Diff()
     if system('git rev-parse --is-inside-work-tree') == "true\n"
