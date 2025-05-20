@@ -130,12 +130,9 @@ noremap <Leader> "+
 " Buffers navigation
 nnoremap <Leader>% <Cmd>vsplit<CR>
 nnoremap <Leader>" <Cmd>split<CR>
-nnoremap <Leader>b :buffer <C-z>
+nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader><Tab> <Cmd>bnext<CR>
 nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
-for i in range(1, 9)
-  execute 'nnoremap <Leader>' . i . ' :buffer ' . i . '<CR>'
-endfor
 
 " Find files by name
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
