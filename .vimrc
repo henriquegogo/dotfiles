@@ -138,45 +138,45 @@ nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
       \. '! -path "*/.*" ! -path "**/node_modules/*" ! -path "**/venv/*" ! -path "**/vendor/*" '
       \. '! -path "**/build/*" ! -path "**/dist/*" ! -path "**/tmp/*" ! -path "**/out/*" ! -path "**/bin/*" '
-      \. '-path "*' . <q-args> . '*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
+      \. '-path "*'.<q-args>.'*" -exec stat -c "%n:0:0: " {} \; | sort') | copen
 nnoremap <Leader>. :Find<Space>
 
 " Search / Replace text
 if executable('rg')
   command! -nargs=1 -complete=tag Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
         \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
-        \. '"' . <q-args> . '" | sort') | copen
+        \. '"'.<q-args>.'" | sort') | copen
 else
   command! -nargs=1 Search silent execute 'grep! -R -i '
         \. '--exclude-dir={node_modules,venv,vendor,build,dist,tmp,out,bin,".?*"} '
-        \. '"' . <q-args> . '" . | sort' | copen | redraw!
+        \. '"'.<q-args>.'" . | sort' | copen | redraw!
 endif
-command! -nargs=+ Replace execute 'Search ' . split(<q-args>)[0] | cclose
-      \| execute 'cfdo %s/\V\C' . split(<q-args>)[0] . '/' . split(<q-args>)[1] . '/gc'
+command! -nargs=+ Replace execute 'Search '.split(<q-args>)[0] | cclose
+      \| execute 'cfdo %s/\V\C'.split(<q-args>)[0].'/'.split(<q-args>)[1].'/gc'
 nnoremap <Leader>/ :Search<Space>
 nnoremap <Leader>? :%s/<C-R><C-W>//gc<Left><Left><Left>
 nnoremap <Leader>?? :Replace <C-R><C-W><Space>
 
 " Git blame / diff / branch
 if executable('git')
-  nnoremap <Leader>g :execute '!git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . line(".") . ',' . line(".")<CR>
-  vnoremap <Leader>g :<C-u>execute '!git -C ' . expand("%:p:h") . ' blame ' . expand("%:p") . ' -L' . getpos("'<")[1] . ',' . getpos("'>")[1]<CR>
-  if executable('tmux') | nnoremap <Leader>d :!tmux neww "git difftool %"<CR> | endif
-  vnoremap <Leader>d :<C-u>execute '!diff <(sed -n ''' . getpos("'<")[1] . ',' . getpos("'>")[1] . '''p % ) 
-        \<(git show HEAD:% \| sed -n ''' . getpos("'<")[1] . ',' . getpos("'>")[1] . '''p )'<CR>
+  nnoremap <Leader>gb :execute '!git -C '.expand("%:p:h").' blame '.expand("%:p").' -L'.line(".").','.line(".")<CR>
+  vnoremap <Leader>gb :<C-u>execute '!git -C '.expand("%:p:h").' blame '.expand("%:p").' -L'.getpos("'<")[1].','.getpos("'>")[1]<CR>
+  nnoremap <Leader>gd :execute '!git diff -U999999 \| grep -v "^+" \| tail -n +5 \| sed -n '.line(".").','.line(".").'p'<CR>
+  vnoremap <Leader>gd :<C-u>execute '!git diff -U999999 \| grep -v "^+" \| tail -n +5 \| sed -n '.getpos("'<")[1].','.getpos("'>")[1].'p'<CR>
+  if executable('tmux') | nnoremap <Leader>GD :!tmux neww "git difftool %"<CR> | endif
 
   function! Diff()
     if system('git rev-parse --is-inside-work-tree') == "true\n"
-      let &statusline = g:statusline . '%#StatusA# ' . trim(system('git branch --show-current 2>/dev/null')) . ' '
+      let &statusline = g:statusline.'%#StatusA# '.trim(system('git branch --show-current 2>/dev/null')).' '
     else
       let &statusline = g:statusline
     endif
     call sign_define('DiffSign', {'text': '~', 'texthl': 'DiffChange'})
     if &buftype == ''
-          \&& system('git -C ' . expand("%:p:h") . ' rev-parse --is-inside-work-tree') == "true\n"
-          \&& strlen(system('git -C ' . expand("%:p:h") . ' ls-files -- ' . expand("%:p")))
+          \&& system('git -C '.expand("%:p:h").' rev-parse --is-inside-work-tree') == "true\n"
+          \&& strlen(system('git -C '.expand("%:p:h").' ls-files -- '.expand("%:p")))
       let bufnr = bufnr('%')
-      let lines = systemlist('git -C ' . expand('%:p:h') . ' blame -sf --abbrev=1 ' . expand("%:p")
+      let lines = systemlist('git -C '.expand('%:p:h').' blame -sf --abbrev=1 '.expand("%:p")
             \. ' | grep -n "^00000 "')
       call sign_unplace('DiffSign', {'buffer': bufnr})
       for item in lines
@@ -190,10 +190,10 @@ endif
 
 " Ctags
 if executable('ctags')
-  let s:tagfilename = '/tmp/tags-' . fnamemodify(getcwd(), ':h:t') . '-' . fnamemodify(getcwd(), ':t')
+  let s:tagfilename = '/tmp/tags-'.fnamemodify(getcwd(), ':h:t').'-'.fnamemodify(getcwd(), ':t')
   command! Ctags silent! execute '!nohup ctags --tag-relative=yes -R -f ' 
-        \. shellescape(s:tagfilename) . ' ' . shellescape(getcwd()) . ' >/dev/null 2>&1 &' | redraw!
-  command! CtagsDelete silent! execute '!rm ' . shellescape(s:tagfilename) | redraw!
+        \. shellescape(s:tagfilename).' '.shellescape(getcwd()).' >/dev/null 2>&1 &' | redraw!
+  command! CtagsDelete silent! execute '!rm '.shellescape(s:tagfilename) | redraw!
   let &tags = s:tagfilename
   autocmd BufWritePost * if filereadable(s:tagfilename) && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
   nnoremap <Leader>t :tjump *<C-z><S-Tab>
@@ -201,9 +201,9 @@ endif
 
 " Plugins manager
 if exists('*stdpath')
-  let g:pluginspath = stdpath('data') . '/site/pack/plugins/start/'
+  let g:pluginspath = stdpath('data').'/site/pack/plugins/start/'
 else
-  let g:pluginspath = split(&runtimepath, ',')[0] . '/pack/plugins/start/'
+  let g:pluginspath = split(&runtimepath, ',')[0].'/pack/plugins/start/'
 endif
 
 function! PluginInstall(repo)
@@ -211,30 +211,30 @@ function! PluginInstall(repo)
   if !isdirectory(g:pluginspath)
     call mkdir(g:pluginspath, 'p')
   endif
-  if !isdirectory(g:pluginspath . l:pluginfolder) && executable('git')
-    echo 'Installing ' . l:pluginfolder . '... '
-    echo system('git clone --depth=1 https://github.com/'. a:repo . ' ' . g:pluginspath . l:pluginfolder)
+  if !isdirectory(g:pluginspath.l:pluginfolder) && executable('git')
+    echo 'Installing '.l:pluginfolder.'... '
+    echo system('git clone --depth=1 https://github.com/'.a:repo.' '.g:pluginspath.l:pluginfolder)
   endif
 endfunction
 
 function! s:PluginRemove(plugin)
   let l:pluginfolder = split(split(a:plugin, ' ')[0], '/')[-1]
-  if isdirectory(g:pluginspath . l:pluginfolder)
-    echo 'Removing ' . l:pluginfolder . '... '
-    echo system('rm -rf ' . g:pluginspath . l:pluginfolder)
+  if isdirectory(g:pluginspath.l:pluginfolder)
+    echo 'Removing '.l:pluginfolder.'... '
+    echo system('rm -rf '.g:pluginspath.l:pluginfolder)
   endif
 endfunction
 
 function! s:PluginUpdate()
   if isdirectory(g:pluginspath) && executable('git')
     echo 'Updating...'
-    echo system('for repo in ' . g:pluginspath . '*; do echo "$repo... "; git -C $repo pull; done')
+    echo system('for repo in '.g:pluginspath.'*; do echo "$repo... "; git -C $repo pull; done')
   endif
 endfunction
 
 function! s:PluginList(A, L, P)
   if isdirectory(g:pluginspath)
-    return system('ls ' . g:pluginspath)
+    return system('ls '.g:pluginspath)
   endif
 endfunction
 
@@ -248,8 +248,8 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 " call PluginInstall('github/copilot.vim')
 
 " call PluginInstall('neoclide/coc.nvim --branch release')
-if isdirectory(g:pluginspath . 'coc.nvim')
-  execute 'source ' . g:pluginspath . 'coc.nvim/doc/coc-example-config.vim'
+if isdirectory(g:pluginspath.'coc.nvim')
+  execute 'source '.g:pluginspath.'coc.nvim/doc/coc-example-config.vim'
   let &statusline = g:statusline
   let g:coc_disable_startup_warning = 1
   hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
