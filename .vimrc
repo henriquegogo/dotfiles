@@ -128,6 +128,7 @@ vnoremap <Space> <Nop>
 noremap <Leader> "+
 
 " Buffers navigation
+nnoremap <Leader>q <Cmd>execute confirm('Quit?', "&Yes\n&No") == 1 ? 'cq' : ''<CR>
 nnoremap <Leader>% <Cmd>vsplit<CR>
 nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
