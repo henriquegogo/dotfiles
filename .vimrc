@@ -103,7 +103,7 @@ autocmd FileType netrw setlocal statusline=%#StatusB#
 " Quickfix list
 autocmd FileType qf setlocal nonumber
       \ | setlocal statusline=%#StatusB#\ %=%l/%L\ 
-      \ | nnoremap <buffer> <CR> <CR>:cclose<CR>
+      \ | nnoremap <buffer> <CR> <CR>:cclose<CR> :lclose<CR>
 
 " Autocompletion
 set completeopt=menu,noinsert,noselect
@@ -179,13 +179,17 @@ if executable('git')
       let lines = systemlist('git -C '.expand('%:p:h').' blame -sf --abbrev=1 '.expand("%:p")
             \. ' | grep -n "^00000 "')
       call sign_unplace('DiffSign', {'buffer': bufnr})
+      let loclist = []
       for item in lines
         let lnum = split(item, ':')[0]
+        let text = join(split(item, ') ')[1:], ') ')
         call sign_place(lnum, 'DiffSign', 'DiffSign', bufnr, {'lnum': lnum})
+        call add(loclist, {'bufnr': bufnr, 'lnum': lnum, 'col': 1, 'text': text})
       endfor
+      call setloclist(0, [], 'r', {'title': 'Diff', 'items': loclist})
     endif
   endfunction
-  autocmd BufReadPost,BufWritePost,BufEnter,DirChanged * if &filetype != '' | call Diff() | endif
+  autocmd BufReadPost,BufWritePost,DirChanged * if &filetype != '' | call Diff() | endif
 endif
 
 " Ctags
