@@ -189,7 +189,7 @@ if executable('git')
       call setloclist(0, [], 'r', {'title': 'Diff', 'items': loclist})
     endif
   endfunction
-  autocmd BufReadPost,BufWritePost,DirChanged * if &filetype != '' | call Diff() | endif
+  autocmd BufReadPost,BufWritePost,BufWinEnter,DirChanged * if &filetype != '' | call Diff() | endif
 endif
 
 " Ctags
