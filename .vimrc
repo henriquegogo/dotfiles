@@ -162,7 +162,7 @@ nnoremap <Leader>?? :Replace <C-R><C-W><Space>
 if executable('git')
   vnoremap <Leader>gb :<C-u>execute '!git -C '.expand("%:p:h").' blame '.expand("%:p").' -L'.getpos("'<")[1].','.getpos("'>")[1]<CR>
   nnoremap <Leader>gb :execute '!git -C '.expand("%:p:h").' blame '.expand("%:p").' -L'.line(".").','.line(".")<CR>
-  vnoremap <Leader>gd :<C-u>execute '!git diff -U999999 \| grep -v "^+" \| tail -n +5 \| sed -n '.getpos("'<")[1].','.getpos("'>")[1].'p'<CR>
+  vnoremap <Leader>gd :<C-u>execute '!git diff -U999999 % \| grep -v "^+" \| tail -n +5 \| sed -n '.getpos("'<")[1].','.getpos("'>")[1].'p'<CR>
   if executable('tmux') | nnoremap <Leader>gd :!tmux neww "git difftool %"<CR> | endif
 
   function! Diff()
