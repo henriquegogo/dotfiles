@@ -105,6 +105,11 @@ autocmd FileType qf setlocal nonumber
       \ | setlocal statusline=%#StatusB#\ %=%l/%L\ 
       \ | nnoremap <buffer> <CR> <CR>:cclose<CR> :lclose<CR>
 
+" Terminal
+if exists('*termopen')
+  autocmd TermOpen * setlocal nonumber | startinsert
+endif
+
 " Autocompletion
 set completeopt=menu,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
@@ -132,7 +137,8 @@ nnoremap <Leader>q <Cmd>execute confirm('Quit?', "&Yes\n&No") == 1 ? 'cq' : ''<C
 nnoremap <Leader>% <Cmd>vsplit<CR>
 nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
-nnoremap <Leader><Tab> <Cmd>bnext<CR>
+nnoremap <Leader><Tab> <Cmd>buffer #<CR>
+nnoremap <Leader><Tab><Tab> <Cmd>bnext<CR>
 nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
 
 " Find files by name
