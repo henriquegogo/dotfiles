@@ -77,6 +77,10 @@ hi WildMenu     ctermfg=236 ctermbg=075  " Black - Blue
 hi WinSeparator cterm=NONE  ctermbg=232  " Dark Black
 
 " Statusline
+function! ScrollIndicator()
+  let index = float2nr((line('.') - 1) * 10 / line('$'))
+  return repeat('◼', index) . '◼' . repeat('◻', 10 - index - 1)
+endfunction
 hi StatusA      ctermfg=248 ctermbg=235
 hi StatusB      ctermfg=248 ctermbg=232
 hi StatusC      ctermfg=239 ctermbg=232
@@ -87,7 +91,7 @@ set laststatus=2
 set statusline=%#StatusA#\ %{fnamemodify(getcwd(),':t')}\ 
 set statusline+=%#StatusC#\ %n\ %#StatusB#%f\ %#StatusC#%M\ %R\ %=
 set statusline+=%#StatusC#\ %{&filetype}\ 
-set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\|%#StatusB#\ %p%%\ 
+set statusline+=%#StatusB#\ %l:%c\ %#StatusC#\ %{ScrollIndicator()}\ 
 let g:statusline = &statusline
 
 " File explorer
@@ -173,7 +177,7 @@ if executable('git')
 
   function! Diff()
     if system('git rev-parse --is-inside-work-tree') == "true\n"
-      let &statusline = g:statusline.'%#StatusA# '.trim(system('git branch --show-current 2>/dev/null')).' '
+      let &statusline = g:statusline.' %#StatusA# '.trim(system('git branch --show-current 2>/dev/null')).' '
     else
       let &statusline = g:statusline
     endif
