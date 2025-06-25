@@ -204,11 +204,11 @@ endif
 " Ctags
 if executable('ctags')
   let s:tagfilename = '/tmp/tags-'.fnamemodify(getcwd(), ':h:t').'-'.fnamemodify(getcwd(), ':t')
-  command! Ctags silent! execute '!nohup ctags --tag-relative=yes -R -f ' 
+  command! CtagsCreate silent! execute '!nohup ctags --tag-relative=yes -R -f ' 
         \. shellescape(s:tagfilename).' '.shellescape(getcwd()).' >/dev/null 2>&1 &' | redraw!
   command! CtagsDelete silent! execute '!rm '.shellescape(s:tagfilename) | redraw!
   let &tags = s:tagfilename
-  autocmd BufWritePost * if filereadable(s:tagfilename) && getcwd() !=# expand('$HOME') | execute 'Ctags' | endif
+  autocmd BufWritePost * if filereadable(s:tagfilename) && getcwd() !=# expand('$HOME') | execute 'CtagsCreate' | endif
   nnoremap <Leader>t :tjump *<C-z><S-Tab>
 endif
 
