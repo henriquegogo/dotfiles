@@ -64,12 +64,6 @@ My dotfiles - by Henrique Gogó
     Automatically load environment variables from all directories within
     $HOME/opt on startup.
 
-  - email: 
-    Sends an email from a file using curl.
-    Usage: `Usage: email [FILE]`
-    Previously you need to setup these environment variables:
-    $SMTP_SERVER $SMTP_USER $SMTP_PASS
-
   - confine: 
     Starts a chroot environment with a clean environment and specified
     command.
@@ -104,17 +98,17 @@ My dotfiles - by Henrique Gogó
   - <C-c> to exit insert mode.
   - <Leader><CR> to open the file explorer.
   - <C-Space> to trigger the omnifunction for syntax completion.
-  - <Leader><Leader> to use the system clipboard for yank and paste
-    operations.
+  - <Leader> to use the system clipboard for yank and paste operations.
 
   Buffers and Tabs Navigation
   ---------------------------
   - Navigation Shortcuts: Map keys for quick buffer and tab management:
+    - <Leader>q Quit editor.
     - <Leader>% Open a vertical split.
     - <Leader>" Open a horizontal split.
     - <Leader>b List all buffers.
-    - <Leader>1-9 Switch buffers by numbers.
-    - <Leader><Tab> Go to next buffer.
+    - <Leader><Tab> Switch recent buffer.
+    - <Leader><Tab><Tab> Go to next buffer.
     - <Leader><S-Tab> Go to previous buffer.
 
   Find Files by Name or Containing Text
@@ -132,6 +126,12 @@ My dotfiles - by Henrique Gogó
     selected lines.
   - Git Diff: Automatically highlight lines with changes in files under
     version control.
+
+  Ctags Support
+  -------------
+  - CtagsCreate: Create tags for the current directory using ctags and
+    save in tmp folder.
+  - CtagsDelete: Delete tags in the tmp folder.
 
   Plugin Management
   -----------------

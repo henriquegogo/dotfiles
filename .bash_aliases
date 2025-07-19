@@ -8,17 +8,6 @@ google() {
   lynx google.com/search?q="$*"
 }
 
-email() {
-  if [ -z "$1" ]; then
-    echo "Usage: email [FILE]"
-  elif [[ -z "$SMTP_SERVER" || -z "$SMTP_USER" || -z "$SMTP_PASS" ]]; then
-    echo "Ensure that env vars SMTP_SERVER, SMTP_USER, and SMTP_PASS are all set."
-  else
-    curl --ssl-reqd "$SMTP_SERVER" -u "$SMTP_USER:$SMTP_PASS" --upload-file "$1" "${@:2}" \
-      $(sed -nE 's/^(To:|Cc:) *(.*)$/--mail-rcpt \2/p' "$1" | sed 's/ .*</ /; s/>//' | tr '\r\n' ' ')
-  fi
-}
-
 loadenv() {
   if [ -z "$1" ]; then
     echo "Usage: loadenv [FOLDER1] [FOLDER2]..."
