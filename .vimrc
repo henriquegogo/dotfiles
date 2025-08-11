@@ -258,7 +258,9 @@ command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
 " Plugins configuration
 " call PluginInstall('sheerun/vim-polyglot')
-" call PluginInstall('github/copilot.vim')
+if isdirectory(g:pluginspath.'vim-polyglot')
+  let g:vim_jsx_pretty_template_tags = ['html', 'jsx', '']
+endif
 
 " call PluginInstall('neoclide/coc.nvim --branch release')
 if isdirectory(g:pluginspath.'coc.nvim')
@@ -268,3 +270,5 @@ if isdirectory(g:pluginspath.'coc.nvim')
   hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
   hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 endif
+
+" call PluginInstall('Exafunction/windsurf.vim')
