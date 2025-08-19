@@ -70,6 +70,11 @@ My dotfiles - by Henrique Gogó
     Usage: `confine [PATH] [COMMAND]`
     If no command is specified, a default shell environment is used.
 
+  - chhome: 
+    Run a command in a different home directory. Good for sandboxing.
+    This function consider LD_LIBRARY_PATH in the new home directory.
+    Usage: `chhome [PATH] [COMMAND]`
+
   - watchpath:
     Watches a directory for changes and executes a command when files
     are added or modified.

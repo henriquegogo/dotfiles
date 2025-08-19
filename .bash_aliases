@@ -38,6 +38,14 @@ confine() {
   fi
 }
 
+chhome() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: chhome [PATH] [COMMAND]"
+  else
+    HOME="$1" PATH="$1/bin:$PATH" LD_LIBRARY_PATH="$1/lib:$1/lib64:$LD_LIBRARY_PATH" "${@:2}"
+  fi
+}
+
 watchpath() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: watchpath [PATH] [COMMAND]"
