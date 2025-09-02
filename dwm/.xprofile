@@ -1,0 +1,14 @@
+xsetroot -solid '#222'
+export GTK_THEME=Yaru-purple-dark
+
+(
+while ! xprop -root _NET_SUPPORTED >/dev/null 2>&1; do sleep 0.3; done
+sleep 0.5
+if pgrep -x dwm; then
+# xrandr --output HDMI-1-0 --auto --left-of eDP-1
+# feh --bg-scale ~/Pictures/wallpaper.jpg
+  xbindkeys
+  xcompmgr -f &
+  while true; do xsetroot -name " $(date +"%a %d %b %R") "; sleep 10; done &
+fi
+) &
