@@ -72,6 +72,9 @@ color index color173 default ~T # tagged messages
 color attachment color238 default
 color body       color75  default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
 color body       color75  default [a-z]+://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
+color body       color2   default ^[\+].*                        
+color body       color1   default ^\-[^-].*                        
+color body       color75  default [@@].*                         
 color hdrdefault color140 default
 color header     color179 default ^Subject:.*  
 color quoted     color246 default
@@ -80,3 +83,5 @@ color quoted2    color246 default
 color quoted3    color241 default
 color quoted4    color246 default
 color signature  color241 default
+
+# Patch syntax highlighting                                                    

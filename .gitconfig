@@ -12,4 +12,4 @@
 	tool = nvimdiff
 [alias]
 	sync = "!for repo in $(echo */); do if [ -d \"$repo/.git\" ]; then echo \"$repo\"; git -C \"$repo\" pull; echo; fi; done"
-	history = "log --format='%Cred%h %Cblue%cs %Creset%s %Cgreen- %an'"
+	lg = "log --format='%Cred%h %Cblue%cs %Creset%s %Cgreen- %an'"
