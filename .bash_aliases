@@ -4,8 +4,16 @@ export PS1='\n\[\e[01;33m\]\$ \[\e[34m\]\w \[\e[0m\]$(__git_ps1 "(\[\e[31m\]%s\[
 alias ll='ls -ahps1 --group-directories-first --color'
 alias battery='cat /sys/class/power_supply/*/capacity'
 
-google() {
-  lynx google.com/search?q="$*"
+websearch() {
+  lynx duckduckgo.com/?q="$*"
+}
+
+wikipedia() {
+  lynx en.m.wikipedia.org/?search="$*"
+}
+
+wikipediapt() {
+  lynx pt.m.wikipedia.org/?search="$*"
 }
 
 loadenv() {
