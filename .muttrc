@@ -17,6 +17,8 @@ set trash         = "+[Gmail]/Trash"
 set hostname      = "localhost"
 set charset       = "utf-8"
 set send_charset  = "us-ascii:utf-8:iso-8859-1"
+set wrap          = 80
+set timeout       = 5
 alternative_order = text/plain text/html
 
 set sidebar_delim_chars  = "/"
@@ -74,7 +76,7 @@ color body       color75  default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
 color body       color75  default [a-z]+://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
 color body       color2   default ^[\+].*                        
 color body       color1   default ^\-[^-].*                        
-color body       color75  default [@@].*                         
+color body       color75  default ^@@.*                         
 color hdrdefault color140 default
 color header     color179 default ^Subject:.*  
 color quoted     color246 default
