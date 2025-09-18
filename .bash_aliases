@@ -74,10 +74,13 @@ selfextract() {
     echo "Usage: selfextract [FOLDER] [COMMAND] [PARAMS]"
   else
     local OUTPUT_BIN="${2}.bin"
-    echo "#!/bin/bash" > "${OUTPUT_BIN}"
+    echo "#!/usr/bin/env bash" > "${OUTPUT_BIN}"
     echo "TMPDIR=\$(mktemp -d)" >> "${OUTPUT_BIN}"
     echo "tail -n +6 \$0 | tar x -C \$TMPDIR" >> "${OUTPUT_BIN}"
-    echo "(cd \$TMPDIR && ./$2 $3 \$@)" >> "${OUTPUT_BIN}"
+    echo "(TMPDIR=\$TMPDIR \
+      PATH=\"\$TMPDIR:\$TMPDIR/bin:\$PATH\" \
+      LD_LIBRARY_PATH=\"\$TMPDIR/lib:\$TMPDIR/lib64:\$LD_LIBRARY_PATH\" \
+      $2 $3 \$@)" >> "${OUTPUT_BIN}"
     echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
     tar cf - -C "$1" . >> "${OUTPUT_BIN}"
     chmod +x "${OUTPUT_BIN}"
