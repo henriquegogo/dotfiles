@@ -51,21 +51,8 @@ chhome() {
     echo "Usage: chhome [PATH] [COMMAND]"
   else
     local NEWHOME=`realpath $1`
-    HOME="$NEWHOME" PATH="$NEWHOME/bin:$PATH" LD_LIBRARY_PATH="$NEWHOME/lib:$NEWHOME/lib64:$LD_LIBRARY_PATH" "${@:2}"
-  fi
-}
-
-watchpath() {
-  if [ "$#" -lt 2 ]; then
-    echo "Usage: watchpath [PATH] [COMMAND]"
-  else
-    while :; do
-      if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
-        local OLD=$(ls -lR --full-time "$1")
-        eval "${@:2}"
-      fi
-      sleep 1
-    done
+    HOME="$NEWHOME" PATH="$NEWHOME/bin:$PATH" \
+      LD_LIBRARY_PATH="$NEWHOME/lib:$NEWHOME/lib64:$LD_LIBRARY_PATH" "${@:2}"
   fi
 }
 
@@ -84,5 +71,35 @@ selfextract() {
     echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
     tar cf - -C "$1" . >> "${OUTPUT_BIN}"
     chmod +x "${OUTPUT_BIN}"
+  fi
+}
+
+mntrun() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: mntrun [FILE] [COMMAND]"
+  else
+    local TMPDIR=$(mktemp -d)
+    if ! sudo -n true 2>/dev/null; then
+      echo "Sudo required to mount $1 in $TMPDIR"
+    fi
+    sudo mount "$1" "$TMPDIR"
+    PATH="$TMPDIR:$TMPDIR/bin:$PATH" \
+      LD_LIBRARY_PATH="$TMPDIR/lib:$TMPDIR/lib64:$LD_LIBRARY_PATH" \
+      $2 ${@:3}
+    sudo umount "$TMPDIR" && rmdir "$TMPDIR"
+  fi
+}
+
+watchpath() {
+  if [ "$#" -lt 2 ]; then
+    echo "Usage: watchpath [PATH] [COMMAND]"
+  else
+    while :; do
+      if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
+        local OLD=$(ls -lR --full-time "$1")
+        eval "${@:2}"
+      fi
+      sleep 1
+    done
   fi
 }

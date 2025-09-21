@@ -23,7 +23,7 @@ My dotfiles - by Henrique Gogó
     it is a Git repository, and runs `git pull` if it is.
     Usage: `git sync`
 
-  - history: 
+  - lg: 
     This alias shows a formatted log of commits with a graphical
     representation of the branch structure. The format includes the
     commit hash, commit message, author name, and relative commit date,
@@ -51,10 +51,20 @@ My dotfiles - by Henrique Gogó
 
   Functions
   ---------
-  - google: 
-    Opens a text-based web browser to search Google with the specified
-    query.
-    Usage: `google [search terms]`
+  - websearch: 
+    Opens a text-based web browser to search DuckDuckGo with the
+    specified query.
+    Usage: `websearch [search terms]`
+
+  - wikipedia: 
+    Opens a text-based web browser to search Wikipedia with the
+    specified query.
+    Usage: `websearch [search terms]`
+
+  - wikipediapt: 
+    Opens a text-based web browser to search Wikipedia in Portuguese
+    with the specified query.
+    Usage: `websearch [search terms]`
 
   - loadenv: 
     Loads specified directories into environment variables such as PATH,
@@ -72,17 +82,22 @@ My dotfiles - by Henrique Gogó
 
   - chhome: 
     Run a command in a different home directory. Good for sandboxing.
-    This function consider LD_LIBRARY_PATH in the new home directory.
+    This function consider HOME, PATH and LD_LIBRARY_PATH in the new
+    home directory.
     Usage: `chhome [PATH] [COMMAND]`
+
+  - selfextract: 
+    Creates a self-extracting archive with the specified command.
+    Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`
+
+  - mntrun:
+    Mount a file in a temporary directory and run a command.
+    Usage: `mntrun [FILE] [COMMAND]`
 
   - watchpath:
     Watches a directory for changes and executes a command when files
     are added or modified.
     Usage: `watchpath [PATH] [COMMAND]`
-
-  - selfextract: 
-    Creates a self-extracting archive with the specified command.
-    Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`
 
 .vimrc
 ======
