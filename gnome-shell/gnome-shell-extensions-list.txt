@@ -1,0 +1,5 @@
+kiwi@kemma
+tilingshell@ferrarodomenico.com
+ubuntu-dock@ubuntu.com
+
+# dconf load /org/gnome/shell/extensions/ < gnome-shell-extensions-settings.dconf

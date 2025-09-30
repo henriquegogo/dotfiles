@@ -1,0 +1,33 @@
+[dash-to-dock]
+always-center-icons=true
+background-opacity=0.80000000000000004
+custom-theme-shrink=false
+dash-max-icon-size=48
+dock-fixed=false
+dock-position='BOTTOM'
+extend-height=false
+height-fraction=0.90000000000000002
+multi-monitor=true
+show-mounts=false
+show-trash=false
+transparency-mode='DEFAULT'
+
+[kiwi]
+enable-app-window-buttons=false
+hide-minimized-windows=false
+move-calendar-right=true
+move-window-to-new-workspace=false
+panel-hover-fullscreen=false
+panel-opaque-on-window=true
+panel-transparency-level=60
+show-window-controls=false
+
+[tilingshell]
+inner-gaps=uint32 12
+last-version-name-installed='17.0'
+layouts-json='[{"id":"Layout 4","tiles":[{"x":0,"y":0,"width":0.67,"height":1,"groups":[1]},{"x":0.67,"y":0,"width":0.33,"height":1,"groups":[1]}]},{"id":"1193631","tiles":[{"x":0,"y":0,"width":1,"height":1,"groups":[]}]},{"id":"1333918","tiles":[{"x":0,"y":0,"width":0.5,"height":1,"groups":[1]},{"x":0.5,"y":0,"width":0.5000000000000002,"height":1,"groups":[1]}]}]'
+outer-gaps=uint32 12
+overridden-settings="{\"org.gnome.mutter.keybindings\":{\"toggle-tiled-right\":\"['<Super>Right']\",\"toggle-tiled-left\":\"['<Super>Left']\"},\"org.gnome.desktop.wm.keybindings\":{\"maximize\":\"['<Super>Up']\",\"unmaximize\":\"['<Super>Down', '<Alt>F5']\"},\"org.gnome.mutter\":{\"edge-tiling\":\"true\"}}"
+quarter-tiling-threshold=uint32 10
+selected-layouts=[['Layout 1', 'Layout 4'], ['Layout 1', 'Layout 4']]
+show-indicator=false
