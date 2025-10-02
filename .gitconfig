@@ -13,3 +13,5 @@
 [alias]
 	sync = "!for repo in $(echo */); do if [ -d \"$repo/.git\" ]; then echo \"$repo\"; git -C \"$repo\" pull; echo; fi; done"
 	lg = "log --format='%Cred%h %Cblue%cs %Creset%s %Cgreen- %an'"
+[init]
+	defaultBranch = master

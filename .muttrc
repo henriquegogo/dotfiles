@@ -17,6 +17,7 @@ set trash         = "+[Gmail]/Trash"
 set hostname      = "localhost"
 set charset       = "utf-8"
 set send_charset  = "us-ascii:utf-8:iso-8859-1"
+set attribution   = "%n <%a> wrote:"
 set wrap          = 80
 set timeout       = 5
 alternative_order = text/plain text/html
