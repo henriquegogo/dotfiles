@@ -18,7 +18,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "🮒", "🮒", "🮒", "🮒" };
+static const char *tags[] = { "1", "2", "3", "4" };
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
@@ -55,8 +55,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ ALTKEY,                       XK_Tab,    focusstack,     {.i = +1 } },
 	{ ALTKEY|ShiftMask,             XK_Tab,    focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ControlMask,           XK_Tab,    focusmon,       {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Tab,    view,           {0} },
+	{ MODKEY,                       XK_Tab,    focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_Tab,    focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_Return, setlayout,      {0} },
 	{ MODKEY,                       XK_Up,     setlayout,      {.v = &layouts[1]} },
