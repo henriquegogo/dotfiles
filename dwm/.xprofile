@@ -7,8 +7,7 @@ sleep 0.5
 if pgrep -x dwm; then
 # xrandr --output HDMI-1-0 --auto --left-of eDP-1
 # feh --bg-scale ~/Pictures/wallpaper.jpg
-  xbindkeys
   xcompmgr -f &
-  while true; do xsetroot -name " $(date +"%a %d %b %R") "; sleep 10; done &
+  while true; do xsetroot -name "$(nmcli -t -f NAME connection show --active | head -n1) | VOL: $(amixer | grep -oP '\[\K\d+%(?=\])' | head -n1) | BAT: $(cat /sys/class/power_supply/*/capacity)% | $(date +"%a %d %b %R") "; sleep 0.3; done &
 fi
 ) &

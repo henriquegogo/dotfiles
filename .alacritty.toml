@@ -7,7 +7,7 @@ import = [
 opacity = 0.9
 
 [font]
-size = 15.0
+size = 11.0
 
 [font.normal]
 family = "M PLUS 1 CODE"

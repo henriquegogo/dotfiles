@@ -1,3 +1,4 @@
+#include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -50,8 +51,30 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+static const char *brightup[]   = { "brightnessctl", "set", "8%+", NULL };
+static const char *brightdown[] = { "brightnessctl", "set", "8%-", NULL };
+static const char *volup[]      = { "amixer", "set", "Master", "5%+", NULL };
+static const char *voldown[]    = { "amixer", "set", "Master", "5%-", NULL };
+static const char *screenshot[] = { "sh", "-c", "scrot -s -e 'xclip -selection clipboard -t image/png -i $f'", NULL };
+static const char *terminal[]   = { "x-terminal-emulator", NULL };
+static const char *dmenurun[]   = { "dmenu_run", "-l", "5", NULL };
+static const char *rofi[]       = { "rofi", "-show", "drun", NULL };
+static const char *lockscreen[] = { "slock", NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ 0,             XF86XK_MonBrightnessUp,   spawn,          {.v = brightup } },
+	{ 0,             XF86XK_MonBrightnessDown, spawn,          {.v = brightdown } },
+	{ 0,             XF86XK_AudioRaiseVolume,  spawn,          {.v = volup } },
+	{ 0,             XF86XK_AudioLowerVolume,  spawn,          {.v = voldown } },
+	{ MODKEY,                       XK_equal,  spawn,          {.v = volup } },
+	{ MODKEY,                       XK_minus,  spawn,          {.v = voldown } },
+	{ 0,                            XK_Print,  spawn,          {.v = screenshot } },
+	{ MODKEY,                       XK_t,      spawn,          {.v = terminal } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = dmenurun } },
+	{ MODKEY,                       XK_a,      spawn,          {.v = rofi } },
+	{ MODKEY,                       XK_l,      spawn,          {.v = lockscreen } },
+    
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ ALTKEY,                       XK_Tab,    focusstack,     {.i = +1 } },
 	{ ALTKEY|ShiftMask,             XK_Tab,    focusstack,     {.i = -1 } },
@@ -89,9 +112,21 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
+	{ ClkRootWin,           0,              Button1,        spawn,          {.v = rofi } },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,              Button4,        setlayout,      {.v = &layouts[0]} },
+	{ ClkLtSymbol,          0,              Button5,        setlayout,      {.v = &layouts[1]} },
+	{ ClkLtSymbol,          0,              Button2,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button1,        movemouse,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkWinTitle,          0,              Button3,        togglefloating, {0} },
+	{ ClkWinTitle,          0,              Button5,        focusstack,     {.i = +1 } },
+	{ ClkWinTitle,          0,              Button4,        focusstack,     {.i = -1 } },
+	{ ClkStatusText,        0,              Button3,        spawn,          {.v = lockscreen } },
+	{ ClkStatusText,        0,              Button4,        spawn,          {.v = volup } },
+	{ ClkStatusText,        0,              Button5,        spawn,          {.v = voldown } },
+	{ ClkStatusText,        MODKEY,         Button4,        spawn,          {.v = brightup } },
+	{ ClkStatusText,        MODKEY,         Button5,        spawn,          {.v = brightdown } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
