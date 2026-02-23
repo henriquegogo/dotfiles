@@ -9,7 +9,7 @@ set ssl_force_tls = yes
 set copy          = no
 set sort          = threads
 set sort_aux      = reverse-last-date-sent
-mailboxes         = =INBOX +[Gmail]/All\ Mail +[Gmail]/Sent\ Mail +[Gmail]/Drafts +[Gmail]/Trash
+mailboxes         = =INBOX
 set spoolfile     = +INBOX
 set record        = "+[Gmail]/Sent Mail"
 set postponed     = "+[Gmail]/Drafts"
