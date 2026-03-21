@@ -5,9 +5,10 @@ import = [
 
 [window]
 opacity = 0.9
+decorations = "none"
 
 [font]
-size = 11.0
+size = 14
 
 [font.normal]
 family = "M PLUS 1 CODE"
