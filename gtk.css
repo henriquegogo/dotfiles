@@ -1,0 +1,9 @@
+.background {
+  background: #222226;
+}
+
+.titlebar {
+  background: transparent;
+  box-shadow: none;
+  border-bottom: none;
+}
