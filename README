@@ -1,17 +1,26 @@
-My dotfiles - by Henrique Gogó
+My dotfiles - by Henrique Soares
 
-.tmux.conf
-==========
-  - Changes prefix to C-a and set some colors and default settings
+.alacritty.yml
+==============
+  - Default configuration for alacritty
+
+.lynxrc
+=======
+  - Vi keymaps, nvim editor and accept cookies
 
 .muttrc
 =======
   - Default configuration for Gmail accounts.
     Create a .mutt/local file to set realname, imap_user and imap_pass
 
-.lynxrc
+.tmux.conf
+==========
+  - Changes prefix to C-a and set some colors and default settings
+
+gtk.css
 =======
-  - Vi keymaps, nvim editor and accept cookies
+  - Some custom titlebar settings for Adwaita theme
+  - Copy it to .config/gtk-3.0/gtk.css and .config/gtk-4.0/gtk.css
 
 .gitconfig
 ==========
