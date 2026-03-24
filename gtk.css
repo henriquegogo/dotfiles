@@ -1,9 +1,5 @@
-.background {
-  background: #222226;
-}
-
 .titlebar {
-  background: transparent;
+  background: inherit;
   box-shadow: none;
   border-bottom: none;
 }
