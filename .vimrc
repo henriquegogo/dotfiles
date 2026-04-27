@@ -55,7 +55,7 @@ hi Identifier   ctermfg=167 cterm=NONE   " Red
 hi Keyword      ctermfg=134              " Purple
 hi LineNr       ctermfg=238              " Gray
 hi MatchParen               ctermbg=059  " Gray
-hi Normal       ctermfg=145 ctermbg=233  " Light Gray - Black
+hi Normal       ctermfg=145 ctermbg=234  " Light Gray - Light Black
 hi Number       ctermfg=173              " Dark Yellow
 hi Pmenu        ctermfg=145 ctermbg=236 cterm=NONE  " Light Gray - Dark Gray
 hi PmenuSel     ctermfg=236 ctermbg=075 cterm=NONE  " Darker Gray - Purple
@@ -269,6 +269,24 @@ if isdirectory(g:pluginspath.'coc.nvim')
   let g:coc_disable_startup_warning = 1
   hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
   hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
+endif
+
+" call PluginInstall('MeanderingProgrammer/render-markdown.nvim')
+if isdirectory(g:pluginspath.'render-markdown.nvim') && has('nvim')
+  highlight RenderMarkdownH1Bg ctermfg=63  ctermbg=NONE
+  highlight RenderMarkdownH2Bg ctermfg=185 ctermbg=NONE
+  highlight RenderMarkdownH3Bg ctermfg=128 ctermbg=NONE
+  highlight RenderMarkdownH4Bg ctermfg=119 ctermbg=NONE
+  highlight RenderMarkdownH5Bg ctermfg=244 ctermbg=NONE
+  highlight RenderMarkdownH6Bg ctermfg=241 ctermbg=NONE
+  lua << EOF
+  require('render-markdown').setup({
+      heading = {
+          icons = { '░░░ ', ' ░░ ', '  ░ ',  '  ▕ ' , '  ▕ ', '  ▕ ' },
+          position = 'inline',  -- Show icons on left side
+      },
+  })
+EOF
 endif
 
 " call PluginInstall('Exafunction/windsurf.vim')
