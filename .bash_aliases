@@ -19,87 +19,101 @@ wikipediapt() {
 loadenv() {
   if [ -z "$1" ]; then
     echo "Usage: loadenv [FOLDER1] [FOLDER2]..."
-  else
-    for arg in "$@"; do
-      local PREFIX=`realpath $arg`
-
-      if [[ "$PATH" != *"$PREFIX"* ]]; then
-        [ -d "$PREFIX/share/man" ]     && export MANPATH="$PREFIX/share/man:$MANPATH"
-        [ -d "$PREFIX/include" ]       && export CPATH="$PREFIX/include:$CPATH"
-        [ -d "$PREFIX/lib" ]           && export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
-        [ -d "$PREFIX/lib" ]           && export LIBRARY_PATH="$PREFIX/lib:$LIBRARY_PATH"
-        [ -d "$PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
-        [ -d "$PREFIX/bin" ]           && export PATH="$PREFIX/bin:$PATH" || export PATH="$PREFIX:$PATH"
-      fi
-    done
+    return 1
   fi
+  for arg in "$@"; do
+    local PREFIX=`realpath $arg`
+
+    if [[ "$PATH" != *"$PREFIX"* ]]; then
+      [ -d "$PREFIX/share/man" ]     && export MANPATH="$PREFIX/share/man:$MANPATH"
+      [ -d "$PREFIX/include" ]       && export CPATH="$PREFIX/include:$CPATH"
+      [ -d "$PREFIX/lib" ]           && export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
+      [ -d "$PREFIX/lib" ]           && export LIBRARY_PATH="$PREFIX/lib:$LIBRARY_PATH"
+      [ -d "$PREFIX/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH"
+      [ -d "$PREFIX/bin" ]           && export PATH="$PREFIX/bin:$PATH" || export PATH="$PREFIX:$PATH"
+    fi
+  done
 }
-[ -d "$HOME/opt" ] && loadenv $HOME/opt/*
 
 confine() {
   if [ -z "$1" ]; then
     echo "Usage: confine [PATH]"
-  else
-    local COMMAND="${@:2}"
-    [ -z "$2" ] && COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
-    sudo unshare --mount-proc -pfR $1 $COMMAND
+    return 1
   fi
+  local COMMAND="${@:2}"
+  [ -z "$2" ] && COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
+  sudo unshare --mount-proc -pfR $1 $COMMAND
 }
 
 chhome() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: chhome [PATH] [COMMAND]"
-  else
-    local NEWHOME=`realpath $1`
-    HOME="$NEWHOME" PATH="$NEWHOME/bin:$PATH" \
-      LD_LIBRARY_PATH="$NEWHOME/lib:$NEWHOME/lib64:$LD_LIBRARY_PATH" "${@:2}"
+    return 1
   fi
+  local NEWHOME=`realpath $1`
+  HOME="$NEWHOME" PATH="$NEWHOME/bin:$PATH" \
+    LD_LIBRARY_PATH="$NEWHOME/lib:$NEWHOME/lib64:$LD_LIBRARY_PATH" "${@:2}"
 }
 
 selfextract() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: selfextract [FOLDER] [COMMAND] [PARAMS]"
-  else
-    local OUTPUT_BIN="${2}.bin"
-    echo "#!/usr/bin/env bash" > "${OUTPUT_BIN}"
-    echo "TMPDIR=\$(mktemp -d)" >> "${OUTPUT_BIN}"
-    echo "tail -n +6 \$0 | tar x -C \$TMPDIR" >> "${OUTPUT_BIN}"
-    echo "(TMPDIR=\$TMPDIR \
-      PATH=\"\$TMPDIR:\$TMPDIR/bin:\$PATH\" \
-      LD_LIBRARY_PATH=\"\$TMPDIR/lib:\$TMPDIR/lib64:\$LD_LIBRARY_PATH\" \
-      $2 $3 \$@)" >> "${OUTPUT_BIN}"
-    echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
-    tar cf - -C "$1" . >> "${OUTPUT_BIN}"
-    chmod +x "${OUTPUT_BIN}"
+    return 1
   fi
+  local OUTPUT_BIN="${2}.bin"
+  echo "#!/usr/bin/env bash" > "${OUTPUT_BIN}"
+  echo "TMPDIR=\$(mktemp -d)" >> "${OUTPUT_BIN}"
+  echo "tail -n +6 \$0 | tar x -C \$TMPDIR" >> "${OUTPUT_BIN}"
+  echo "(TMPDIR=\$TMPDIR \
+    PATH=\"\$TMPDIR:\$TMPDIR/bin:\$PATH\" \
+    LD_LIBRARY_PATH=\"\$TMPDIR/lib:\$TMPDIR/lib64:\$LD_LIBRARY_PATH\" \
+    $2 $3 \$@)" >> "${OUTPUT_BIN}"
+  echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
+  tar cf - -C "$1" . >> "${OUTPUT_BIN}"
+  chmod +x "${OUTPUT_BIN}"
 }
 
 mntrun() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: mntrun [FILE] [COMMAND]"
-  else
-    local TMPDIR=$(mktemp -d)
-    if ! sudo -n true 2>/dev/null; then
-      echo "Sudo required to mount $1 in $TMPDIR"
-    fi
-    sudo mount "$1" "$TMPDIR"
-    PATH="$TMPDIR:$TMPDIR/bin:$PATH" \
-      LD_LIBRARY_PATH="$TMPDIR/lib:$TMPDIR/lib64:$LD_LIBRARY_PATH" \
-      $2 ${@:3}
-    sudo umount "$TMPDIR" && rmdir "$TMPDIR"
+    return 1
   fi
+  local TMPDIR=$(mktemp -d)
+  if ! sudo -n true 2>/dev/null; then
+    echo "Sudo required to mount $1 in $TMPDIR"
+  fi
+  sudo mount "$1" "$TMPDIR"
+  PATH="$TMPDIR:$TMPDIR/bin:$PATH" \
+    LD_LIBRARY_PATH="$TMPDIR/lib:$TMPDIR/lib64:$LD_LIBRARY_PATH" \
+    $2 ${@:3}
+  sudo umount "$TMPDIR" && rmdir "$TMPDIR"
 }
 
 watchpath() {
   if [ "$#" -lt 2 ]; then
     echo "Usage: watchpath [PATH] [COMMAND]"
-  else
-    while :; do
-      if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
-        local OLD=$(ls -lR --full-time "$1")
-        eval "${@:2}"
-      fi
-      sleep 1
-    done
+    return 1
   fi
+  while :; do
+    if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
+      local OLD=$(ls -lR --full-time "$1")
+      eval "${@:2}"
+    fi
+    sleep 1
+  done
+}
+
+appinstall() {
+  sudo find /usr/local/bin -xtype l -delete
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: appinstall [FILE]"
+    return 0
+  fi
+  local FILE=$(realpath "$1")
+  local DEST="/usr/local/apps/$(basename "${FILE%%.*}")"
+  sudo mkdir -p "$DEST"
+  [[ "$FILE" == *.zip ]] && \
+    sudo unzip -q "$FILE" -d "$DEST" || sudo tar xf "$FILE" -C "$DEST"
+  find "$DEST" -maxdepth 3 -path "*/bin/*" -exec \
+    sudo ln -sfv {} /usr/local/bin/ \;
 }

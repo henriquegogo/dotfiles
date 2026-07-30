@@ -108,6 +108,11 @@ gtk.css
     are added or modified.
     Usage: `watchpath [PATH] [COMMAND]`
 
+  - appinstall:
+    Unarchive an application archive in /usr/local/apps and create
+    symlinks in /usr/local/bin
+    Usage: `appinstall [FILE]`
+
 .vimrc
 ======
   Overview
