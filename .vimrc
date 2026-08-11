@@ -111,6 +111,7 @@ autocmd FileType qf setlocal nonumber
 
 " Terminal
 if exists('*termopen')
+  autocmd BufEnter,WinEnter term://* startinsert
   autocmd TermOpen * setlocal nonumber | startinsert
 endif
 
