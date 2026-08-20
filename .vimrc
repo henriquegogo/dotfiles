@@ -46,6 +46,8 @@ hi DiffAdd      ctermfg=7   ctermbg=22   " White - Green
 hi DiffChange   cterm=NONE  ctermbg=236  " Darker Gray
 hi DiffDelete   ctermfg=52  ctermbg=52   " Red - Red
 hi DiffText     ctermfg=7   ctermbg=236 cterm=underline  " White - Darker Gray
+hi diffAdded    ctermfg=10  ctermbg=NONE " Green
+hi diffRemoved  ctermfg=9   ctermbg=NONE " Red
 hi EndOfBuffer  ctermfg=233              " Black
 hi ErrorMsg     ctermfg=167 ctermbg=233  " Red - Black
 hi FoldColumn               ctermbg=233  " Black
