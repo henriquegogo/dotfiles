@@ -2,8 +2,14 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1='\n\[\e['"$([ -n "$SSH_CLIENT" ] && echo 33 || ([ -n "$container" ] && echo 35 || echo 32)
 )"'m\]\u@\h \[\e[34m\]\w \[\e[0m\]$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\])" 2>/dev/null)\n\$ '
 
-alias ll='ls -ahps1 --group-directories-first --color'
 alias battery='cat /sys/class/power_supply/*/capacity'
+
+unalias l 2> /dev/null
+l() {
+  local cmd="ls"
+  type busybox >/dev/null 2>&1 && cmd="busybox ls"
+  $cmd -shAp1 --group-directories-first --color=always "$@"
+}
 
 websearch() {
   lynx duckduckgo.com/?q="$*"
