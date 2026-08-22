@@ -1,8 +1,14 @@
 export PROMPT_DIRTRIM=2
 export PS1='\n\[\e[01;33m\]\$ \[\e[34m\]\w \[\e[0m\]$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\]) " 2>/dev/null)'
 
-alias ll='ls -ahps1 --group-directories-first --color'
 alias battery='cat /sys/class/power_supply/*/capacity'
+
+unalias l 2> /dev/null
+l() {
+  local cmd="ls"
+  type busybox >/dev/null 2>&1 && cmd="busybox ls"
+  $cmd -shAp1 --group-directories-first --color=always "$@"
+}
 
 websearch() {
   lynx duckduckgo.com/?q="$*"
