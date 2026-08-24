@@ -27,6 +27,7 @@ set tabstop=2
 set timeoutlen=300
 set updatetime=300
 set wildcharm=<C-z>
+set wildoptions=pum
 set wildmenu
 
 filetype plugin indent on
@@ -176,11 +177,10 @@ noremap <Leader> "+
 
 " Buffers navigation
 nnoremap <Leader>q <Cmd>execute confirm('Quit?', "&Yes\n&No") == 1 ? 'cq' : ''<CR>
-nnoremap <Leader>% <Cmd>vsplit<CR>
-nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader><Tab> <Cmd>bnext<CR>
 nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
+nnoremap <Leader>gf :edit <cfile><CR>
 
 " Find files by name
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
@@ -202,8 +202,9 @@ endif
 command! -nargs=+ Replace execute 'Search '.split(<q-args>)[0] | cclose
       \| execute 'cfdo %s/\V\C'.split(<q-args>)[0].'/'.split(<q-args>)[1].'/gc'
 nnoremap <Leader>/ :Search<Space>
-nnoremap <Leader>? :%s/<C-R><C-W>//gc<Left><Left><Left>
-nnoremap <Leader>?? :Replace <C-R><C-W><Space>
+nnoremap <Leader>F :Search<Space>
+nnoremap <Leader>h :%s/<C-R><C-W>//gc<Left><Left><Left>
+nnoremap <Leader>H :Replace <C-R><C-W><Space>
 
 " Git blame / diff / branch
 if executable('git')
@@ -320,32 +321,41 @@ endif
 
 " AI function
 function! AI(msg) range
-  let l:lines = ['<context-content file="' . expand('%:t') . '">'] + getline(1, '$') + ['</context-content>', '']
-        \ + ['<user-instructions>', '<instruction-text>', a:msg, '</instruction-text>']
-        \ + ['<instruction-focus file="' . expand('%:t') . '" lines="' . a:firstline . '-' . a:lastline . '">']
-        \ + getline(a:firstline, a:lastline) + ['</instruction-focus>', '</user-instructions>']
-  let l:win = bufwinnr('^\[AI\]$')
-  if l:win != -1 | execute l:win . 'wincmd w'
-  else | execute 'vsplit [AI]' | setlocal buftype=nofile bufhidden=hide noswapfile filetype=markdown
+  let l:prompt = a:msg
+  if histget('cmd', -1) =~# '^\s*[''%]'
+    let l:prompt = a:msg . "\n\nFile: " . expand('%:.') . ':' .
+          \ a:firstline . '-' . a:lastline . "\n```" . &filetype . "\n" .
+          \ join(getline(a:firstline, a:lastline), "\n") . "\n```"
   endif
-  silent %delete _
-  call setline(1, l:lines) | silent call setreg('+', getline(1, '$'), 'l')
-  silent %!ai
-  if search('^```', 'wn') | execute "normal! G$?```\<CR>kV?```\<CR>jygg" | endif
-  wincmd p | normal! gv
+  call setreg('+', l:prompt)
+  if empty(system("curl -s http://localhost:4096/session"))
+    call system("tmux split-window -d -h -p 35 opencode --port 4096 --prompt " . shellescape(l:prompt))
+    return
+  endif
+  let l:session_id = substitute(system("curl -s http://localhost:4096/session | jq -r '.[0].id'"), '\n', '', 'g')
+  let l:payload = json_encode({'parts': [{'type': 'text', 'text': l:prompt}]})
+  let l:cmd = printf('curl -X POST "http://localhost:4096/session/%s/prompt_async" 
+        \ -H "Content-Type: application/json" -d %s', l:session_id, shellescape(l:payload))
+  silent call system(l:cmd)
 endfunction
 command! -range -nargs=* AI <line1>,<line2>call AI(<q-args>)
 
 function! FIM() abort
+  let l:host = empty($OLLAMA_HOST) ? 'http://localhost:11434' : $OLLAMA_HOST
+  let l:model = empty($OLLAMA_MODEL) ? 'qwen2.5-coder:1.5b' : $OLLAMA_MODEL
   let l:p = getline(max([1, line('.') - 40]), line('.'))
   let l:s = getline(line('.'), min([line('$'), line('.') + 40]))
   let l:p[-1] = l:p[-1][:col('.') - 2]
   let l:s[0]  = l:s[0][col('.') - 1:]
-  let l:completion = system('fim ' . shellescape(join(l:p, "\n")), join(l:s, "\n"))
-  if !empty(l:completion)
-    call setreg('a', l:completion, 'c')
-    normal! "agp
-  endif
+  let l:payload = json_encode({
+        \   'model': l:model, 'prompt': join(l:p, "\n"), 'suffix': join(l:s, "\n"), 'stream': v:false,
+        \   'options': { 'stop': ['<|endoftext|>', '<|file_separator|>', '<|fim_prefix|>', '<|fim_suffix|>', '<|fim_middle|>'] }
+        \ })
+  let l:auth = empty($OLLAMA_API_KEY) ? '' : ' -H ' . shellescape('Authorization: Bearer ' . $OLLAMA_API_KEY)
+  let l:raw = system('curl -s' . l:auth . ' -H "Content-Type: application/json" --data-binary @- ' . shellescape(l:host . '/api/generate'), l:payload)
+  if v:shell_error || empty(l:raw) | return | endif
+  let l:completion = substitute(get(json_decode(l:raw), 'response', ''), '.*</think>\s*', '', '')
+  if !empty(l:completion) | call setreg('a', l:completion, 'c') | execute 'normal! "agp' | endif
 endfunction
 inoremap <expr> <C-f> "\<C-g>u\<Cmd>call FIM()\<CR>"
 

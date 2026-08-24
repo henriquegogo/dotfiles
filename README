@@ -1,9 +1,5 @@
 My dotfiles - by Henrique Soares
 
-.alacritty.yml
-==============
-  - Default configuration for alacritty
-
 .lynxrc
 =======
   - Vi keymaps, nvim editor and accept cookies
@@ -17,13 +13,11 @@ My dotfiles - by Henrique Soares
 ==========
   - Changes prefix to C-a and set some colors and default settings
 
-gtk.css
-=======
-  - Some custom titlebar settings for Adwaita theme
-  - Copy it to .config/gtk-3.0/gtk.css and .config/gtk-4.0/gtk.css
-
 .gitconfig
 ==========
+  Copy .gitconfig file as ~/.config/git/config. Use a custom ~/.gitconfig
+  to environment settings such as user name and email
+
   Git Aliases
   -----------
   - sync: 
@@ -106,8 +100,14 @@ gtk.css
     symlinks in /usr/local/bin
     Usage: `appinstall [FILE]`
 
+  - ai:
+    Interact with local OpenAI API using stdin and stdout.
+    Usage: `ai [PROMPT]` or `echo [PROMPT] | ai`
+
 .vimrc
 ======
+  Copy .vimrc file as ~/.config/nvim/init.vim to use with Neovim.
+
   Overview
   --------
   - General Settings: Set some desirable options.
@@ -131,11 +131,8 @@ gtk.css
   ---------------------------
   - Navigation Shortcuts: Map keys for quick buffer and tab management:
     - <Leader>q Quit editor.
-    - <Leader>% Open a vertical split.
-    - <Leader>" Open a horizontal split.
     - <Leader>b List all buffers.
-    - <Leader><Tab> Switch recent buffer.
-    - <Leader><Tab><Tab> Go to next buffer.
+    - <Leader><Tab> Go to next buffer.
     - <Leader><S-Tab> Go to previous buffer.
 
   Find Files by Name or Containing Text
@@ -163,6 +160,13 @@ gtk.css
     save in tmp folder.
   - CtagsDelete: Delete tags in the tmp folder.
 
+  Plugin Management
+  -----------------
+  - Custom Functions: Functions to install, remove, update, and list
+    plugins using git.
+  - Commands: Define :PluginInstall, :PluginRemove, :PluginUpdate, and 
+    :PluginList commands to manage plugins.
+
   LSP
   ---
   - Preconfigured LSP Servers for popular languages.
@@ -178,14 +182,7 @@ gtk.css
   Artificial Intelligence
   -----------------------
   - AI: Auto generate a prompt to be used with bash "ai" command.
-    Append +f for file content, +c for ctags, +d for dependencies.
-
-  Plugin Management
-  -----------------
-  - Custom Functions: Functions to install, remove, update, and list
-    plugins using git.
-  - Commands: Define :PluginInstall, :PluginRemove, :PluginUpdate, and 
-    :PluginList commands to manage plugins.
+    Use <C-f> to fill-in-the-middle autocompletion.
 
 Disclaimer
 ==========
