@@ -27,6 +27,7 @@ set tabstop=2
 set timeoutlen=300
 set updatetime=300
 set wildcharm=<C-z>
+set wildoptions=pum
 set wildmenu
 
 filetype plugin indent on
@@ -176,11 +177,10 @@ noremap <Leader> "+
 
 " Buffers navigation
 nnoremap <Leader>q <Cmd>execute confirm('Quit?', "&Yes\n&No") == 1 ? 'cq' : ''<CR>
-nnoremap <Leader>% <Cmd>vsplit<CR>
-nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader><Tab> <Cmd>bnext<CR>
 nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
+nnoremap <Leader>gf :edit <cfile><CR>
 
 " Find files by name
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
@@ -202,8 +202,9 @@ endif
 command! -nargs=+ Replace execute 'Search '.split(<q-args>)[0] | cclose
       \| execute 'cfdo %s/\V\C'.split(<q-args>)[0].'/'.split(<q-args>)[1].'/gc'
 nnoremap <Leader>/ :Search<Space>
-nnoremap <Leader>? :%s/<C-R><C-W>//gc<Left><Left><Left>
-nnoremap <Leader>?? :Replace <C-R><C-W><Space>
+nnoremap <Leader>F :Search<Space>
+nnoremap <Leader>h :%s/<C-R><C-W>//gc<Left><Left><Left>
+nnoremap <Leader>H :Replace <C-R><C-W><Space>
 
 " Git blame / diff / branch
 if executable('git')
