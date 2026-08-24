@@ -113,6 +113,10 @@ gtk.css
     symlinks in /usr/local/bin
     Usage: `appinstall [FILE]`
 
+  - ai:
+    Interact with local OpenAI API using stdin and stdout.
+    Usage: `ai [PROMPT]` or `echo [PROMPT] | ai`
+
 .vimrc
 ======
   Overview
@@ -138,11 +142,8 @@ gtk.css
   ---------------------------
   - Navigation Shortcuts: Map keys for quick buffer and tab management:
     - <Leader>q Quit editor.
-    - <Leader>% Open a vertical split.
-    - <Leader>" Open a horizontal split.
     - <Leader>b List all buffers.
-    - <Leader><Tab> Switch recent buffer.
-    - <Leader><Tab><Tab> Go to next buffer.
+    - <Leader><Tab> Go to next buffer.
     - <Leader><S-Tab> Go to previous buffer.
 
   Find Files by Name or Containing Text
@@ -152,7 +153,15 @@ gtk.css
     <Leader>. to use this command.
   - Search Command: Define a :Search command to search for text within
     files using rg (ripgrep) if available, or fallback to grep. Map
-    <Leader>/ to use this command.
+    <Leader>/ and <Leader>F to use this command.
+  - Replace Command: Define a :Replace command to replace text within
+    files using Search and Vim commands. Map <Leader>h to replace words
+    in the current buffer and <Leader>H to replace words in all files.
+
+  Artificial Intelligence
+  -----------------------
+  - AI: Auto generate a prompt to be used with bash "ai" command.
+    Append +f for file content, +c for ctags, +d for dependencies.
 
   Git Integrations
   ----------------

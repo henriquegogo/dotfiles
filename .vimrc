@@ -27,6 +27,7 @@ set tabstop=2
 set timeoutlen=300
 set updatetime=300
 set wildcharm=<C-z>
+set wildoptions=pum
 set wildmenu
 
 filetype plugin indent on
@@ -123,6 +124,9 @@ set omnifunc=syntaxcomplete#Complete
 imap <C-Space> <C-x><C-o>
 imap <C-@> <C-x><C-o>
 
+" Folding
+autocmd FileType markdown setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^#\\+\\s'?'>1':'='
+
 " Popup menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 imap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -141,11 +145,10 @@ noremap <Leader> "+
 
 " Buffers navigation
 nnoremap <Leader>q <Cmd>execute confirm('Quit?', "&Yes\n&No") == 1 ? 'cq' : ''<CR>
-nnoremap <Leader>% <Cmd>vsplit<CR>
-nnoremap <Leader>" <Cmd>split<CR>
 nnoremap <Leader>b :buffer <C-z><S-Tab>
 nnoremap <Leader><Tab> <Cmd>bnext<CR>
 nnoremap <Leader><S-Tab> <Cmd>bprevious<CR>
+nnoremap <Leader>gf :edit <cfile><CR>
 
 " Find files by name
 command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
@@ -167,8 +170,9 @@ endif
 command! -nargs=+ Replace execute 'Search '.split(<q-args>)[0] | cclose
       \| execute 'cfdo %s/\V\C'.split(<q-args>)[0].'/'.split(<q-args>)[1].'/gc'
 nnoremap <Leader>/ :Search<Space>
-nnoremap <Leader>? :%s/<C-R><C-W>//gc<Left><Left><Left>
-nnoremap <Leader>?? :Replace <C-R><C-W><Space>
+nnoremap <Leader>F :Search<Space>
+nnoremap <Leader>h :%s/<C-R><C-W>//gc<Left><Left><Left>
+nnoremap <Leader>H :Replace <C-R><C-W><Space>
 
 " Git blame / diff / branch
 if executable('git')
@@ -258,6 +262,45 @@ command! -nargs=1 PluginInstall call PluginInstall(<q-args>)
 command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove(<q-args>)
 command! -nargs=0 PluginUpdate call s:PluginUpdate()
 command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
+
+" AI function
+function! AI(msg) range
+  let l:ft = &filetype !=# '' ? &filetype : ''
+  let l:f = a:msg =~# '\v(^|\s)\+f($|\s)'
+  let l:c = a:msg =~# '\v(^|\s)\+c($|\s)'
+  let l:d = a:msg =~# '\v(^|\s)\+d($|\s)'
+  let l:paths = [expand('%')]
+  let l:lines = [
+      \ '# System', 'You are an AI coding assistant.',
+      \ 'Do not make code changes that are not directly and logically related to the prompt. ', '',
+  \ ]
+
+  if l:d | let l:paths += systemlist("grep -o -E '\\b\\w+\\.\\w+\\b' " . shellescape(expand('%'))
+        \. " | sort -u | xargs -I{} sh -c 'test -f \"{}\" && echo \"{}\"' 2>/dev/null") | endif
+  if l:c | let l:lines += ['# Symbols (ctags)']
+        \ + systemlist('ctags -x ' . join(mapnew(l:paths, 'shellescape(v:val)'))) + [''] | endif
+  if l:f | let l:lines += ['# File contents', '```' . l:ft]
+        \ + systemlist('tail -n +1 ' . join(mapnew(l:paths, 'shellescape(v:val)'))) + ['```', ''] | endif
+
+  let l:lines += [
+      \ '# Focused block', '> File: ' . expand('%:t') . ' (Lines ' . a:firstline . '-' . a:lastline . ')',
+      \ '```' . l:ft, ] + map(getline(a:firstline, a:lastline), 'v:val') + [ '```', '',
+      \ '# User instruction', trim(substitute(a:msg, '\v\+[fcd]>', '', 'g'))
+  \ ]
+
+  let l:win = bufwinnr('^\[AI\]$')
+  if l:win != -1 | execute l:win . 'wincmd w'
+  else
+    execute 'vsplit [AI]'
+    setlocal buftype=nofile bufhidden=hide noswapfile filetype=markdown
+  endif
+  silent %delete _
+  call setline(1, l:lines) | silent call setreg('+', getline(1, '$'), 'l')
+  silent %!ai
+  if search('^```', 'wn') | execute "normal! G$?```\<CR>kV?```\<CR>jygg" | endif
+  wincmd p | normal! gv
+endfunction
+command! -range=% -nargs=* AI <line1>,<line2>call AI(<q-args>)
 
 " Plugins configuration
 " call PluginInstall('sheerun/vim-polyglot')

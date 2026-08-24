@@ -123,3 +123,17 @@ appinstall() {
   find "$DEST" -maxdepth 3 -path "*/bin/*" -exec \
     sudo ln -sfv {} /usr/local/bin/ \;
 }
+
+ai() {
+  local MODEL="${MODEL:-$(curl -s http://localhost:11434/api/ps | jq -r '.models[0].name // empty')}"
+  MODEL="${MODEL:-$(curl -s http://localhost:11434/api/tags | jq -r '.models[0].name // empty')}"
+  local PROMPT=""
+  [ $# -gt 0 ] && PROMPT="$*"
+  [ $# -eq 0 ] && [ ! -t 0 ] && PROMPT=$(cat)
+  [ $# -eq 0 ] && [ -t 0 ] && ollama run $MODEL && return 0
+  curl -s http://localhost:11434/api/generate \
+    -H "Content-Type: application/json" \
+    -d "$(jq -n --arg model "$MODEL" --arg prompt "$PROMPT" '{model: $model, prompt: $prompt, stream: false}')" \
+    | jq -r '.response // empty' | sed -z 's/.*<\/think>[[:space:]]*//'
+}
+export -f ai
