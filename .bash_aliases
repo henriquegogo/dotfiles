@@ -130,3 +130,18 @@ appinstall() {
   find "$DEST" -maxdepth 3 -path "*/bin/*" -exec \
     sudo ln -sfv {} /usr/local/bin/ \;
 }
+
+ai() {
+  local OLLAMA_HOST="${OLLAMA_HOST:-http://localhost:11434}"; local MODEL="${OLLAMA_MODEL:-qwen2.5-coder:1.5b}"
+  local AUTH_HEADER=(); [ -n "$OLLAMA_API_KEY" ] && AUTH_HEADER=(-H "Authorization: Bearer ${OLLAMA_API_KEY}")
+  local PROMPT=""
+  [ $# -gt 0 ] && PROMPT="$*"
+  [ $# -eq 0 ] && [ ! -t 0 ] && PROMPT=$(cat)
+  [ $# -eq 0 ] && [ -t 0 ] && OLLAMA_HOST="$OLLAMA_HOST" ollama run "$MODEL" && return 0
+  jq -n --arg m "$MODEL" --arg p "$PROMPT" \
+    '{model: $m, prompt: $p, stream: false}' \
+    | curl -s "${AUTH_HEADER[@]}" "${OLLAMA_HOST}/api/generate" -H "Content-Type: application/json" --data-binary @- \
+    | jq -r '.response // empty' \
+    | sed -z 's/.*<\/think>[[:space:]]*//'
+}
+export -f ai
