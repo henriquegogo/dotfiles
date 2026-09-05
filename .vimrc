@@ -259,19 +259,65 @@ command! -nargs=1 -complete=custom,s:PluginList PluginRemove call s:PluginRemove
 command! -nargs=0 PluginUpdate call s:PluginUpdate()
 command! -nargs=0 PluginList echo s:PluginList(0, 0, 0)
 
+" LSP
+if has('nvim-0.8')
+  autocmd FileType javascript,typescript,javascriptreact,typescriptreact lua if vim.fn.executable('typescript-language-server') == 1 then vim.lsp.start({ name = 'tsserver', cmd = { 'typescript-language-server', '--stdio' } }) end
+  autocmd FileType c,cpp,objc,objcpp lua if vim.fn.executable('clangd') == 1 then vim.lsp.start({ name = 'clangd', cmd = { 'clangd' } }) end
+  autocmd FileType go,gomod lua if vim.fn.executable('gopls') == 1 then vim.lsp.start({ name = 'gopls', cmd = { 'gopls' } }) end
+  autocmd FileType python lua if vim.fn.executable('pyright-langserver') == 1 then vim.lsp.start({ name = 'pyright', cmd = { 'pyright-langserver', '--stdio' } }) end
+  autocmd FileType ruby lua if vim.fn.executable('solargraph') == 1 then vim.lsp.start({ name = 'solargraph', cmd = { 'solargraph', 'stdio' } }) end
+  autocmd FileType sh,bash,zsh lua if vim.fn.executable('bash-language-server') == 1 then vim.lsp.start({ name = 'bashls', cmd = { 'bash-language-server', 'start' } }) end
+  autocmd FileType html lua if vim.fn.executable('vscode-html-language-server') == 1 then vim.lsp.start({ name = 'html', cmd = { 'vscode-html-language-server', '--stdio' } }) end
+  autocmd FileType css,scss,less lua if vim.fn.executable('vscode-css-language-server') == 1 then vim.lsp.start({ name = 'css', cmd = { 'vscode-css-language-server', '--stdio' } }) end
+  autocmd FileType rust lua if vim.fn.executable('rust-analyzer') == 1 then vim.lsp.start({ name = 'rust_analyzer', cmd = { 'rust-analyzer' } }) end
+  autocmd FileType lua lua if vim.fn.executable('lua-language-server') == 1 then vim.lsp.start({ name = 'lua_ls', cmd = { 'lua-language-server' } }) end
+
+  autocmd LspAttach * lua local opts = { buffer = true, silent = true }
+        \ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        \ vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        \ vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        \ vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
+        \ vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, opts)
+        \ vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+        \ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+        \ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+endif
+
+" AI function
+function! AI(msg) range
+  let l:lines = ['<context-content file="' . expand('%:t') . '">'] + getline(1, '$') + ['</context-content>', '']
+        \ + ['<user-instructions>', '<instruction-text>', a:msg, '</instruction-text>']
+        \ + ['<instruction-focus file="' . expand('%:t') . '" lines="' . a:firstline . '-' . a:lastline . '">']
+        \ + getline(a:firstline, a:lastline) + ['</instruction-focus>', '</user-instructions>']
+  let l:win = bufwinnr('^\[AI\]$')
+  if l:win != -1 | execute l:win . 'wincmd w'
+  else | execute 'vsplit [AI]' | setlocal buftype=nofile bufhidden=hide noswapfile filetype=markdown
+  endif
+  silent %delete _
+  call setline(1, l:lines) | silent call setreg('+', getline(1, '$'), 'l')
+  silent %!ai
+  if search('^```', 'wn') | execute "normal! G$?```\<CR>kV?```\<CR>jygg" | endif
+  wincmd p | normal! gv
+endfunction
+command! -range -nargs=* AI <line1>,<line2>call AI(<q-args>)
+
+function! FIM() abort
+  let l:p = getline(max([1, line('.') - 40]), line('.'))
+  let l:s = getline(line('.'), min([line('$'), line('.') + 40]))
+  let l:p[-1] = l:p[-1][:col('.') - 2]
+  let l:s[0]  = l:s[0][col('.') - 1:]
+  let l:completion = system('fim ' . shellescape(join(l:p, "\n")), join(l:s, "\n"))
+  if !empty(l:completion)
+    call setreg('a', l:completion, 'c')
+    normal! "agp
+  endif
+endfunction
+inoremap <expr> <C-f> "\<C-g>u\<Cmd>call FIM()\<CR>"
+
 " Plugins configuration
 " call PluginInstall('sheerun/vim-polyglot')
 if isdirectory(g:pluginspath.'vim-polyglot')
   let g:vim_jsx_pretty_template_tags = ['html', 'jsx', '']
-endif
-
-" call PluginInstall('neoclide/coc.nvim --branch release')
-if isdirectory(g:pluginspath.'coc.nvim')
-  execute 'source '.g:pluginspath.'coc.nvim/doc/coc-example-config.vim'
-  let &statusline = g:statusline
-  let g:coc_disable_startup_warning = 1
-  hi CocFloating  ctermfg=145 ctermbg=236  " Light Gray - Dark Gray
-  hi CocMenuSel   ctermfg=236 ctermbg=075  cterm=NONE  " Darker Gray - Purple
 endif
 
 " call PluginInstall('MeanderingProgrammer/render-markdown.nvim')
