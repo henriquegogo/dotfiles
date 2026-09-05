@@ -80,6 +80,41 @@ hi Visual       ctermfg=145 ctermbg=237  " Light Gray - Dark Gray
 hi WildMenu     ctermfg=236 ctermbg=075  " Black - Blue
 hi WinSeparator cterm=NONE  ctermbg=232  " Dark Black
 
+" Markdown
+hi htmlH1           ctermfg=63  ctermbg=NONE cterm=bold
+hi htmlH2           ctermfg=185 ctermbg=NONE cterm=bold
+hi htmlH3           ctermfg=128 ctermbg=NONE cterm=bold
+hi htmlH4           ctermfg=119 ctermbg=NONE cterm=bold
+hi htmlH5           ctermfg=244 ctermbg=NONE cterm=bold
+hi htmlH6           ctermfg=241 ctermbg=NONE cterm=bold
+hi mkdHeading       ctermfg=234 ctermbg=NONE
+hi mkdCodeDelimiter ctermfg=238
+hi mkdCodeStart     ctermfg=238
+hi mkdCodeEnd       ctermfg=238
+hi mkdBold          ctermfg=234
+hi htmlItalic       ctermfg=15  ctermbg=234  cterm=NONE
+hi mkdItalic        ctermfg=234 ctermbg=NONE
+hi htmlBoldItalic   ctermfg=15  ctermbg=NONE cterm=bold
+hi mkdBoldItalic    ctermfg=234
+hi mkdLink          ctermfg=4   cterm=underline
+hi mkdDelimiter     ctermfg=238
+hi link markdownH1Delimiter         mkdHeading 
+hi link markdownH2Delimiter         mkdHeading 
+hi link markdownH3Delimiter         mkdHeading 
+hi link markdownH4Delimiter         mkdHeading 
+hi link markdownH5Delimiter         mkdHeading 
+hi link markdownH6Delimiter         mkdHeading 
+hi link markdownBoldDelimiter       mkdBold 
+hi link markdownItalicDelimiter     mkdItalic 
+hi link markdownBoldItalicDelimiter mkdBoldItalic 
+hi link markdownLinkText            mkdLink 
+hi link markdownLinkTextDelimiter   mkdDelimiter 
+hi link markdownCodeDelimiter       mkdCodeDelimiter 
+if has('nvim')
+  autocmd FileType markdown lua vim.treesitter.stop()
+endif
+autocmd FileType markdown setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^#\\+\\s'?'>1':'='
+
 " Statusline
 hi StatusA      ctermfg=248 ctermbg=235
 hi StatusB      ctermfg=248 ctermbg=232
@@ -123,9 +158,6 @@ set completeopt=menu,noinsert,noselect
 set omnifunc=syntaxcomplete#Complete
 imap <C-Space> <C-x><C-o>
 imap <C-@> <C-x><C-o>
-
-" Folding
-autocmd FileType markdown setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^#\\+\\s'?'>1':'='
 
 " Popup menu
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
@@ -331,23 +363,3 @@ command! -range=% -nargs=* AI <line1>,<line2>call AI(<q-args>)
 if isdirectory(g:pluginspath.'vim-polyglot')
   let g:vim_jsx_pretty_template_tags = ['html', 'jsx', '']
 endif
-
-" call PluginInstall('MeanderingProgrammer/render-markdown.nvim')
-if isdirectory(g:pluginspath.'render-markdown.nvim') && has('nvim')
-  highlight RenderMarkdownH1Bg ctermfg=63  ctermbg=NONE
-  highlight RenderMarkdownH2Bg ctermfg=185 ctermbg=NONE
-  highlight RenderMarkdownH3Bg ctermfg=128 ctermbg=NONE
-  highlight RenderMarkdownH4Bg ctermfg=119 ctermbg=NONE
-  highlight RenderMarkdownH5Bg ctermfg=244 ctermbg=NONE
-  highlight RenderMarkdownH6Bg ctermfg=241 ctermbg=NONE
-  lua << EOF
-  require('render-markdown').setup({
-      heading = {
-          icons = { '░░░ ', ' ░░ ', '  ░ ',  '  ▕ ' , '  ▕ ', '  ▕ ' },
-          position = 'inline',  -- Show icons on left side
-      },
-  })
-EOF
-endif
-
-" call PluginInstall('Exafunction/windsurf.vim')
