@@ -158,11 +158,6 @@ gtk.css
     files using Search and Vim commands. Map <Leader>h to replace words
     in the current buffer and <Leader>H to replace words in all files.
 
-  Artificial Intelligence
-  -----------------------
-  - AI: Auto generate a prompt to be used with bash "ai" command.
-    Append +f for file content, +c for ctags, +d for dependencies.
-
   Git Integrations
   ----------------
   - Git Blame: Map <Leader>g to show git blame for the current line or
@@ -175,6 +170,23 @@ gtk.css
   - CtagsCreate: Create tags for the current directory using ctags and
     save in tmp folder.
   - CtagsDelete: Delete tags in the tmp folder.
+
+  LSP
+  ---
+  - Preconfigured LSP Servers for popular languages.
+    - gd: Go to Definition
+    - gr: Find References
+    - K: Show Documentation
+    - <Leader>rn: Rename
+    - <Leader>ca: Code Action
+    - gl: Show Line Diagnostics
+    - [d: Previous Diagnostic
+    - ]d: Next Diagnostic
+
+  Artificial Intelligence
+  -----------------------
+  - AI: Auto generate a prompt to be used with bash "ai" command.
+    Append +f for file content, +c for ctags, +d for dependencies.
 
   Plugin Management
   -----------------
