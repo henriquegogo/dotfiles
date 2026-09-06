@@ -1,5 +1,6 @@
-export PROMPT_DIRTRIM=2
-export PS1='\n\[\e[01;33m\]\$ \[\e[34m\]\w \[\e[0m\]$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\]) " 2>/dev/null)'
+export GIT_PS1_SHOWDIRTYSTATE=1
+export PS1='\n\[\e['"$([ -n "$SSH_CLIENT" ] && echo 33 || ([ -n "$container" ] && echo 35 || echo 32)
+)"'m\]\u@\h \[\e[34m\]\w \[\e[0m\]$(__git_ps1 "(\[\e[31m\]%s\[\e[0m\])" 2>/dev/null)\n\$ '
 
 alias ll='ls -ahps1 --group-directories-first --color'
 alias battery='cat /sys/class/power_supply/*/capacity'
@@ -35,24 +36,14 @@ loadenv() {
   done
 }
 
-confine() {
+machinespawn() {
   if [ -z "$1" ]; then
-    echo "Usage: confine [PATH]"
+    echo "Usage: machinespawn [MACHINE] [PARAMS]"
     return 1
   fi
-  local COMMAND="${@:2}"
-  [ -z "$2" ] && COMMAND="env - DISPLAY=$DISPLAY TERM=$TERM USER=root HOME=/root sh -l"
-  sudo unshare --mount-proc -pfR $1 $COMMAND
-}
-
-chhome() {
-  if [ "$#" -lt 2 ]; then
-    echo "Usage: chhome [PATH] [COMMAND]"
-    return 1
-  fi
-  local NEWHOME=`realpath $1`
-  HOME="$NEWHOME" PATH="$NEWHOME/bin:$PATH" \
-    LD_LIBRARY_PATH="$NEWHOME/lib:$NEWHOME/lib64:$LD_LIBRARY_PATH" "${@:2}"
+  sudo systemd-nspawn -M "$1" --hostname="$1" --background="" \
+    --directory=/var/lib/machines/base \
+    --overlay=/var/lib/machines/base:/var/lib/machines/"$1":/ "${@:2}"
 }
 
 selfextract() {
