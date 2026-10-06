@@ -82,13 +82,9 @@ My dotfiles - by Henrique Soares
     machine present in `/var/lib/machines`.
     Usage: `machinespawn [MACHINE] [PARAMS]`
 
-  - selfextract: 
+  - mksquashbin: 
     Creates a self-extracting archive with the specified command.
-    Usage: `selfextract [FOLDER] [COMMAND] [PARAMS]`
-
-  - mntrun:
-    Mount a file in a temporary directory and run a command.
-    Usage: `mntrun [FILE] [COMMAND]`
+    Usage: `mksquashbin [FOLDER] [COMMAND] [PARAMS]`
 
   - watchpath:
     Watches a directory for changes and executes a command when files

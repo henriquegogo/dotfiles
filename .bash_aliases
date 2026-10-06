@@ -69,38 +69,21 @@ machinespawn() {
     --overlay=/var/lib/machines/base:/var/lib/machines/"$1":/ "${@:2}"
 }
 
-selfextract() {
+mksquashbin() {
   if [ "$#" -lt 2 ]; then
-    echo "Usage: selfextract [FOLDER] [COMMAND] [PARAMS]"
+    echo "Usage: mksquashbin [FOLDER] [COMMAND] [PARAMS]"
     return 1
   fi
   local OUTPUT_BIN="${2}.bin"
   echo "#!/usr/bin/env bash" > "${OUTPUT_BIN}"
-  echo "TMPDIR=\$(mktemp -d)" >> "${OUTPUT_BIN}"
-  echo "tail -n +6 \$0 | tar x -C \$TMPDIR" >> "${OUTPUT_BIN}"
-  echo "(TMPDIR=\$TMPDIR \
-    PATH=\"\$TMPDIR:\$TMPDIR/bin:\$PATH\" \
-    LD_LIBRARY_PATH=\"\$TMPDIR/lib:\$TMPDIR/lib64:\$LD_LIBRARY_PATH\" \
-    $2 $3 \$@)" >> "${OUTPUT_BIN}"
-  echo "rm -rf \$TMPDIR; exit 0" >> "${OUTPUT_BIN}"
-  tar cf - -C "$1" . >> "${OUTPUT_BIN}"
+  echo "TMP=\$(mktemp -d)" >> "${OUTPUT_BIN}"
+  echo "tail -n +6 \$0 > \$TMP.squashfs && squashfuse \$TMP.squashfs \$TMP" >> "${OUTPUT_BIN}"
+  echo "PATH=\"\$TMP:\$TMP/bin:\$PATH\" LD_LIBRARY_PATH=\"\$TMP/lib:\$TMP/lib64:\$LD_LIBRARY_PATH\" \$TMP/$2 $3 \$@" >> "${OUTPUT_BIN}"
+  echo "fusermount -u \$TMP && rm -rf \$TMP \$TMP.squashfs; exit 0" >> "${OUTPUT_BIN}"
+  mksquashfs "$1" "${OUTPUT_BIN}.tmp" -comp zstd -noappend >/dev/null 2>&1
+  cat "${OUTPUT_BIN}.tmp" >> "${OUTPUT_BIN}"
+  rm "${OUTPUT_BIN}.tmp"
   chmod +x "${OUTPUT_BIN}"
-}
-
-mntrun() {
-  if [ "$#" -lt 2 ]; then
-    echo "Usage: mntrun [FILE] [COMMAND]"
-    return 1
-  fi
-  local TMPDIR=$(mktemp -d)
-  if ! sudo -n true 2>/dev/null; then
-    echo "Sudo required to mount $1 in $TMPDIR"
-  fi
-  sudo mount "$1" "$TMPDIR"
-  PATH="$TMPDIR:$TMPDIR/bin:$PATH" \
-    LD_LIBRARY_PATH="$TMPDIR/lib:$TMPDIR/lib64:$LD_LIBRARY_PATH" \
-    $2 ${@:3}
-  sudo umount "$TMPDIR" && rmdir "$TMPDIR"
 }
 
 watchpath() {
