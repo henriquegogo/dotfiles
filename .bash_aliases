@@ -91,13 +91,9 @@ watchpath() {
     echo "Usage: watchpath [PATH] [COMMAND]"
     return 1
   fi
-  while :; do
-    if [[ $(ls -lR --full-time "$1") != "$OLD" ]]; then
-      local OLD=$(ls -lR --full-time "$1")
-      eval "${@:2}"
-    fi
-    sleep 1
-  done
+  while inotifywait -q -r -e modify "$1"; do
+    eval "${@:2}"
+  done 
 }
 
 appinstall() {
