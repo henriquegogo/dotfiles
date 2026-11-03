@@ -96,6 +96,22 @@ My dotfiles - by Henrique Soares
     symlinks in /usr/local/bin
     Usage: `appinstall [FILE]`
 
+  - record:
+    Record mic and sound to a mp3 file.
+    Usage: `record [FILE]`
+
+  - transcribe:
+    Trascribe a given audio file.
+    Usage: `transcribe [FILE]
+
+  - llm:
+    Process generative AI models.
+    Usage `llm [SYSTEM_PROMPT] [PROMPT]`
+
+  - takenote:
+    Record from mic and sound, transcribe, summarize and save as markdown locally.
+    Usage: `takenote`
+
 .vimrc
 ======
   Copy .vimrc file as ~/.config/nvim/init.vim to use with Neovim.

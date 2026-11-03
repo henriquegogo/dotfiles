@@ -110,3 +110,33 @@ appinstall() {
   find "$DEST" -maxdepth 3 -path "*/bin/*" -exec \
     sudo ln -sfv {} /usr/local/bin/ \;
 }
+
+record() {
+  local FILEPATH="${1:-/tmp/$(date +%FT%H-%M).mp3}"
+  echo "Recording... (Press 'q' to stop)" >&2
+  ffmpeg -f pulse -i default -f pulse -i @DEFAULT_MONITOR@ -filter_complex amix=inputs=2 -y $FILEPATH >/dev/null 2>&1
+  echo $FILEPATH
+}
+
+transcribe() {
+  if [ "$#" -lt 1 ]; then
+    echo "Usage: transcribe [AUDIO_FILE]"
+    return 0
+  fi
+  echo "Transcribing..." >&2
+  whisper-cli -m ~/Models/ggml-large-v3-turbo.bin -l auto -np -nt -sns -f $1 2>/dev/null
+}
+
+llm() {
+  local PROMPT="${@:--}"
+  echo "Processing..." >&2
+  llama-cli -hf google/gemma-4-E4B-it-qat-q4_0-gguf:Q4_0 -co off -st -rea on --simple-io --no-show-timings -sys "DON'T USE emojis." -p "$PROMPT" | grep -z -oP "\[End thinking\]\n\n\K[\s\S]*?(?=\n\nExiting...)" | tr -d '\0'
+}
+
+takenote() {
+  local OUTPUT="$(llm 'Take meeting notes. Title on top. Markdown. Identify and answer in transcription language:\n\n' "$(transcribe $(record))")"
+  local TITLE=$(echo "$OUTPUT" | head -n1 | tr -d '\0' | sed -E 's/[#*/()]//g' | xargs)
+  local FILENAME="$(date +%FT%H-%M) - $TITLE.md"
+  echo "$OUTPUT" > "$FILENAME"
+  echo $FILENAME
+}
