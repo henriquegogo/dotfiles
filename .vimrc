@@ -188,15 +188,9 @@ command! -nargs=1 -complete=file Find cgetexpr system('find . -type f '
 nnoremap <Leader>. :Find<Space>
 
 " Search / Replace text
-if executable('rg')
-  command! -nargs=1 -complete=tag Search cgetexpr system('rg --vimgrep --no-heading --smart-case '
-        \. '-g "!{**/node_modules/*,**/venv/*,**/vendor/*,**/build/*,**/dist/*,**/tmp/*,**/out/*,**/bin/*}" '
-        \. '"'.<q-args>.'" | sort') | copen
-else
-  command! -nargs=1 Search silent execute 'grep! -R -i '
-        \. '--exclude-dir={node_modules,venv,vendor,build,dist,tmp,out,bin,".?*"} '
-        \. '"'.<q-args>.'" . | sort' | copen | redraw!
-endif
+command! -nargs=1 -complete=tag Search cgetexpr system((executable('ugrep') ? 'ugrep' : 'grep')
+      \. ' -R -n -i --exclude-dir={node_modules,venv,vendor,build,dist,tmp,out,bin,".?*"} '
+      \. shellescape(<q-args>) . ' . | sort') | copen
 command! -nargs=+ Replace execute 'Search '.split(<q-args>)[0] | cclose
       \| execute 'cfdo %s/\V\C'.split(<q-args>)[0].'/'.split(<q-args>)[1].'/gc'
 nnoremap <Leader>/ :Search<Space>
